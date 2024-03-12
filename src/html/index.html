@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="./css/style.css">
+    <title>Your Budget</title>
+</head>
+<body>
+    <div class="overblock"></div>
+    @@include("./blocks/popup-category.html")
+    <header class="header">
+        <div class="container">
+            <nav class="navigation">
+                <a class="navigation__logo logo">Your Budget</a>
+                <ul class="navigation__list">
+                    <li class="navigation__item">
+                        <a class="navigation__link">Операции</a>
+                    </li>
+                    <li class="navigation__item">
+                        <a class="navigation__link">Статистика</a>
+                    </li>
+                    <li class="navigation__item">
+                        <a class="navigation__link">Счета</a>
+                    </li>
+                    <li class="navigation__item">
+                        <a class="navigation__link">Настройки</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main class="page-index">
+        <div class="container">
+            <div class="page-index__content">
+                @@include("./blocks/categories.html")
+                <div class="grafic"></div>
+            </div>
+        </div>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="./js/index.bundle.js"></script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+// Импорт базовых стилей
+@import "./base/reset.scss";
+@import "./base/vars.scss";
+@import "./base/mixin.scss";
+@import "./base/base.scss";
+@import "./blocks/common.scss";
+
+@import "./blocks/navigation.scss";
+@import "./blocks/categories.scss";
+@import "./blocks/popup-operation.scss";

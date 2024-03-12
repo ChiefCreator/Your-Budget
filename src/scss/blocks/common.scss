@@ -1,0 +1,34 @@
+.page-index__content{
+    flex: 1 1 100%;
+    display: flex;
+    gap: 20px;
+}
+.categories{
+    flex: 1 1 auto;
+}
+.grafic{
+    flex: 1 1 100%;
+}
+.overblock{
+    position: fixed;
+    left: 0;
+    top:0;
+    width: 100%;
+    height: 100vh;
+    background-color: black;
+    visibility: hidden;
+    opacity: 0;
+    z-index: 3;
+    cursor: pointer;
+    &_open{
+        visibility: visible;
+        opacity: .7;
+    }
+}
+.button{
+    padding: 12px 40px;
+    background-color: $main-color;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+}

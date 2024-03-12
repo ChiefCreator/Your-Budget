@@ -1,0 +1,383 @@
+.slider-categories{
+    margin-top: 15px;
+    &__item{
+        min-width: 400px;
+        min-height: 180px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgb(175, 172, 172);
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+    &__head{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+    }
+    &__title{
+        text-transform: uppercase;
+        font-weight: 700;
+        font-size: 20px;
+        letter-spacing: 3px;
+    }
+    &__icon{
+        &::before{
+            content: "\f08e";
+            @include font-awesome;
+            color: black;
+            font-size: 18px;
+        }
+    }
+    &__body{
+        margin-top: auto;
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+    }
+    &__total{
+        font-size: 20px;
+        font-weight: 600;
+    }
+    &__total-num{
+        font-size: 35px;
+    }
+    &__total-currency{
+        color: red;
+    }
+}
+.list-categories{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    &__item{
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+        &_add{
+            .list-categories__icon{
+                background-color: gray;
+                &::before{
+                    content: "\2b";
+                }
+            }
+        }
+    }
+    &__icon{
+        flex: 0 0 55px;
+        height: 55px;
+        background-color: orange;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        &::before{
+            @include font-awesome;
+            content: "\f805";
+            color: white;
+            font-size: 25px;
+        }
+    }
+    .icon-children::before{
+        content: "\f1ae";
+    }
+    .icon-home::before{
+        content: "\f015";
+    }
+    .icon-care::before{
+        content: "\f004";
+    }
+    .icon-health::before{
+        content: "\f21e";
+    }
+    .icon-cafe::before{
+        content: "\f0f4";
+    }
+    .icon-communal::before{
+        content: "\e585";
+    }
+    .icon-car::before{
+        content: "\f5e4";
+    }
+    .icon-education::before{
+        content: "\f549";
+    }
+    .icon-payment::before{
+        content: "\f53d";
+    }
+    .icon-gift::before{
+        content: "\f06b";
+    }
+    .icon-subscribe::before{
+        content: "\f0f3";
+    }
+    .icon-purchase::before{
+        content: "\f07a";
+    }
+    .icon-product::before{
+        content: "\f290";
+    }
+    .icon-journey::before{
+        content: "\f57d";
+    }
+    .icon-entertainment::before{
+        content: "\f561";
+    }
+    .icon-transport::before{
+        content: "\f207";
+    }
+    &__info{
+        padding: 5px 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    &__name{
+        font-weight: 500;
+        font-size: 18px;
+    }
+    &__total{
+        font-weight: 500;
+        padding: 5px 0;
+        margin-left: auto;
+    }
+}
+.tools-categories{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    &__item{
+        position: relative;
+        max-width: 200px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        border-radius: 50px;
+        overflow: hidden;
+        cursor: pointer;
+        &_change{
+            .tools-categories__icon{
+                background-color: red;
+                &::before{
+                    content: "\f363";
+                }
+            }
+            .tools-categories__icon-bg{
+                background-color: red;
+            }
+        }
+        &:hover{
+            .tools-categories__icon-bg{
+                transform: scale(6.3);
+            }
+        }
+    }
+    &__icon{
+        z-index: 2;
+        flex: 0 0 55px;
+        height: 55px;
+        background-color: gray;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        &::before{
+            @include font-awesome;
+            content: "\2b";
+            color: white;
+            font-size: 25px;
+        }
+    }
+    &__icon-bg{
+        z-index: 1;
+        position: absolute;
+        top:0;
+        left: 0;
+        width: 55px;
+        height: 55px;
+        background-color: gray;
+        border-radius: 50%;
+        transition: all .3s ease;
+    }
+    &__info{
+        z-index: 2;
+        flex: 1 1 auto;
+    }
+    &__name{
+        font-weight: 500;
+        font-size: 18px;
+    }
+}
+.popup-category{
+    position: fixed;
+    right: calc(-100% + 500px);
+    top:0;
+    width: 500px;
+    min-height: 100vh;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    z-index: 4;
+    transition: right .3s ease;
+    &_open{
+        right: 0;
+    }
+    &__head{
+        border-bottom: 2px solid $main-color;
+    }
+    &__head-content{
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    &__title{
+        font-size: 25px;
+    }
+    &__close{
+        flex: 0 0 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        &::before{
+            content: "\f00d";
+            @include font-awesome;
+            color: black;
+            font-size: 35px;
+        }
+    }
+    &__body{
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        flex: 1 1 auto;
+    }
+    &__block-title{
+        font-size: 18px;
+        font-weight: 500;
+    }
+    &__input-container{
+        margin-top: 10px;
+        position: relative;
+        flex: 0 1 200px;
+        height: 35px;
+        border-radius: 7px;
+        border: 2px solid $main-color;
+    }
+    &__input{
+        background-color: transparent;
+        width: 100%;
+        height: 100%;
+        &:focus + .popup-category__input-label{
+            left: 10px;
+            top:0;
+            font-size: 12px;
+        }
+        &:valid + .popup-category__input-label{
+            left: 10px;
+            top:0;
+            font-size: 12px;
+        }
+    }
+    &__input-label{
+        font-size: 14px;
+        background-color: white;
+        padding: 0 3px;
+        color: black;
+        position: absolute;
+        left: 3px;
+        top:50%;
+        transform: translate(0,-50%);
+        pointer-events: none;
+        transition: all .3s ease;
+    }
+    &__icon-list{
+        margin-top: 10px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+    &__icon{
+        flex: 0 0 55px;
+        height: 55px;
+        border: 1px solid rgb(173, 173, 173);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: transform .3s ease;
+        &::before{
+            content: "\f00d";
+            @include font-awesome;
+            color: inherit;
+            font-size: 30px;
+        }
+        &_children::before{
+            content: "\f1ae";
+        }
+        &_home::before{
+            content: "\f015";
+        }
+        &_care::before{
+            content: "\f004";
+        }
+        &_health::before{
+            content: "\f21e";
+        }
+        &_cafe::before{
+            content: "\f0f4";
+        }
+        &_communal::before{
+            content: "\e585";
+        }
+        &_car::before{
+            content: "\f5e4";
+        }
+        &_education::before{
+            content: "\f549";
+        }
+        &_payment::before{
+            content: "\f53d";
+        }
+        &_gift::before{
+            content: "\f06b";
+        }
+        &_subscribe::before{
+            content: "\f0f3";
+        }
+        &_purchase::before{
+            content: "\f07a";
+        }
+        &_product::before{
+            content: "\f290";
+        }
+        &_journey::before{
+            content: "\f57d";
+        }
+        &_entertainment::before{
+            content: "\f561";
+        }
+        &_transport::before{
+            content: "\f207";
+        }
+    }
+    .act{
+        transform: translateY(-7px);
+    }
+    &__button{
+        margin-top: auto;
+        margin-right: auto;
+    }
+}
+.chart-expenses{
+    width: 100px;
+    height: 100px;
+}

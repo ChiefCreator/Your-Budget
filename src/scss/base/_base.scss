@@ -1,0 +1,17 @@
+html{
+    scroll-behavior: smooth;
+}
+body{
+    font-family: $main-font;
+}
+.container{
+    max-width: 1590px;
+    padding: 0 15px;
+    margin: 0 auto;
+}
+.hide{
+    display: none;
+    opacity: 0;
+    visibility: 0;
+    pointer-events: none;
+}
