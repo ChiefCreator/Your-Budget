@@ -53,7 +53,30 @@
             <p class="popup-category__block-title">Цвет иконки:</p>
            <input type="color" class="popup-category__inp-color" value="#ffffff">
         </div>
-        <button class="button popup-category__button">Создать</button>
+        <button class="button popup-category__button">Создать категорию</button>
+    </div>
+</div>
+    <div class="popup-operation">
+    <header class="popup-operation__head">
+        <div class="popup-operation__head-content">
+            <h4 class="popup-operation__title">Новая операция</h4>
+            <div class="popup-operation__close"></div>
+        </div>
+    </header>
+    <div class="popup-operation__body">
+        <div class="popup-operation__block">
+            <p class="popup-operation__block-title">Категория:</p>
+            <div class="list-categories">
+            </div>
+        </div>
+        <div class="popup-operation__block">
+            <p class="popup-operation__block-title">Стоимость операции:</p>
+            <div class="popup-operation__input-container">
+                <input class="popup-operation__input" required>
+                <label class="popup-operation__input-label">Введите стоимость</label>
+            </div>
+        </div>
+        <button class="button popup-operation__button">Создать операцию</button>
     </div>
 </div>
     <header class="header">
@@ -88,7 +111,7 @@
                 <span class="slider-categories__icon"></span>
             </header>
             <div class="slider-categories__body">
-                <p class="slider-categories__total"><span class="slider-categories__total-num">1250</span> <span class="slider-categories__total-currency">BYN</span></p>
+                <p class="slider-categories__total"><span class="slider-categories__total-num">0</span> <span class="slider-categories__total-currency">BYN</span></p>
                 <div>
                     <canvas id="myChart" class="chart-expenses"></canvas>
                 </div>
@@ -97,13 +120,6 @@
     </div>
     <div class="categories__body">
         <div class="categories__list list-categories">
-            <div class="list-categories__item">
-                <div class="list-categories__icon"></div>
-                <div class="list-categories__info">
-                    <p class="list-categories__name">Продукты</p>
-                </div>
-                <div class="list-categories__total">500 BYN</div>
-            </div>
         </div>
         <div class="categories__tools tools-categories">
             <div class="tools-categories__item tools-categories__item_add">

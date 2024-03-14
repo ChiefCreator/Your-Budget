@@ -1,6 +1,5 @@
-function chooseIcon(chartExpenses) {
+function chooseIcon(chartExpenses, arrOfCategories) {
     let objCategory = {};
-    let arrOfCategories = [];
     let inpTitle = document.querySelector(".popup-category__input");
     let inpBg = document.querySelector(".popup-category__inp-bg");
     let inpColor = document.querySelector(".popup-category__inp-color");
@@ -12,18 +11,17 @@ function chooseIcon(chartExpenses) {
 
         let blockToPaste = document.querySelector(".categories__list");
         for (let i = 0;i < JSON.parse(localStorage.getItem("categories")).length;i++) {
-            console.log(i)
-            let itemCategory = `<div class="list-categories__item">
-                        <div class="list-categories__icon ${JSON.parse(localStorage.getItem("categories"))[i].icon}" style="background-color:${JSON.parse(localStorage.getItem("categories"))[i].bg}"></div>
-                        <div class="list-categories__info">
-                            <p class="list-categories__name">${JSON.parse(localStorage.getItem("categories"))[i].title}</p>
+            let itemCategory = `<div class="list-categories__item item-category" data-index="${JSON.parse(localStorage.getItem("categories"))[i].index}">
+                        <div class="item-category__icon ${JSON.parse(localStorage.getItem("categories"))[i].icon}" style="background-color:${JSON.parse(localStorage.getItem("categories"))[i].bg}"></div>
+                        <div class="item-category__info">
+                            <p class="item-category__name">${JSON.parse(localStorage.getItem("categories"))[i].title}</p>
                         </div>
-                        <div class="list-categories__total">0 BYN</div>
+                        <div class="item-category__total">0 BYN</div>
                         </div>`;
         function parser(itemCategory) {
             var parser = new DOMParser();
             let teg = parser.parseFromString(itemCategory, 'text/html');
-            let item = teg.querySelector(".list-categories__item");
+            let item = teg.querySelector(".item-category");
             return item;
         }
         blockToPaste.append(parser(itemCategory))
@@ -78,7 +76,7 @@ function chooseIcon(chartExpenses) {
         obj.title = inpTitle.value;
         obj.bg = inpBg.value;
         obj.color = inpColor.value;
-        obj.cost = 1;
+        obj.cost = 0;
         return obj;
     }
 
@@ -104,8 +102,14 @@ function chooseIcon(chartExpenses) {
             popupCategory.classList.remove("popup-category_open");
             overblock.classList.remove("overblock_open");
 
-            arrOfCategories.push(Object.assign({}, objCategory)) 
+            if (localStorage.getItem("operations")) {
+                arrOfCategories = JSON.parse(localStorage.getItem("operations"))
+                arrOfCategories.push(Object.assign({}, objCategory)) 
+            } else {
+                arrOfCategories.push(Object.assign({}, objCategory)) 
+            }
             localStorage.setItem("categories", JSON.stringify(arrOfCategories));
+            localStorage.setItem("operations", JSON.stringify(arrOfCategories));
 
             chart(arrOfCategories);
 
@@ -142,31 +146,38 @@ function chooseIcon(chartExpenses) {
 
     function setItemToList() {
         let blockToPaste = document.querySelector(".categories__list");
-        let itemCategory = `<div class="list-categories__item">
-                        <div class="list-categories__icon ${objCategory.icon}" style="background-color:${objCategory.bg}"></div>
-                        <div class="list-categories__info">
-                            <p class="list-categories__name">${objCategory.title}</p>
+        let itemCategory = `<div class="list-categories__item item-category" data-index="${objCategory.index}">
+                        <div class="item-category__icon ${objCategory.icon}" style="background-color:${objCategory.bg}"></div>
+                        <div class="item-category__info">
+                            <p class="item-category__name">${objCategory.title}</p>
                         </div>
-                        <div class="list-categories__total">0 BYN</div>
+                        <div class="item-category__total">0 BYN</div>
                         </div>`;
         function parser(itemCategory) {
             var parser = new DOMParser();
             let teg = parser.parseFromString(itemCategory, 'text/html');
-            let item = teg.querySelector(".list-categories__item");
+            let item = teg.querySelector(".item-category");
             return item;
         }
         blockToPaste.append(parser(itemCategory))
     }
 
     function chart(arrOfCategories) {
+        let titles = [];
         let bgArr = [];
-        let costArr = []
+        let costArr = [];
         arrOfCategories.forEach(item => {
+            titles.push(item.title);
             bgArr.push(item.bg);
-            costArr.push(item.cost);
+
+            if (item.cost == 0) {
+                costArr.push(1);
+            } else {
+                costArr.push(item.cost);
+            }
         })
-        chartExpenses.data.datasets[0].data = [...costArr];
-        chartExpenses.data.datasets[0].backgroundColor = [...bgArr];
+        chartExpenses.data.datasets[0].data = costArr;
+        chartExpenses.data.datasets[0].backgroundColor = bgArr;
         chartExpenses.update();
     }
 }

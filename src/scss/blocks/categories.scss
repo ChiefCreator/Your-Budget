@@ -52,17 +52,17 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
-    &__item{
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        cursor: pointer;
-        &_add{
-            .list-categories__icon{
-                background-color: gray;
-                &::before{
-                    content: "\2b";
-                }
+}
+.item-category{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    &_add{
+        .list-categories__icon{
+            background-color: gray;
+            &::before{
+                content: "\2b";
             }
         }
     }
