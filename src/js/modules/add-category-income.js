@@ -1,20 +1,21 @@
-function chooseIcon(chartExpenses, arrOfCategories) {
+function addCategoryIncome(chartExpenses, arrOfCategories) {
     let objCategory = {};
-    let inpTitle = document.querySelector(".popup-category__input");
-    let inpBg = document.querySelector(".popup-category__inp-bg");
-    let inpColor = document.querySelector(".popup-category__inp-color");
+    let popupIncome = document.querySelector(".popup-category_income");
+    let inpTitle = popupIncome.querySelector(".popup-category__input");
+    let inpBg = popupIncome.querySelector(".popup-category__inp-bg");
+    let inpColor = popupIncome.querySelector(".popup-category__inp-color");
     
-    let icons = document.querySelectorAll(".popup-category__icon");
+    let icons = popupIncome.querySelectorAll(".popup-category__icon");
 
-    if (localStorage.getItem("categories")) {
-        arrOfCategories = JSON.parse(localStorage.getItem("categories"));
+    if (localStorage.getItem("categoriesIncome")) {
+        arrOfCategories = JSON.parse(localStorage.getItem("categoriesIncome"));
 
-        let blockToPaste = document.querySelector(".categories__list");
-        for (let i = 0;i < JSON.parse(localStorage.getItem("categories")).length;i++) {
-            let itemCategory = `<div class="list-categories__item item-category" data-index="${JSON.parse(localStorage.getItem("categories"))[i].index}">
-                        <div class="item-category__icon ${JSON.parse(localStorage.getItem("categories"))[i].icon}" style="background-color:${JSON.parse(localStorage.getItem("categories"))[i].bg}"></div>
+        let blockToPaste = document.querySelector(".list-categories_income");
+        for (let i = 0;i < JSON.parse(localStorage.getItem("categoriesIncome")).length;i++) {
+            let itemCategory = `<div class="list-categories__item item-category item-category_income" data-index="${JSON.parse(localStorage.getItem("categoriesIncome"))[i].index}">
+                        <div class="item-category__icon ${JSON.parse(localStorage.getItem("categoriesIncome"))[i].icon}" style="background-color:${JSON.parse(localStorage.getItem("categoriesIncome"))[i].bg}"></div>
                         <div class="item-category__info">
-                            <p class="item-category__name">${JSON.parse(localStorage.getItem("categories"))[i].title}</p>
+                            <p class="item-category__name">${JSON.parse(localStorage.getItem("categoriesIncome"))[i].title}</p>
                         </div>
                         <div class="item-category__total">0 BYN</div>
                         </div>`;
@@ -80,8 +81,8 @@ function chooseIcon(chartExpenses, arrOfCategories) {
         return obj;
     }
 
-    let btnCreate = document.querySelector(".popup-category__button");
-    let popupCategory = document.querySelector(".popup-category");
+    let btnCreate = popupIncome.querySelector(".popup-category__button");
+    let popupCategory = document.querySelector(".popup-category_income");
     let overblock = document.querySelector(".overblock");
     let index = 0;
 
@@ -90,9 +91,9 @@ function chooseIcon(chartExpenses, arrOfCategories) {
         if (validation(objCategory)) {
             index++;
 
-            if (localStorage.getItem("categories")) {
-                console.log(localStorage.getItem("categories"))
-                index = JSON.parse(localStorage.getItem("categories"))[JSON.parse(localStorage.getItem("categories")).length - 1].index;
+            if (localStorage.getItem("categoriesIncome")) {
+                console.log(localStorage.getItem("categoriesIncome"))
+                index = JSON.parse(localStorage.getItem("categoriesIncome"))[JSON.parse(localStorage.getItem("categoriesIncome")).length - 1].index;
                 index++;
             }
             setValueToObject(objCategory, index);
@@ -102,14 +103,14 @@ function chooseIcon(chartExpenses, arrOfCategories) {
             popupCategory.classList.remove("popup-category_open");
             overblock.classList.remove("overblock_open");
 
-            if (localStorage.getItem("operations")) {
-                arrOfCategories = JSON.parse(localStorage.getItem("operations"))
+            if (localStorage.getItem("operationsIncome")) {
+                arrOfCategories = JSON.parse(localStorage.getItem("operationsIncome"))
                 arrOfCategories.push(Object.assign({}, objCategory)) 
             } else {
                 arrOfCategories.push(Object.assign({}, objCategory)) 
             }
-            localStorage.setItem("categories", JSON.stringify(arrOfCategories));
-            localStorage.setItem("operations", JSON.stringify(arrOfCategories));
+            localStorage.setItem("categoriesIncome", JSON.stringify(arrOfCategories));
+            localStorage.setItem("operationsIncome", JSON.stringify(arrOfCategories));
 
             chart(arrOfCategories);
 
@@ -126,10 +127,10 @@ function chooseIcon(chartExpenses, arrOfCategories) {
         inpBg.value = "#808080";
         inpColor.value = "#FFFFFF";
 
-        document.querySelector(".popup-category__icon.act").style.backgroundColor = "#808080";
-        document.querySelector(".popup-category__icon.act").style.color = "white"; 
-        document.querySelector(".popup-category__icon.act").style.border = `2px solid gray`;
-        document.querySelector(".popup-category__icon.act").classList.remove("act");
+        popupIncome.querySelector(".popup-category__icon.act").style.backgroundColor = "#808080";
+        popupIncome.querySelector(".popup-category__icon.act").style.color = "white"; 
+        popupIncome.querySelector(".popup-category__icon.act").style.border = `2px solid gray`;
+        popupIncome.querySelector(".popup-category__icon.act").classList.remove("act");
     }
 
     function validation(objCategory) {
@@ -145,8 +146,9 @@ function chooseIcon(chartExpenses, arrOfCategories) {
     }
 
     function setItemToList() {
-        let blockToPaste = document.querySelector(".categories__list");
-        let itemCategory = `<div class="list-categories__item item-category" data-index="${objCategory.index}">
+        let blockToPaste = document.querySelector(".list-categories_income");
+        console.log(blockToPaste)
+        let itemCategory = `<div class="list-categories__item item-category item-category_income" data-index="${objCategory.index}">
                         <div class="item-category__icon ${objCategory.icon}" style="background-color:${objCategory.bg}"></div>
                         <div class="item-category__info">
                             <p class="item-category__name">${objCategory.title}</p>
@@ -182,4 +184,4 @@ function chooseIcon(chartExpenses, arrOfCategories) {
     }
 }
 
-export default chooseIcon;
+export default addCategoryIncome;

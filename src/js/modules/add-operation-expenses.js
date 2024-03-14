@@ -1,13 +1,13 @@
-function addOperation(chartExpenses) {
-    let popupOperation = document.querySelector(".popup-operation");
+function addOperationExpenses(chartExpenses) {
+    let popupOperation = document.querySelector(".popup-operation_expenses");
     let overblock = document.querySelector(".overblock");
-    let btnCreate = document.querySelector(".popup-operation__button");
-    let inputCost = document.querySelector(".popup-operation__input");
-    let closeBtn = document.querySelector(".popup-operation__close");
+    let btnCreate = popupOperation.querySelector(".popup-operation__button");
+    let inputCost = popupOperation.querySelector(".popup-operation__input");
+    let closeBtn = popupOperation.querySelector(".popup-operation__close");
 
     if (localStorage.getItem("operations")) {
         let total = 0;
-        document.querySelectorAll(".list-categories__item").forEach((category, i) => {
+        document.querySelectorAll(".list-categories_expenses .list-categories__item").forEach((category, i) => {
 
             category.querySelector(".item-category__total").textContent = `${JSON.parse(localStorage.getItem("operations"))[i].cost} BYN`;
             total += JSON.parse(localStorage.getItem("operations"))[i].cost;
@@ -16,12 +16,12 @@ function addOperation(chartExpenses) {
     }
 
     window.addEventListener("click", function(e) {
-        if (e.target.closest(".list-categories__item")) {
-            document.querySelectorAll(".list-categories__item").forEach(cat => {
+        if (e.target.closest(".list-categories_expenses .list-categories__item")) {
+            document.querySelectorAll(".list-categories_expenses .list-categories__item").forEach(cat => {
                 cat.classList.remove("act");
             })
 
-            let category = e.target.closest(".list-categories__item");
+            let category = e.target.closest(".list-categories_expenses .list-categories__item");
             category.classList.add("act");
 
             addPopup();
@@ -52,7 +52,7 @@ function addOperation(chartExpenses) {
 
         category.querySelector(".item-category__total").textContent = `${operationsStorage[category.dataset.index - 1].cost} BYN`;
         
-        document.querySelectorAll(".list-categories__item").forEach((category, i) => {
+        document.querySelectorAll(".list-categories_expenses .list-categories__item").forEach((category, i) => {
             total += JSON.parse(localStorage.getItem("operations"))[i].cost;
         })
         document.querySelector(".slider-categories__total-num").textContent = total;
@@ -108,4 +108,4 @@ function addOperation(chartExpenses) {
     }
 }
 
-export default addOperation;
+export default addOperationExpenses;

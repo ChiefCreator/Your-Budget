@@ -9,7 +9,7 @@
 </head>
 <body>
     <div class="overblock"></div>
-    <div class="popup-category">
+    <div class="popup-category popup-category_expenses">
     <header class="popup-category__head">
         <div class="popup-category__head-content">
             <h4 class="popup-category__title">Новая категория</h4>
@@ -56,7 +56,70 @@
         <button class="button popup-category__button">Создать категорию</button>
     </div>
 </div>
-    <div class="popup-operation">
+    <div class="popup-category popup-category_income">
+    <header class="popup-category__head">
+        <div class="popup-category__head-content">
+            <h4 class="popup-category__title">Новая категория</h4>
+            <div class="popup-category__close"></div>
+        </div>
+    </header>
+    <div class="popup-category__body">
+        <div class="popup-category__block">
+            <p class="popup-category__block-title">Название категории:</p>
+            <div class="popup-category__input-container">
+                <input class="popup-category__input" required>
+                <label class="popup-category__input-label">Введите название</label>
+            </div>
+        </div>
+        <div class="popup-category__block">
+            <p class="popup-category__block-title">Иконка категории:</p>
+            <div class="popup-category__icon-list">
+                <div class="popup-category__icon popup-category__icon_children" data-category-icon="icon-children"></div>
+                <div class="popup-category__icon popup-category__icon_home" data-category-icon="icon-home"></div>
+                <div class="popup-category__icon popup-category__icon_care" data-category-icon="icon-care"></div>
+                <div class="popup-category__icon popup-category__icon_health" data-category-icon="icon-health"></div>
+                <div class="popup-category__icon popup-category__icon_cafe" data-category-icon="icon-cafe"></div>
+                <div class="popup-category__icon popup-category__icon_communal" data-category-icon="icon-communal"></div>
+                <div class="popup-category__icon popup-category__icon_car" data-category-icon="icon-car"></div>
+                <div class="popup-category__icon popup-category__icon_education" data-category-icon="icon-education"></div>
+                <div class="popup-category__icon popup-category__icon_payment" data-category-icon="icon-payment"></div>
+            </div>
+        </div>
+        <div class="popup-category__block">
+            <p class="popup-category__block-title">Фоновый цвет иконки:</p>
+           <input type="color" class="popup-category__inp-bg" value="#808080">
+        </div>
+        <div class="popup-category__block">
+            <p class="popup-category__block-title">Цвет иконки:</p>
+           <input type="color" class="popup-category__inp-color" value="#ffffff">
+        </div>
+        <button class="button popup-category__button">Создать категорию</button>
+    </div>
+</div>
+    <div class="popup-operation popup-operation_expenses">
+    <header class="popup-operation__head">
+        <div class="popup-operation__head-content">
+            <h4 class="popup-operation__title">Новая операция</h4>
+            <div class="popup-operation__close"></div>
+        </div>
+    </header>
+    <div class="popup-operation__body">
+        <div class="popup-operation__block">
+            <p class="popup-operation__block-title">Категория:</p>
+            <div class="list-categories">
+            </div>
+        </div>
+        <div class="popup-operation__block">
+            <p class="popup-operation__block-title">Стоимость операции:</p>
+            <div class="popup-operation__input-container">
+                <input class="popup-operation__input" required>
+                <label class="popup-operation__input-label">Введите стоимость</label>
+            </div>
+        </div>
+        <button class="button popup-operation__button">Создать операцию</button>
+    </div>
+</div>
+    <div class="popup-operation popup-operation_income">
     <header class="popup-operation__head">
         <div class="popup-operation__head-content">
             <h4 class="popup-operation__title">Новая операция</h4>
@@ -125,6 +188,9 @@
                 </header>
                 <div class="slider-categories__body">
                     <p class="slider-categories__total"><span class="slider-categories__total-num">0</span> <span class="slider-categories__total-currency">BYN</span></p>
+                    <div>
+                        <canvas id="chartIncome" class="chart-expenses"></canvas>
+                    </div>
                 </div>
             </div>
         </div>
@@ -138,10 +204,10 @@
     </div>
     <div class="categories__body">
         <div class="categories__tab categories__tab_active categories__tab_expenses">
-            <div class="categories__list list-categories">
+            <div class="categories__list list-categories list-categories_expenses">
             </div>
             <div class="categories__tools tools-categories">
-                <div class="tools-categories__item tools-categories__item_add">
+                <div class="tools-categories__item tools-categories__item_add tools-categories__item_expenses">
                     <div class="tools-categories__icon"></div>
                     <div class="tools-categories__icon-bg"></div>
                     <div class="tools-categories__info">
@@ -158,10 +224,10 @@
             </div>
         </div>
         <div class="categories__tab categories__tab_income">
-            <div class="categories__list list-categories">
+            <div class="categories__list list-categories list-categories_income">
             </div>
             <div class="categories__tools tools-categories">
-                <div class="tools-categories__item tools-categories__item_add">
+                <div class="tools-categories__item tools-categories__item_add tools-categories__item_income">
                     <div class="tools-categories__icon"></div>
                     <div class="tools-categories__icon-bg"></div>
                     <div class="tools-categories__info">

@@ -37,15 +37,61 @@ const chartExpenses = new Chart(ctx, {
         }
     },
 });
+// ========================
+let categoriesIncome = [];
 
-import addCategory from "./modules/add-category";
-addCategory();
+let bgArrIncome = [];
+let costArrIncome = [];
+let titlesIncome = [];
 
-import chooseIcon from "./modules/choose-icon";
-chooseIcon(chartExpenses,arrOfCategories);
+if (localStorage.getItem("categoriesIncome")) {
+    categoriesIncome = JSON.parse(localStorage.getItem("categoriesIncome"));
+    
+    categoriesIncome.forEach(item => {
+        titlesIncome.push(item.title);
+        bgArrIncome.push(item.bg);
+        
+        if (item.cost == 0) {
+            costArrIncome.push(1);
+        } else {
+            costArrIncome.push(item.cost);
+        }
+    })
+}
+const ctxIncome = document.getElementById('chartIncome');
+const chartIncome = new Chart(ctxIncome, {
+    type: 'doughnut',
+    data: {
+        labels: titlesIncome,
+        datasets: [{
+            data: costArrIncome,
+            backgroundColor: bgArrIncome,
+            borderWidth: 1,
+        }]
+    },
+    options: {
+        plugins: {
+            legend: {
+                display: false
+            },
+        }
+    },
+});
 
-import addOperation from "./modules/add-operation";
-addOperation(chartExpenses);
+import togglePopup from "./modules/toggle-popup";
+togglePopup();
+
+import addCategoryExpenses from "./modules/add-category-expenses";
+addCategoryExpenses(chartExpenses,arrOfCategories);
+
+import addCategoryIncome from "./modules/add-category-income";
+addCategoryIncome(chartIncome, categoriesIncome);
+
+import addOperationExpenses from "./modules/add-operation-expenses";
+addOperationExpenses(chartExpenses);
+
+import addOperationIncome from "./modules/add-operation-income";
+addOperationIncome(chartIncome);
 
 import switchCategory from "./modules/switch-category";
 switchCategory();

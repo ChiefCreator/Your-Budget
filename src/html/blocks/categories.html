@@ -20,6 +20,9 @@
                 </header>
                 <div class="slider-categories__body">
                     <p class="slider-categories__total"><span class="slider-categories__total-num">0</span> <span class="slider-categories__total-currency">BYN</span></p>
+                    <div>
+                        <canvas id="chartIncome" class="chart-expenses"></canvas>
+                    </div>
                 </div>
             </div>
         </div>
@@ -33,10 +36,10 @@
     </div>
     <div class="categories__body">
         <div class="categories__tab categories__tab_active categories__tab_expenses">
-            <div class="categories__list list-categories">
+            <div class="categories__list list-categories list-categories_expenses">
             </div>
             <div class="categories__tools tools-categories">
-                <div class="tools-categories__item tools-categories__item_add">
+                <div class="tools-categories__item tools-categories__item_add tools-categories__item_expenses">
                     <div class="tools-categories__icon"></div>
                     <div class="tools-categories__icon-bg"></div>
                     <div class="tools-categories__info">
@@ -53,10 +56,10 @@
             </div>
         </div>
         <div class="categories__tab categories__tab_income">
-            <div class="categories__list list-categories">
+            <div class="categories__list list-categories list-categories_income">
             </div>
             <div class="categories__tools tools-categories">
-                <div class="tools-categories__item tools-categories__item_add">
+                <div class="tools-categories__item tools-categories__item_add tools-categories__item_income">
                     <div class="tools-categories__icon"></div>
                     <div class="tools-categories__icon-bg"></div>
                     <div class="tools-categories__info">
