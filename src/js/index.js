@@ -46,3 +46,6 @@ chooseIcon(chartExpenses,arrOfCategories);
 
 import addOperation from "./modules/add-operation";
 addOperation(chartExpenses);
+
+import switchCategory from "./modules/switch-category";
+switchCategory();
