@@ -1,12 +1,12 @@
 .page-index__content{
-    flex: 1 1 100%;
     display: flex;
-    gap: 20px;
+    gap: 100px;
 }
 .categories{
     flex: 1 1 auto;
 }
 .grafic{
+    margin-top: 15px;
     flex: 1 1 100%;
 }
 .overblock{

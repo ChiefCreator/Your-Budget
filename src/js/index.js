@@ -78,6 +78,79 @@ const chartIncome = new Chart(ctxIncome, {
     },
 });
 
+// =========================
+let arrDate = new Set();
+let objOperationsDate = {};
+if (!localStorage.getItem("operationsExpensesDate")) {
+    objOperationsDate = {};
+} else {
+    objOperationsDate = JSON.parse(localStorage.getItem("operationsExpensesDate"));
+    arrDate = new Set(Object.keys(objOperationsDate));
+}
+
+let categoryCosts = [];
+let categoryBg = [];
+if (localStorage.getItem("arrOfCostsOfOperationsExpenses")) {
+    categoryCosts = JSON.parse(localStorage.getItem("arrOfCostsOfOperationsExpenses"));
+}
+
+if (localStorage.getItem("objOfBgOfOperationsExpenses")) {
+    categoryBg = JSON.parse(localStorage.getItem("objOfBgOfOperationsExpenses"));
+    for (let bg of categoryBg) {
+        categoryCosts.push(bg)
+    }
+}
+console.log(categoryCosts)
+ 
+const ctxExpensesAndIncome = document.getElementById('chartExpensesAndIncome');
+const chartExpensesAndIncome = new Chart(ctxExpensesAndIncome, {
+    type: 'bar',
+    data: {
+        labels: Array.from(arrDate),
+        datasets: [
+            {
+                type: 'bar',
+                label: 'Dataset 1',
+                backgroundColor: categoryBg[0],
+                data: categoryCosts[0],
+            },
+        ]
+    },
+    options: {
+      plugins: {
+        title: {
+          text: 'Chart.js Combo Time Scale',
+          display: false
+        },
+        legend: {
+            display: false
+        },
+      },
+    },
+});
+
+for (let i = 0;i < categoryBg.length;i++) {
+    if (!chartExpensesAndIncome.data.datasets[i]) {
+        chartExpensesAndIncome.data.datasets.push({type: 'bar',
+        label: 'Dataset 1',
+        backgroundColor: [],
+        data: [],})
+    }
+
+    chartExpensesAndIncome.data.datasets[i].data = categoryCosts[i];
+    chartExpensesAndIncome.data.datasets[i].backgroundColor = categoryBg[i];
+}
+chartExpensesAndIncome.update();
+
+// =================================
+
+import AirDatepicker from 'air-datepicker';
+import 'air-datepicker/air-datepicker.css';
+
+let dateOperationExpenses = new AirDatepicker('#date-operation-expenses', {
+    inline: true
+})
+
 import togglePopup from "./modules/toggle-popup";
 togglePopup();
 
@@ -88,7 +161,7 @@ import addCategoryIncome from "./modules/add-category-income";
 addCategoryIncome(chartIncome, categoriesIncome);
 
 import addOperationExpenses from "./modules/add-operation-expenses";
-addOperationExpenses(chartExpenses);
+addOperationExpenses(chartExpenses, objOperationsDate, arrDate, chartExpensesAndIncome);
 
 import addOperationIncome from "./modules/add-operation-income";
 addOperationIncome(chartIncome);

@@ -1,0 +1,15 @@
+.air-datepicker {
+    margin-top: 10px;
+    border: 2px solid $main-color !important;
+    border-radius: 10px !important;
+    width: 100% !important;
+}
+.air-datepicker-body--day-name {
+    color: #0c6cde !important;
+}
+.air-datepicker-cell.-selected- {
+    background: $main-color !important;
+}
+.air-datepicker-cell.-current- {
+    color: #0c6cde !important;
+}
