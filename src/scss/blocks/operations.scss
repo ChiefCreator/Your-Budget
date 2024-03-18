@@ -9,3 +9,33 @@
         margin-bottom: 10px;
     }
 }
+.grafic{
+    &__wrapper{
+        display: flex;
+        gap: 60px;
+        margin-bottom: 20px;
+    }
+    &__chart{
+        width: 100%;
+        padding: 10px 10px 0 10px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgb(175, 172, 172);
+    }
+    &__chart-title{
+        text-transform: uppercase;
+        font-weight: 700;
+        font-size: 20px;
+        letter-spacing: 3px;
+        text-align: center;
+    }
+    #chartExpensesAndIncome{
+        width: 100% !important;
+    }
+}
+.operation-list{
+    display: flex;
+    gap: 60px;
+    &__item{
+      width: 100%;
+    }
+}

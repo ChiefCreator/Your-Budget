@@ -126,6 +126,11 @@ const chartExpensesAndIncome = new Chart(ctxExpensesAndIncome, {
             display: false
         },
       },
+      scales: {
+        y: {
+          display: false
+        }
+      }
     },
 });
 
@@ -141,6 +146,40 @@ for (let i = 0;i < categoryBg.length;i++) {
     chartExpensesAndIncome.data.datasets[i].backgroundColor = categoryBg[i];
 }
 chartExpensesAndIncome.update();
+
+// =================================
+
+const ctxIncomeBar = document.getElementById('chartExpensesBar');
+const chartIncomeBar = new Chart(ctxIncomeBar, {
+    type: 'bar',
+    data: {
+        labels: [12.32, 32.44, 321.11,32.31],
+        datasets: [
+            {
+                type: 'bar',
+                label: 'Dataset 1',
+                backgroundColor: "red",
+                data: [0,21,43],
+            },
+        ]
+    },
+    options: {
+      plugins: {
+        title: {
+          text: 'Chart.js Combo Time Scale',
+          display: false
+        },
+        legend: {
+            display: false
+        },
+      },
+      scales: {
+        y: {
+          display: false
+        }
+      }
+    },
+});
 
 // =================================
 

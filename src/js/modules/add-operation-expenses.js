@@ -18,7 +18,7 @@ function addOperationExpenses(chartExpenses, objOperationsDate, arrDate, chartEx
     }
 
     if (localStorage.getItem("operationsExpensesDate")) {
-        let blockToPaste = document.querySelector(".operations");
+        let blockToPaste = document.querySelector(".operation-list__item_expenses");
 
         for (let [key, value] of Object.entries(JSON.parse(localStorage.getItem("operationsExpensesDate")))) {
 
@@ -106,13 +106,6 @@ function addOperationExpenses(chartExpenses, objOperationsDate, arrDate, chartEx
         closePopup();
 
         operationToChart();
-
-        // chartExpensesAndIncome.data.labels = Array.from(new Set(Object.keys(JSON.parse(localStorage.getItem("operationsExpensesDate")))));
-        // for (let i = 0;i < JSON.parse(localStorage.getItem("objOfBgOfOperationsExpenses")).length;i++) {
-        //     chartExpensesAndIncome.data.datasets[i].data = JSON.parse(localStorage.getItem("arrOfCostsOfOperationsExpenses"))[i];
-        //     chartExpensesAndIncome.data.datasets[i].bg = JSON.parse(localStorage.getItem("objOfBgOfOperationsExpenses"))[i];
-        // }
-        // chartExpensesAndIncome.update();
     })
 
     overblock.addEventListener("click", function() {
@@ -185,7 +178,7 @@ function addOperationExpenses(chartExpenses, objOperationsDate, arrDate, chartEx
     }
 
     function setOperationToList(obj) {
-        let blockToPaste = document.querySelector(".operations");
+        let blockToPaste = document.querySelector(".operation-list__item_expenses");
 
         let block = `<div class="list-operation__wrapper" data-dat="${obj.date}">
             <p class="list-operation__date">${obj.date}</p>
