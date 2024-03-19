@@ -299,7 +299,7 @@
     }
 }
 .popup-category{
-    position: absolute;
+    position: fixed;
     left: calc(100% + 500px);
     top:0;
     width: 500px;

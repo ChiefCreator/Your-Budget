@@ -1,8 +1,10 @@
-function addOperationIncome(chartExpenses) {
+function addOperationIncome(chartExpenses, objOperationsDate, arrDate, chartExpensesAndIncome) {
     let popupOperation = document.querySelector(".popup-operation_income");
     let overblock = document.querySelector(".overblock");
     let btnCreate = popupOperation.querySelector(".popup-operation__button");
     let inputCost = popupOperation.querySelector(".popup-operation__input");
+    let inputDate = popupOperation.querySelector("#date-operation-income");
+    let textarreaComment = popupOperation.querySelector(".popup-operation__textarrea");
     let closeBtn = popupOperation.querySelector(".popup-operation__close");
 
     if (localStorage.getItem("operationsIncome")) {
@@ -13,6 +15,42 @@ function addOperationIncome(chartExpenses) {
             total += JSON.parse(localStorage.getItem("operationsIncome"))[i].cost;
             document.querySelector(".slider-categories__item_income .slider-categories__total-num").textContent = total;
         })
+    }
+
+    if (localStorage.getItem("operationsIncomeDate")) {
+        let blockToPaste = document.querySelector(".operation-list__item_income");
+
+        for (let [key, value] of Object.entries(JSON.parse(localStorage.getItem("operationsIncomeDate")))) {
+
+            let block = `<div class="list-operation__wrapper" data-dat="${key}">
+                    <p class="list-operation__date">${key}</p>
+                </div>`;
+            function parserBlockToPaste(block) {
+                var parser = new DOMParser();
+                let teg = parser.parseFromString(block, 'text/html');
+                let item = teg.querySelector(".list-operation__wrapper");
+                return item;
+            }
+            blockToPaste.append(parserBlockToPaste(block));
+            for (let i = 0;i < value.length;i++) {
+
+                let itemCategory = `<div class="list-category__item item-category">
+                <div class="item-category__icon ${value[i].icon}" style="background-color:${value[i].bg}"></div>
+                <div class="item-category__info">
+                    <p class="item-category__name">${value[i].title}</p>
+                </div>
+                <div class="item-category__total">${value[i].cost} BYN</div>
+                </div>`;
+    
+                function parser(itemCategory) {
+                    var parser = new DOMParser();
+                    let teg = parser.parseFromString(itemCategory, 'text/html');
+                    let item = teg.querySelector(".item-category");
+                    return item;
+                }
+                document.querySelector(`[data-dat="${key}"]`).append(parser(itemCategory))
+            }
+        }               
     }
 
     window.addEventListener("click", function(e) {
@@ -41,6 +79,9 @@ function addOperationIncome(chartExpenses) {
             
         objectCategory.cost += priceOfOperation;
 
+        let dateOfOperation = inputDate.value;
+        let commentOfOperation = textarreaComment.value;
+
         let costArr = [];
         operationsStorage.forEach(item => {
             costArr.push(item.cost);
@@ -60,6 +101,10 @@ function addOperationIncome(chartExpenses) {
         chartExpenses.data.datasets[0].data = costArr;
         chartExpenses.update();
         closePopup();
+
+        addOperation(priceOfOperation, objectCategory, dateOfOperation, commentOfOperation);
+
+        operationToChart();
     })
 
     overblock.addEventListener("click", function() {
@@ -105,6 +150,139 @@ function addOperationIncome(chartExpenses) {
         }
 
         blockToPaste.append(parser(itemCategory));
+    }
+
+    // 
+
+    function addOperation(priceOfOperation, objectCategory, dateOfOperation, commentOfOperation) {
+        let arrOperation = [];
+
+        if (localStorage.getItem("itemOperationIncome")) {
+            arrOperation = JSON.parse(localStorage.getItem("itemOperationIncome"));
+        }
+
+        let objectOperation = {};
+        objectOperation.cost = priceOfOperation;
+        objectOperation.title = objectCategory.title;
+        objectOperation.icon = objectCategory.icon;
+        objectOperation.bg = objectCategory.bg;
+        objectOperation.color = objectCategory.color;
+        objectOperation.date = dateOfOperation;
+        objectOperation.comment = commentOfOperation;
+
+        arrOperation.push(objectOperation);
+
+        localStorage.setItem("itemOperationIncome", JSON.stringify(arrOperation));
+        setOperationToList(objectOperation);
+
+        return objectOperation;
+    }
+
+    function setOperationToList(obj) {
+        let blockToPaste = document.querySelector(".operation-list__item_income");
+
+        let block = `<div class="list-operation__wrapper" data-dat="${obj.date}">
+            <p class="list-operation__date">${obj.date}</p>
+        </div>`;
+        let itemCategory = `<div class="list-category__item item-category">
+                        <div class="item-category__icon ${obj.icon}" style="background-color:${obj.bg}"></div>
+                        <div class="item-category__info">
+                            <p class="item-category__name">${obj.title}</p>
+                        </div>
+                        <div class="item-category__total">${obj.cost} BYN</div>
+                        </div>`;
+                        
+        function parser(itemCategory) {
+            var parser = new DOMParser();
+            let teg = parser.parseFromString(itemCategory, 'text/html');
+            let item = teg.querySelector(".item-category");
+            return item;
+        }
+        function parserBlockToPaste(block) {
+            var parser = new DOMParser();
+            let teg = parser.parseFromString(block, 'text/html');
+            let item = teg.querySelector(".list-operation__wrapper");
+            return item;
+        }
+
+        console.log(arrDate)
+
+
+        if (!Array.from(arrDate).includes(obj.date)) {
+            blockToPaste.append(parserBlockToPaste(block));
+            console.log(document.querySelector(`[data-dat="${obj.date}"]`));
+        }
+        document.querySelector(`[data-dat="${obj.date}"]`).append(parser(itemCategory))
+
+        arrDate.add(obj.date)
+
+        if (!objOperationsDate[obj.date]) {
+            objOperationsDate[obj.date] = [obj]
+        } else {
+            objOperationsDate[obj.date].push(obj)
+        
+        }
+
+        localStorage.setItem("operationsIncomeDate", JSON.stringify(objOperationsDate));
+        return objOperationsDate;
+    }
+
+    function operationToChart() {
+        let obj = JSON.parse(localStorage.getItem("operationsIncomeDate"))
+
+        let uniqueTitles = [];
+
+        for (let date in obj) {
+          obj[date].forEach(item => {
+            if (!uniqueTitles.includes(item.title)) {
+              uniqueTitles.push(item.title);
+            }
+          });
+        }
+
+        let costArray = {};
+
+        uniqueTitles.forEach(title => {
+          costArray[title] = [];
+        
+          for (let key in obj) {
+            let totalCost = obj[key].reduce((acc, curr) => curr.title === title ? acc + curr.cost : acc, 0);
+
+            costArray[title].push(totalCost);
+          }
+        });
+        
+        let OperationSumCosts = []
+        for (let value of Object.values(costArray)) {
+            OperationSumCosts.push(value)
+        }
+
+        let bgArray = [];
+
+        for (let date in obj) {
+            obj[date].forEach(item => {
+            if (!bgArray.includes(item.bg)) {
+              bgArray.push(item.bg);
+            }
+          })
+        }
+
+        chartExpensesAndIncome.data.labels = Array.from(new Set(Object.keys(JSON.parse(localStorage.getItem("operationsIncomeDate")))))
+        for (let i = 0;i < bgArray.length;i++) {
+            if (!chartExpensesAndIncome.data.datasets[i]) {
+                chartExpensesAndIncome.data.datasets.push({type: 'bar',
+                label: 'Dataset 1',
+                backgroundColor: [],
+                data: [],})
+            }
+
+            chartExpensesAndIncome.data.datasets[i].data = OperationSumCosts[i];
+            chartExpensesAndIncome.data.datasets[i].backgroundColor = bgArray[i];
+        }
+        chartExpensesAndIncome.update();
+
+        localStorage.setItem("objOfBgOfOperationsIncome", JSON.stringify(bgArray))
+        localStorage.setItem("arrOfCostsOfOperationsIncome", JSON.stringify(OperationSumCosts))
     }
 }
 

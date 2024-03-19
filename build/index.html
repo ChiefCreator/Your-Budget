@@ -105,7 +105,6 @@
     </header>
     <div class="popup-operation__body">
         <div class="popup-operation__block">
-            <p class="popup-operation__block-title">Категория:</p>
             <div class="list-categories">
             </div>
         </div>
@@ -139,7 +138,6 @@
     </header>
     <div class="popup-operation__body">
         <div class="popup-operation__block">
-            <p class="popup-operation__block-title">Категория:</p>
             <div class="list-categories">
             </div>
         </div>
@@ -148,6 +146,17 @@
             <div class="popup-operation__input-container">
                 <input class="popup-operation__input" required>
                 <label class="popup-operation__input-label">Введите стоимость</label>
+            </div>
+        </div>
+        <div class="popup-operation__block">
+            <p class="popup-operation__block-title">Дата операции:</p>
+            <input id="date-operation-income" hidden>
+        </div>
+        <div class="popup-operation__block">
+            <p class="popup-operation__block-title">Комментарий операции:</p>
+            <div class="popup-operation__textarrea-container">
+                <textarea class="popup-operation__textarrea" required></textarea>
+                <label class="popup-operation__textarrea-label">Введите комментарий</label>
             </div>
         </div>
         <button class="button popup-operation__button">Создать операцию</button>
