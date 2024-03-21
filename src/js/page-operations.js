@@ -63,6 +63,11 @@ const chartOperationsBubbles = new Chart(ctxBubbles, {
                     stepSize: 5
                 }
             },
+            y: {
+                ticks: {
+                    stepSize: 200
+                }
+            }
         },
       },
 });

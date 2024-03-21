@@ -5,17 +5,16 @@
         gap: 60px;
     }
     &__operations{
-        flex: 1 1 50%;
+        flex: 1 1 40%;
     }
     &__chart{
-        flex: 1 1 50%;
+        flex: 1 1 60%;
         height: 500px;
         position: sticky;
         top:0;
         left: 0;
         #chartAllOperation{
             width: 100% !important;
-            // height: 100% !important;
         }
     }
 }
