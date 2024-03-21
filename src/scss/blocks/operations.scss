@@ -7,6 +7,8 @@
     }
     .list-operation__date{
         margin-bottom: 10px;
+        font-weight: 500;
+        // color: rgb(77, 77, 77);
     }
 }
 .grafic{
@@ -36,7 +38,41 @@
 .operation-list{
     display: flex;
     gap: 60px;
+    &__block{
+        width: 100%;
+    }
     &__item{
       width: 100%;
+    }
+    &__more{
+        display: none;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+        &_act{
+            display: inline-flex;
+        }
+        &:hover .operation-list__more-arrow{
+            animation: anim-arrow .5s ease 2;
+        }
+        @keyframes anim-arrow {
+            0%, 100%{
+                transform: translateX(0);
+            }
+            50%{
+                transform: translateX(8px);
+            }
+        }
+    }
+    &__more-text{
+        font-size: 16px;
+        font-weight: 500;
+    }
+    &__more-arrow{
+        &::before{
+            content: "\f105";
+            @include font-awesome;
+            font-size: 15px;
+        }
     }
 }

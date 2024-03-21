@@ -2,8 +2,8 @@ function togglePopup() {
     let popupCategoryExpenses = document.querySelector(".popup-category_expenses");
     let popupCategoryIncome = document.querySelector(".popup-category_income");
     let overblock = document.querySelector(".overblock");
-    let addBtnsExpenses = document.querySelectorAll(".tools-categories__item_expenses");
-    let addBtnsIncome = document.querySelectorAll(".tools-categories__item_income");
+    let addBtnsExpenses = document.querySelectorAll(".add-expenses");
+    let addBtnsIncome = document.querySelectorAll(".add-income");
     let closeBtn = document.querySelector(".popup-category__close");
     addBtnsExpenses.forEach(addBtn => {
         addBtn.addEventListener("click", function() {

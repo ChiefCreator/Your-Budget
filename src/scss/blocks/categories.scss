@@ -237,65 +237,32 @@
     flex-direction: column;
     gap: 20px;
     &__item{
-        position: relative;
-        max-width: 200px;
-        display: flex;
+        display: inline-flex;
         align-items: center;
         gap: 10px;
-        border-radius: 50px;
-        overflow: hidden;
         cursor: pointer;
-        &_change{
-            .tools-categories__icon{
-                background-color: red;
-                &::before{
-                    content: "\f363";
-                }
-            }
-            .tools-categories__icon-bg{
-                background-color: red;
-            }
+        &:hover .tools-categories__item-arrow{
+            animation: anim-arrow .5s ease 2;
         }
-        &:hover{
-            .tools-categories__icon-bg{
-                transform: scale(6.3);
+        @keyframes anim-arrow {
+            0%, 100%{
+                transform: translateX(0);
+            }
+            50%{
+                transform: translateX(8px);
             }
         }
     }
-    &__icon{
-        z-index: 2;
-        flex: 0 0 55px;
-        height: 55px;
-        background-color: gray;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 50%;
-        &::before{
-            @include font-awesome;
-            content: "\2b";
-            color: white;
-            font-size: 25px;
-        }
-    }
-    &__icon-bg{
-        z-index: 1;
-        position: absolute;
-        top:0;
-        left: 0;
-        width: 55px;
-        height: 55px;
-        background-color: gray;
-        border-radius: 50%;
-        transition: all .3s ease;
-    }
-    &__info{
-        z-index: 2;
-        flex: 1 1 auto;
-    }
-    &__name{
+    &__item-text{
+        font-size: 16px;
         font-weight: 500;
-        font-size: 18px;
+    }
+    &__item-arrow{
+        &::before{
+            content: "\f105";
+            @include font-awesome;
+            font-size: 15px;
+        }
     }
 }
 .popup-category{

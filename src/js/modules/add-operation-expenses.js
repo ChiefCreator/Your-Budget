@@ -6,6 +6,7 @@ function addOperationExpenses(chartExpenses, objOperationsDate, arrDate, chartEx
     let inputDate = popupOperation.querySelector("#date-operation-expenses");
     let textarreaComment = popupOperation.querySelector(".popup-operation__textarrea");
     let closeBtn = popupOperation.querySelector(".popup-operation__close");
+    let more = document.querySelector(".operation-list__more_expenses");
 
     if (localStorage.getItem("operations")) {
         let total = 0;
@@ -20,37 +21,111 @@ function addOperationExpenses(chartExpenses, objOperationsDate, arrDate, chartEx
     if (localStorage.getItem("operationsExpensesDate")) {
         let blockToPaste = document.querySelector(".operation-list__item_expenses");
 
-        for (let [key, value] of Object.entries(JSON.parse(localStorage.getItem("operationsExpensesDate")))) {
+        if (JSON.parse(localStorage.getItem("itemOperationExpenses")).length < 3) {
+            for (let [key, value] of Object.entries(JSON.parse(localStorage.getItem("operationsExpensesDate")))) {
 
-            let block = `<div class="list-operation__wrapper" data-dat="${key}">
-                    <p class="list-operation__date">${key}</p>
-                </div>`;
-            function parserBlockToPaste(block) {
-                var parser = new DOMParser();
-                let teg = parser.parseFromString(block, 'text/html');
-                let item = teg.querySelector(".list-operation__wrapper");
-                return item;
-            }
-            blockToPaste.append(parserBlockToPaste(block));
-            for (let i = 0;i < value.length;i++) {
-
-                let itemCategory = `<div class="list-category__item item-category">
-                <div class="item-category__icon ${value[i].icon}" style="background-color:${value[i].bg}"></div>
-                <div class="item-category__info">
-                    <p class="item-category__name">${value[i].title}</p>
-                </div>
-                <div class="item-category__total">${value[i].cost} BYN</div>
-                </div>`;
-    
-                function parser(itemCategory) {
+                let block = `<div class="list-operation__wrapper" data-dat="expenses${key}">
+                        <p class="list-operation__date">${key}</p>
+                    </div>`;
+                function parserBlockToPaste(block) {
                     var parser = new DOMParser();
-                    let teg = parser.parseFromString(itemCategory, 'text/html');
-                    let item = teg.querySelector(".item-category");
+                    let teg = parser.parseFromString(block, 'text/html');
+                    let item = teg.querySelector(".list-operation__wrapper");
                     return item;
                 }
-                document.querySelector(`[data-dat="${key}"]`).append(parser(itemCategory))
-            }
-        }               
+                blockToPaste.append(parserBlockToPaste(block));
+                for (let i = 0;i < value.length;i++) {
+    
+                    let itemCategory = `<div class="list-category__item item-category">
+                    <div class="item-category__icon ${value[i].icon}" style="background-color:${value[i].bg}"></div>
+                    <div class="item-category__info">
+                        <p class="item-category__name">${value[i].title}</p>
+                    </div>
+                    <div class="item-category__total">${value[i].cost} BYN</div>
+                    </div>`;
+        
+                    function parser(itemCategory) {
+                        var parser = new DOMParser();
+                        let teg = parser.parseFromString(itemCategory, 'text/html');
+                        let item = teg.querySelector(".item-category");
+                        return item;
+                    }
+                    document.querySelector(`[data-dat="expenses${key}"]`).append(parser(itemCategory))
+                }
+            } 
+            more.classList.remove("operation-list__more_act")
+        } else {
+            let count = 0;
+            for (let [key, value] of Object.entries(JSON.parse(localStorage.getItem("operationsExpensesDate")))) {
+
+                let block = `<div class="list-operation__wrapper" data-dat="expenses${key}">
+                        <p class="list-operation__date">${key}</p>
+                    </div>`;
+                function parserBlockToPaste(block) {
+                    var parser = new DOMParser();
+                    let teg = parser.parseFromString(block, 'text/html');
+                    let item = teg.querySelector(".list-operation__wrapper");
+                    return item;
+                }
+                if (count < 3) {
+                    blockToPaste.append(parserBlockToPaste(block));
+                }
+                
+                for (let i = 0;i < value.length;i++) {
+                    if (count < 3) {
+                        count++;
+
+                        let itemCategory = `<div class="list-category__item item-category">
+                        <div class="item-category__icon ${value[i].icon}" style="background-color:${value[i].bg}"></div>
+                        <div class="item-category__info">
+                            <p class="item-category__name">${value[i].title}</p>
+                        </div>
+                        <div class="item-category__total">${value[i].cost} BYN</div>
+                        </div>`;
+                        
+                        function parser(itemCategory) {
+                            var parser = new DOMParser();
+                            let teg = parser.parseFromString(itemCategory, 'text/html');
+                            let item = teg.querySelector(".item-category");
+                            return item;
+                        }
+                        document.querySelector(`[data-dat="expenses${key}"]`).append(parser(itemCategory))
+                    }
+                }
+                more.classList.add("operation-list__more_act")
+            } 
+        }
+        // for (let [key, value] of Object.entries(JSON.parse(localStorage.getItem("operationsExpensesDate")))) {
+
+        //     let block = `<div class="list-operation__wrapper" data-dat="${key}">
+        //             <p class="list-operation__date">${key}</p>
+        //         </div>`;
+        //     function parserBlockToPaste(block) {
+        //         var parser = new DOMParser();
+        //         let teg = parser.parseFromString(block, 'text/html');
+        //         let item = teg.querySelector(".list-operation__wrapper");
+        //         return item;
+        //     }
+        //     blockToPaste.append(parserBlockToPaste(block));
+        //     for (let i = 0;i < value.length;i++) {
+
+        //         let itemCategory = `<div class="list-category__item item-category">
+        //         <div class="item-category__icon ${value[i].icon}" style="background-color:${value[i].bg}"></div>
+        //         <div class="item-category__info">
+        //             <p class="item-category__name">${value[i].title}</p>
+        //         </div>
+        //         <div class="item-category__total">${value[i].cost} BYN</div>
+        //         </div>`;
+    
+        //         function parser(itemCategory) {
+        //             var parser = new DOMParser();
+        //             let teg = parser.parseFromString(itemCategory, 'text/html');
+        //             let item = teg.querySelector(".item-category");
+        //             return item;
+        //         }
+        //         document.querySelector(`[data-dat="${key}"]`).append(parser(itemCategory))
+        //     }
+        // }               
     }
 
     window.addEventListener("click", function(e) {
@@ -180,7 +255,7 @@ function addOperationExpenses(chartExpenses, objOperationsDate, arrDate, chartEx
     function setOperationToList(obj) {
         let blockToPaste = document.querySelector(".operation-list__item_expenses");
 
-        let block = `<div class="list-operation__wrapper" data-dat="${obj.date}">
+        let block = `<div class="list-operation__wrapper" data-dat="expenses${obj.date}">
             <p class="list-operation__date">${obj.date}</p>
         </div>`;
         let itemCategory = `<div class="list-category__item item-category">
@@ -204,14 +279,15 @@ function addOperationExpenses(chartExpenses, objOperationsDate, arrDate, chartEx
             return item;
         }
 
-        console.log(arrDate)
-
-
-        if (!Array.from(arrDate).includes(obj.date)) {
-            blockToPaste.append(parserBlockToPaste(block));
-            console.log(document.querySelector(`[data-dat="${obj.date}"]`));
+        if (JSON.parse(localStorage.getItem("itemOperationExpenses")).length < 4) {
+            if (!Array.from(arrDate).includes(obj.date)) {
+                blockToPaste.append(parserBlockToPaste(block));
+            }
+            document.querySelector(`[data-dat="expenses${obj.date}"]`).append(parser(itemCategory));
+            more.classList.remove("operation-list__more_act")
+        } else {
+            more.classList.add("operation-list__more_act")
         }
-        document.querySelector(`[data-dat="${obj.date}"]`).append(parser(itemCategory))
 
         arrDate.add(obj.date)
 
