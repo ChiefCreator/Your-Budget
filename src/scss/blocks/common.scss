@@ -32,3 +32,95 @@
     border-radius: 10px;
     cursor: pointer;
 }
+.item-category{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    &_add{
+        .list-categories__icon{
+            background-color: gray;
+            &::before{
+                content: "\2b";
+            }
+        }
+    }
+    &__icon{
+        flex: 0 0 55px;
+        height: 55px;
+        background-color: orange;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        &::before{
+            @include font-awesome;
+            content: "\f805";
+            color: white;
+            font-size: 25px;
+        }
+    }
+    .icon-children::before{
+        content: "\f1ae";
+    }
+    .icon-home::before{
+        content: "\f015";
+    }
+    .icon-care::before{
+        content: "\f004";
+    }
+    .icon-health::before{
+        content: "\f21e";
+    }
+    .icon-cafe::before{
+        content: "\f0f4";
+    }
+    .icon-communal::before{
+        content: "\e585";
+    }
+    .icon-car::before{
+        content: "\f5e4";
+    }
+    .icon-education::before{
+        content: "\f549";
+    }
+    .icon-payment::before{
+        content: "\f53d";
+    }
+    .icon-gift::before{
+        content: "\f06b";
+    }
+    .icon-subscribe::before{
+        content: "\f0f3";
+    }
+    .icon-purchase::before{
+        content: "\f07a";
+    }
+    .icon-product::before{
+        content: "\f290";
+    }
+    .icon-journey::before{
+        content: "\f57d";
+    }
+    .icon-entertainment::before{
+        content: "\f561";
+    }
+    .icon-transport::before{
+        content: "\f207";
+    }
+    &__info{
+        padding: 5px 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    &__name{
+        font-weight: 500;
+        font-size: 18px;
+    }
+    &__total{
+        font-weight: 500;
+        padding: 5px 0;
+        margin-left: auto;
+    }
+}

@@ -1,4 +1,4 @@
-function addOperationExpenses(chartExpenses, objOperationsDate, arrDate, chartExpensesAndIncome) {
+function addOperationExpenses(chartExpenses, objOperationsDate, arrDate, chartExpensesAndIncome, operationsDateAll) {
     let popupOperation = document.querySelector(".popup-operation_expenses");
     let overblock = document.querySelector(".overblock");
     let btnCreate = popupOperation.querySelector(".popup-operation__button");
@@ -94,38 +94,7 @@ function addOperationExpenses(chartExpenses, objOperationsDate, arrDate, chartEx
                 }
                 more.classList.add("operation-list__more_act")
             } 
-        }
-        // for (let [key, value] of Object.entries(JSON.parse(localStorage.getItem("operationsExpensesDate")))) {
-
-        //     let block = `<div class="list-operation__wrapper" data-dat="${key}">
-        //             <p class="list-operation__date">${key}</p>
-        //         </div>`;
-        //     function parserBlockToPaste(block) {
-        //         var parser = new DOMParser();
-        //         let teg = parser.parseFromString(block, 'text/html');
-        //         let item = teg.querySelector(".list-operation__wrapper");
-        //         return item;
-        //     }
-        //     blockToPaste.append(parserBlockToPaste(block));
-        //     for (let i = 0;i < value.length;i++) {
-
-        //         let itemCategory = `<div class="list-category__item item-category">
-        //         <div class="item-category__icon ${value[i].icon}" style="background-color:${value[i].bg}"></div>
-        //         <div class="item-category__info">
-        //             <p class="item-category__name">${value[i].title}</p>
-        //         </div>
-        //         <div class="item-category__total">${value[i].cost} BYN</div>
-        //         </div>`;
-    
-        //         function parser(itemCategory) {
-        //             var parser = new DOMParser();
-        //             let teg = parser.parseFromString(itemCategory, 'text/html');
-        //             let item = teg.querySelector(".item-category");
-        //             return item;
-        //         }
-        //         document.querySelector(`[data-dat="${key}"]`).append(parser(itemCategory))
-        //     }
-        // }               
+        }        
     }
 
     window.addEventListener("click", function(e) {
@@ -295,10 +264,17 @@ function addOperationExpenses(chartExpenses, objOperationsDate, arrDate, chartEx
             objOperationsDate[obj.date] = [obj]
         } else {
             objOperationsDate[obj.date].push(obj)
-        
         }
 
+        if (!operationsDateAll[obj.date]) {
+            operationsDateAll[obj.date] = [obj];
+        } else {
+            operationsDateAll[obj.date].push(obj)
+        }
+       
         localStorage.setItem("operationsExpensesDate", JSON.stringify(objOperationsDate));
+        localStorage.setItem("operationsAllDate", JSON.stringify(operationsDateAll));
+
         return objOperationsDate;
     }
 
@@ -331,6 +307,7 @@ function addOperationExpenses(chartExpenses, objOperationsDate, arrDate, chartEx
         for (let value of Object.values(costArray)) {
             OperationSumCosts.push(value)
         }
+        console.log(OperationSumCosts)
 
         let bgArray = [];
 

@@ -218,6 +218,13 @@ chartIncomeBar.update();
 
 // =================================
 
+let operationsDateAll = {};
+if (localStorage.getItem("operationsAllDate")) {
+    operationsDateAll = JSON.parse(localStorage.getItem("operationsAllDate"));
+}
+
+// ==================================
+
 import AirDatepicker from 'air-datepicker';
 import 'air-datepicker/air-datepicker.css';
 
@@ -239,10 +246,10 @@ import addCategoryIncome from "./modules/add-category-income";
 addCategoryIncome(chartIncome, categoriesIncome);
 
 import addOperationExpenses from "./modules/add-operation-expenses";
-addOperationExpenses(chartExpenses, objOperationsDate, arrDate, chartExpensesAndIncome);
+addOperationExpenses(chartExpenses, objOperationsDate, arrDate, chartExpensesAndIncome, operationsDateAll);
 
 import addOperationIncome from "./modules/add-operation-income";
-addOperationIncome(chartIncome, objOperationsDateIncome, arrDateIncome, chartIncomeBar);
+addOperationIncome(chartIncome, objOperationsDateIncome, arrDateIncome, chartIncomeBar, operationsDateAll);
 
 import switchCategory from "./modules/switch-category";
 switchCategory();

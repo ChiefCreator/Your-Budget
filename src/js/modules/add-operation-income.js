@@ -1,4 +1,4 @@
-function addOperationIncome(chartExpenses, objOperationsDate, arrDate, chartExpensesAndIncome) {
+function addOperationIncome(chartExpenses, objOperationsDate, arrDate, chartExpensesAndIncome, operationsDateAll) {
     let popupOperation = document.querySelector(".popup-operation_income");
     let overblock = document.querySelector(".overblock");
     let btnCreate = popupOperation.querySelector(".popup-operation__button");
@@ -195,8 +195,6 @@ function addOperationIncome(chartExpenses, objOperationsDate, arrDate, chartExpe
         blockToPaste.append(parser(itemCategory));
     }
 
-    // 
-
     function addOperation(priceOfOperation, objectCategory, dateOfOperation, commentOfOperation) {
         let arrOperation = [];
 
@@ -271,7 +269,15 @@ function addOperationIncome(chartExpenses, objOperationsDate, arrDate, chartExpe
         
         }
 
+        if (!operationsDateAll[obj.date]) {
+            operationsDateAll[obj.date] = [obj];
+        } else {
+            operationsDateAll[obj.date].push(obj)
+        }
+
         localStorage.setItem("operationsIncomeDate", JSON.stringify(objOperationsDate));
+        localStorage.setItem("operationsAllDate", JSON.stringify(operationsDateAll));
+
         return objOperationsDate;
     }
 

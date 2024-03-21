@@ -1,0 +1,21 @@
+.page-operation{
+    &__content{
+        margin-top: 15px;
+        display: flex;
+        gap: 60px;
+    }
+    &__operations{
+        flex: 1 1 50%;
+    }
+    &__chart{
+        flex: 1 1 50%;
+        height: 500px;
+        position: sticky;
+        top:0;
+        left: 0;
+        #chartAllOperation{
+            width: 100% !important;
+            // height: 100% !important;
+        }
+    }
+}
