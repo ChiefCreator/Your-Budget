@@ -9,10 +9,13 @@
     }
     &__chart{
         flex: 1 1 60%;
-        height: 500px;
+        height: 450px;
         position: sticky;
-        top:0;
+        top:15px;
         left: 0;
+        box-shadow: 0 0 10px rgb(175, 172, 172);
+        padding: 10px 10px 0 10px;
+        border-radius: 10px;
         #chartAllOperation{
             width: 100% !important;
         }

@@ -258,7 +258,7 @@ function addOperationExpenses(chartExpenses, objOperationsDate, arrDate, chartEx
             more.classList.add("operation-list__more_act")
         }
 
-        arrDate.add(obj.date)
+        arrDate.push(obj.date)
 
         if (!objOperationsDate[obj.date]) {
             objOperationsDate[obj.date] = [obj]
@@ -319,7 +319,14 @@ function addOperationExpenses(chartExpenses, objOperationsDate, arrDate, chartEx
           })
         }
 
-        chartExpensesAndIncome.data.labels = Array.from(new Set(Object.keys(JSON.parse(localStorage.getItem("operationsExpensesDate")))))
+        let arrDate = []
+        for (let key of Object.keys(JSON.parse(localStorage.getItem("operationsExpensesDate")))) {
+            let temp = key.split(".").reverse()
+            temp = temp.join("-")
+            arrDate.push(temp);
+        }
+
+        chartExpensesAndIncome.data.labels = arrDate
         for (let i = 0;i < bgArray.length;i++) {
             if (!chartExpensesAndIncome.data.datasets[i]) {
                 chartExpensesAndIncome.data.datasets.push({type: 'bar',

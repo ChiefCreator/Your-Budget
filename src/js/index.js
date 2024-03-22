@@ -79,15 +79,19 @@ const chartIncome = new Chart(ctxIncome, {
 });
 
 // =========================
-let arrDate = new Set();
+let arrDate = []
 let objOperationsDate = {};
 if (!localStorage.getItem("operationsExpensesDate")) {
     objOperationsDate = {};
 } else {
     objOperationsDate = JSON.parse(localStorage.getItem("operationsExpensesDate"));
-    arrDate = new Set(Object.keys(objOperationsDate));
+    for (let key of Object.keys(JSON.parse(localStorage.getItem("operationsExpensesDate")))) {
+        let temp = key.split(".").reverse()
+        temp = temp.join("-")
+        arrDate.push(temp);
+    }
 }
-
+console.log(arrDate)
 let categoryCosts = [];
 let categoryBg = [];
 if (localStorage.getItem("arrOfCostsOfOperationsExpenses")) {
@@ -106,7 +110,7 @@ const ctxExpensesAndIncome = document.getElementById('chartExpensesAndIncome');
 const chartExpensesAndIncome = new Chart(ctxExpensesAndIncome, {
     type: 'bar',
     data: {
-        labels: Array.from(arrDate),
+        labels: arrDate,
         datasets: [
             {
                 type: 'bar',
@@ -127,10 +131,19 @@ const chartExpensesAndIncome = new Chart(ctxExpensesAndIncome, {
         },
       },
       scales: {
+        x: {
+            type: "time",
+            time: {
+                unit: "day"
+            },
+            ticks: {
+                stepSize: 2
+            }
+        },
         y: {
-          display: false
+            display: false
         }
-      }
+    },
     },
 });
 
@@ -149,13 +162,17 @@ chartExpensesAndIncome.update();
 
 // =================================
 
-let arrDateIncome = new Set();
+let arrDateIncome = [];
 let objOperationsDateIncome = {};
 if (!localStorage.getItem("operationsIncomeDate")) {
     objOperationsDateIncome = {};
 } else {
     objOperationsDateIncome = JSON.parse(localStorage.getItem("operationsIncomeDate"));
-    arrDateIncome = new Set(Object.keys(objOperationsDateIncome));
+    for (let key of Object.keys(JSON.parse(localStorage.getItem("operationsIncomeDate")))) {
+        let temp = key.split(".").reverse()
+        temp = temp.join("-")
+        arrDateIncome.push(temp);
+    }
 }
 
 let categoryCostsIncome = [];
@@ -175,7 +192,7 @@ const ctxIncomeBar = document.getElementById('chartExpensesBar');
 const chartIncomeBar = new Chart(ctxIncomeBar, {
     type: 'bar',
     data: {
-        labels: Array.from(arrDateIncome),
+        labels: arrDateIncome,
         datasets: [
             {
                 type: 'bar',
@@ -196,8 +213,17 @@ const chartIncomeBar = new Chart(ctxIncomeBar, {
         },
       },
       scales: {
+        x: {
+            type: "time",
+            time: {
+                unit: "day"
+            },
+            ticks: {
+                stepSize: 2
+            }
+        },
         y: {
-          display: false
+            display: false
         }
       }
     },

@@ -118,6 +118,7 @@ function operationToChart() {
         temp = temp.join("-")
         arrDate.push(temp);
     }
+    console.log(arrDate)
     
     let total = 0;
     for (let i = 0;i < OperationSumCosts.length;i++) {
