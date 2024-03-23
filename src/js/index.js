@@ -86,12 +86,9 @@ if (!localStorage.getItem("operationsExpensesDate")) {
 } else {
     objOperationsDate = JSON.parse(localStorage.getItem("operationsExpensesDate"));
     for (let key of Object.keys(JSON.parse(localStorage.getItem("operationsExpensesDate")))) {
-        let temp = key.split(".").reverse()
-        temp = temp.join("-")
-        arrDate.push(temp);
+        arrDate.push(key);
     }
 }
-console.log(arrDate)
 let categoryCosts = [];
 let categoryBg = [];
 if (localStorage.getItem("arrOfCostsOfOperationsExpenses")) {
@@ -105,7 +102,8 @@ if (localStorage.getItem("objOfBgOfOperationsExpenses")) {
     }
 }
 console.log(categoryCosts)
- 
+console.log(categoryBg)
+console.log(arrDate)
 const ctxExpensesAndIncome = document.getElementById('chartExpensesAndIncome');
 const chartExpensesAndIncome = new Chart(ctxExpensesAndIncome, {
     type: 'bar',
@@ -169,9 +167,7 @@ if (!localStorage.getItem("operationsIncomeDate")) {
 } else {
     objOperationsDateIncome = JSON.parse(localStorage.getItem("operationsIncomeDate"));
     for (let key of Object.keys(JSON.parse(localStorage.getItem("operationsIncomeDate")))) {
-        let temp = key.split(".").reverse()
-        temp = temp.join("-")
-        arrDateIncome.push(temp);
+        arrDateIncome.push(key);
     }
 }
 

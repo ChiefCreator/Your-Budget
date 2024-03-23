@@ -123,6 +123,9 @@ function addOperationIncome(chartExpenses, objOperationsDate, arrDate, chartExpe
         objectCategory.cost += priceOfOperation;
 
         let dateOfOperation = inputDate.value;
+        dateOfOperation = dateOfOperation.split(".").reverse()
+        dateOfOperation = dateOfOperation.join("-")
+
         let commentOfOperation = textarreaComment.value;
 
         let costArr = [];
@@ -213,24 +216,35 @@ function addOperationIncome(chartExpenses, objOperationsDate, arrDate, chartExpe
 
         arrOperation.push(objectOperation);
 
-        localStorage.setItem("itemOperationIncome", JSON.stringify(arrOperation));
-        setOperationToList(objectOperation);
+        const sortedData = arrOperation.map(obj => ({
+            ...obj,
+            date: obj.date.split('.').reverse().join('-')
+        })).sort((a, b) => new Date(b.date) - new Date(a.date));
+
+        localStorage.setItem("itemOperationIncome", JSON.stringify(sortedData));
+
+        setOperationToList(sortedData, objectOperation);
 
         return objectOperation;
     }
 
-    function setOperationToList(obj) {
+    function setOperationToList(sortedData, obj) {
         let blockToPaste = document.querySelector(".operation-list__item_income");
 
-        let block = `<div class="list-operation__wrapper" data-dat="income${obj.date}">
-            <p class="list-operation__date">${obj.date}</p>
+        blockToPaste.querySelectorAll(".list-operation__wrapper").forEach(block => {
+            block.remove()
+        })
+
+        for (let i = 0;i < sortedData.length;i++) {
+            let block = `<div class="list-operation__wrapper" data-dat="income${sortedData[i].date}">
+            <p class="list-operation__date">${sortedData[i].date}</p>
         </div>`;
         let itemCategory = `<div class="list-category__item item-category">
-                        <div class="item-category__icon ${obj.icon}" style="background-color:${obj.bg}"></div>
+                        <div class="item-category__icon ${sortedData[i].icon}" style="background-color:${sortedData[i].bg}"></div>
                         <div class="item-category__info">
-                            <p class="item-category__name">${obj.title}</p>
+                            <p class="item-category__name">${sortedData[i].title}</p>
                         </div>
-                        <div class="item-category__total">${obj.cost} BYN</div>
+                        <div class="item-category__total">${sortedData[i].cost} BYN</div>
                         </div>`;
                         
         function parser(itemCategory) {
@@ -248,14 +262,30 @@ function addOperationIncome(chartExpenses, objOperationsDate, arrDate, chartExpe
 
 
         if (JSON.parse(localStorage.getItem("itemOperationIncome")).length < 4) {
-            if (!arrDate.includes(obj.date)) {
-                blockToPaste.append(parserBlockToPaste(block));
-                console.log(document.querySelector(`[data-dat="${obj.date}"]`));
+            blockToPaste.append(parserBlockToPaste(block));
+            document.querySelector(`[data-dat="income${sortedData[i].date}"]`).append(parser(itemCategory));
+
+            if (document.querySelectorAll(`[data-dat="income${sortedData[i].date}"]`).length > 1) {
+                document.querySelectorAll(`[data-dat="income${sortedData[i].date}"]`)[document.querySelectorAll(`[data-dat="income${sortedData[i].date}"]`).length - 1].remove()
             }
-            document.querySelector(`[data-dat="income${obj.date}"]`).append(parser(itemCategory))
             more.classList.remove("operation-list__more_act")
         } else {
+            blockToPaste.append(parserBlockToPaste(block));
+            document.querySelector(`[data-dat="income${sortedData[i].date}"]`).append(parser(itemCategory));
+
+            if (document.querySelectorAll(`[data-dat="income${sortedData[i].date}"]`).length > 1) {
+                document.querySelectorAll(`[data-dat="income${sortedData[i].date}"]`)[document.querySelectorAll(`[data-dat="income${sortedData[i].date}"]`).length - 1].remove()
+            }
+
+            blockToPaste.querySelectorAll(".item-category").forEach((operation, index) => {
+                if (index > 2) operation.remove()
+            })
+            blockToPaste.querySelectorAll(".list-operation__wrapper").forEach((block, index) => {
+                if (block.children.length <= 1) block.remove()
+            })
+
             more.classList.add("operation-list__more_act")
+        }
         }
 
         arrDate.push(obj.date)
@@ -273,10 +303,20 @@ function addOperationIncome(chartExpenses, objOperationsDate, arrDate, chartExpe
             operationsDateAll[obj.date].push(obj)
         }
 
-        localStorage.setItem("operationsIncomeDate", JSON.stringify(objOperationsDate));
-        localStorage.setItem("operationsAllDate", JSON.stringify(operationsDateAll));
+        localStorage.setItem("operationsIncomeDate", JSON.stringify(sortDates(objOperationsDate)));
+        localStorage.setItem("operationsAllDate", JSON.stringify(sortDates(operationsDateAll)));
 
         return objOperationsDate;
+    }
+
+    function sortDates(obj) {
+        const sortedDates = Array.from(Object.keys(obj).sort((a, b) => new Date(b) - new Date(a))).reverse();
+        const sortedObj = sortedDates.reduce((acc, date) => {
+            acc[date] = obj[date];
+            return acc;
+        }, {});
+
+        return sortedObj;
     }
 
     function operationToChart() {

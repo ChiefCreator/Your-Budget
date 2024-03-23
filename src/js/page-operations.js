@@ -1,7 +1,7 @@
 if (localStorage.getItem("operationsAllDate")) {
     let blockToPaste = document.querySelector(".list-all-operation");
         if (blockToPaste) {
-            for (let [key, value] of Object.entries(JSON.parse(localStorage.getItem("operationsAllDate")))) {
+            for (let [key, value] of Object.entries(JSON.parse(localStorage.getItem("operationsAllDate"))).reverse()) {
 
                 let block = `<div class="list-all-operation__wrapper" data-dat="all${key}">
                         <p class="list-all-operation__date">${key}</p>
