@@ -3,6 +3,9 @@
     border: 2px solid $main-color !important;
     border-radius: 10px !important;
     width: 100% !important;
+    background: white !important;
+    z-index: 100 !important;
+    position: relative !important;
 }
 .air-datepicker-body--day-name {
     color: #0c6cde !important;

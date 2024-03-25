@@ -250,6 +250,58 @@ if (localStorage.getItem("operationsAllDate")) {
 import AirDatepicker from 'air-datepicker';
 import 'air-datepicker/air-datepicker.css';
 
+let buttonYear = {
+    content: 'Выбрать год',
+    className: 'custom-button-classname',
+    onClick: (dp) => {
+        if (dp.currentView == "years") {
+            buttonYear.content = 'Выбрать год'
+            dp.update({
+                view : "months",
+                minView : "months",
+                dateFormat: 'yyyy-MM',
+            })
+        } else if (dp.currentView == "months") {
+            buttonYear.content = 'Выбрать месяц'
+            dp.update({
+                view : "years",
+                minView : "years",
+                dateFormat: 'yyyy',
+            })
+        }
+    }
+}
+let mainDatePicker = new AirDatepicker('#main-picker', {
+    inline: false,
+    position:'left top',
+    view: "months",
+    minView:"months",
+    dateFormat: 'yyyy-MM',
+    onSelect: ({date, formattedDate, datepicker}) => {
+        let dateText = document.querySelector(".main-date__value");
+        let mounth = new Date(formattedDate).toLocaleString('default', { month: 'long' }) + " " + new Date(formattedDate).getFullYear();
+    
+        if (datepicker.currentView == "months") {
+            if (date) {
+                dateText.textContent = mounth;  
+            } else {
+                dateText.textContent = "Выберите дату";  
+            }
+        } else {
+            if (date) {
+                dateText.textContent = formattedDate;  
+            } else {
+                dateText.textContent = "Выберите дату";  
+            }
+        }
+    },
+    buttons: buttonYear,
+})
+
+let currentDateStorage = []
+currentDateStorage.push(JSON.parse(localStorage.getItem("itemOperationExpenses")))
+localStorage.setItem("currentDateStorage", JSON.stringify(currentDateStorage))
+
 let dateOperationExpenses = new AirDatepicker('#date-operation-expenses', {
     inline: true
 })
