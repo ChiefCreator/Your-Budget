@@ -1,4 +1,5 @@
 function addCategoryExpenses(chartExpenses, arrOfCategories) {
+    // let arrOfCategoriesSortedByDate = []
     let objCategory = {};
     let inpTitle = document.querySelector(".popup-category__input");
     let inpBg = document.querySelector(".popup-category__inp-bg");

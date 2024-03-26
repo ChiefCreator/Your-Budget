@@ -226,9 +226,37 @@ function addOperationExpenses(chartExpenses, objOperationsDate, arrDate, chartEx
 
         localStorage.setItem("itemOperationExpenses", JSON.stringify(sortedData));
 
-        setOperationToList(sortedData, objectOperation);
+        sortArrayByCurrentDate(sortedData)
 
+        if (isObjectBelongToCurrentDate(objectOperation)) setOperationToList(sortArrayByCurrentDate(sortedData), objectOperation);
+    
         return objectOperation;
+    }
+
+    function sortArrayByCurrentDate(arr) {
+        function filterExpensesByMonth(arr, yearMonth) {
+            const [year, month] = yearMonth.split('-');
+            return arr.filter(expense => {
+                const expenseDate = new Date(expense.date);
+                return expenseDate.getFullYear() === parseInt(year) && expenseDate.getMonth() + 1 === parseInt(month);
+            });
+        }
+
+        const yearMonthToFilter = localStorage.getItem("currentDate");
+        const expensesInYearMonth = filterExpensesByMonth(arr, yearMonthToFilter);
+        localStorage.setItem("itemOperationExpensesSortedByCurrenDate", JSON.stringify(expensesInYearMonth));
+
+        return expensesInYearMonth;
+    }
+
+    function isObjectBelongToCurrentDate(obj) {
+        const expenseDate = new Date(obj.date).getFullYear() + "-" + ("0" + (+(new Date(obj.date)).getMonth() + 1)).slice(-2);
+        const yearMonthToFilter = localStorage.getItem("currentDate");
+        console.log(expenseDate,yearMonthToFilter)
+        if (expenseDate === yearMonthToFilter) {
+            return true
+        }
+        return false;
     }
 
     function setOperationToList(sortedData, objectOperation) {
@@ -263,7 +291,7 @@ function addOperationExpenses(chartExpenses, objOperationsDate, arrDate, chartEx
             return item;
         }
 
-        if (JSON.parse(localStorage.getItem("itemOperationExpenses")).length < 4) {
+        if (JSON.parse(localStorage.getItem("itemOperationExpensesSortedByCurrenDate")).length < 4) {
             blockToPaste.append(parserBlockToPaste(block));
             document.querySelector(`[data-dat="expenses${sortedData[i].date}"]`).append(parser(itemCategory));
 
@@ -289,25 +317,36 @@ function addOperationExpenses(chartExpenses, objOperationsDate, arrDate, chartEx
             more.classList.add("operation-list__more_act")
         }
         }
+        let newObjDate = {};
+        if (isObjectBelongToCurrentDate(objectOperation)) {
+        //     arrDate.push(objectOperation.date)
+        //     console.log(arrDate)
 
-        arrDate.push(objectOperation.date)
+        // if (!objOperationsDate[objectOperation.date]) {
+        //     objOperationsDate[objectOperation.date] = [objectOperation]
+        // } else {
+        //     objOperationsDate[objectOperation.date].push(objectOperation)
+        // }
 
-        if (!objOperationsDate[objectOperation.date]) {
-            objOperationsDate[objectOperation.date] = [objectOperation]
-        } else {
-            objOperationsDate[objectOperation.date].push(objectOperation)
-        }
-
-        if (!operationsDateAll[objectOperation.date]) {
-            operationsDateAll[objectOperation.date] = [objectOperation];
-        } else {
-            operationsDateAll[objectOperation.date].push(objectOperation)
-        }
+        // if (!operationsDateAll[objectOperation.date]) {
+        //     operationsDateAll[objectOperation.date] = [objectOperation];
+        // } else {
+        //     operationsDateAll[objectOperation.date].push(objectOperation)
+        // }
+        // console.log("xwe", objOperationsDate)
+        sortedData.forEach(item => {
+            if (!newObjDate[item.date]) {
+                newObjDate[item.date] = [item];
+            } else {
+                newObjDate[item.date].push(item);
+            }
+        });
        
-        localStorage.setItem("operationsExpensesDate", JSON.stringify(sortDates(objOperationsDate)));
+        localStorage.setItem("operationsExpensesDate", JSON.stringify(sortDates(newObjDate)));
         localStorage.setItem("operationsAllDate", JSON.stringify(sortDates(operationsDateAll)));
 
         return objOperationsDate;
+        }
     }
 
     function sortDates(obj) {
@@ -321,7 +360,9 @@ function addOperationExpenses(chartExpenses, objOperationsDate, arrDate, chartEx
     }
 
     function operationToChart() {
-        let obj = JSON.parse(localStorage.getItem("operationsExpensesDate"))
+        let obj = {}
+        if (localStorage.getItem("operationsExpensesDate")) obj = JSON.parse(localStorage.getItem("operationsExpensesDate"))
+        // if (obj = {}) return
 
         let uniqueTitles = [];
 
