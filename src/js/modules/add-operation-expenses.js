@@ -8,12 +8,12 @@ function addOperationExpenses(chartExpenses, objOperationsDate, arrDate, chartEx
     let closeBtn = popupOperation.querySelector(".popup-operation__close");
     let more = document.querySelector(".operation-list__more_expenses");
 
-    if (localStorage.getItem("operations")) {
+    if (localStorage.getItem("itemCategoriesExpensesSortedByCurrenDate")) {
         let total = 0;
         document.querySelectorAll(".list-categories_expenses .list-categories__item").forEach((category, i) => {
 
-            category.querySelector(".item-category__total").textContent = `${JSON.parse(localStorage.getItem("operations"))[i].cost} BYN`;
-            total += JSON.parse(localStorage.getItem("operations"))[i].cost;
+            category.querySelector(".item-category__total").textContent = `${JSON.parse(localStorage.getItem("itemCategoriesExpensesSortedByCurrenDate"))[i].cost} BYN`;
+            total += JSON.parse(localStorage.getItem("itemCategoriesExpensesSortedByCurrenDate"))[i].cost;
             document.querySelector(".slider-categories__total-num").textContent = total;
         })
     }
@@ -129,23 +129,54 @@ function addOperationExpenses(chartExpenses, objOperationsDate, arrDate, chartEx
 
         let commentOfOperation = textarreaComment.value;
 
-        let costArr = [];
-        operationsStorage.forEach(item => {
-            costArr.push(item.cost);
-        })
+        addOperation(priceOfOperation, objectCategory, dateOfOperation, commentOfOperation);
 
-        operationsStorage[category.dataset.index - 1] = objectCategory;
-        localStorage.setItem("operations", JSON.stringify(operationsStorage));
-        localStorage.setItem("categories", JSON.stringify(operationsStorage));
+        const groupedItems = JSON.parse(localStorage.getItem("itemOperationExpensesSortedByCurrenDate")).reduce((acc, item) => {
+            const key = item.title;
+            if (!acc[key]) {
+                acc[key] = {...item};
+            } else {
+                acc[key].cost += item.cost;
+            }
+            return acc;
+        }, {});
+        
+        const result = Object.values(groupedItems);
 
-        category.querySelector(".item-category__total").textContent = `${operationsStorage[category.dataset.index - 1].cost} BYN`;
+        let i = 0;
+        for (let obj of result) {
+            i++;
+            obj.index = i;
+        }
+
+        const mergedArray = [...JSON.parse(localStorage.getItem("operations")), ...JSON.parse(localStorage.getItem("itemOperationExpensesSortedByCurrenDate"))];
+
+        const grouped = mergedArray.reduce((acc, item) => {
+            const key = item.title;
+            if (!acc[key]) {
+                acc[key] = {...item};
+            } else {
+                acc[key].cost += item.cost;
+            }
+            return acc;
+        }, {});
+
+        const res = Object.values(grouped);
+        localStorage.setItem("itemCategoriesExpensesSortedByCurrenDate", JSON.stringify(res))
         
         document.querySelectorAll(".list-categories_expenses .list-categories__item").forEach((category, i) => {
-            total += JSON.parse(localStorage.getItem("operations"))[i].cost;
+            if (JSON.parse(localStorage.getItem("itemCategoriesExpensesSortedByCurrenDate"))[i]) {
+                total += JSON.parse(localStorage.getItem("itemCategoriesExpensesSortedByCurrenDate"))[i].cost;
+
+                category.querySelector(".item-category__total").textContent = JSON.parse(localStorage.getItem("itemCategoriesExpensesSortedByCurrenDate"))[i].cost + " BYN";
+            }
         })
         document.querySelector(".slider-categories__total-num").textContent = total;
 
-        addOperation(priceOfOperation, objectCategory, dateOfOperation, commentOfOperation);
+        let costArr = [];
+        JSON.parse(localStorage.getItem("itemCategoriesExpensesSortedByCurrenDate")).forEach(item => {
+            costArr.push(item.cost);
+        })
 
         chartExpenses.data.datasets[0].data = costArr;
         chartExpenses.update();

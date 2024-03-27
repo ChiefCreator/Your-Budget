@@ -4,8 +4,8 @@ let bgArr = [];
 let costArr = [];
 let titles = [];
 
-if (localStorage.getItem("categories")) {
-    arrOfCategories = JSON.parse(localStorage.getItem("categories"));
+if (localStorage.getItem("itemCategoriesExpensesSortedByCurrenDate")) {
+    arrOfCategories = JSON.parse(localStorage.getItem("itemCategoriesExpensesSortedByCurrenDate"));
     
     arrOfCategories.forEach(item => {
         titles.push(item.title);
@@ -454,6 +454,62 @@ let mainDatePicker = new AirDatepicker('#main-picker', {
             localStorage.setItem("arrOfCostsOfOperationsExpenses", JSON.stringify(OperationSumCosts))
         }
         operationToChart() 
+
+
+        // категории
+        // в operation кидать только категории при создании, не изменять cost
+        let mergedArray = [];
+            
+        if (localStorage.getItem("itemOperationExpensesSortedByCurrenDate")) {
+            mergedArray = [...JSON.parse(localStorage.getItem("operations")), ...JSON.parse(localStorage.getItem("itemOperationExpensesSortedByCurrenDate"))];
+        } else {
+            mergedArray = [...JSON.parse(localStorage.getItem("operations"))];
+        }
+
+        const grouped = mergedArray.reduce((acc, item) => {
+            const key = item.title;
+            if (!acc[key]) {
+                acc[key] = {...item};
+            } else {
+                acc[key].cost += item.cost;
+            }
+            return acc;
+        }, {});
+    
+    const res = Object.values(grouped);
+    console.log(res)
+    localStorage.setItem("itemCategoriesExpensesSortedByCurrenDate", JSON.stringify(res))
+
+    if (localStorage.getItem("itemCategoriesExpensesSortedByCurrenDate")) {
+        let total = 0;
+        document.querySelectorAll(".list-categories_expenses .list-categories__item").forEach((category, i) => {
+
+            category.querySelector(".item-category__total").textContent = `${JSON.parse(localStorage.getItem("itemCategoriesExpensesSortedByCurrenDate"))[i].cost} BYN`;
+            total += JSON.parse(localStorage.getItem("itemCategoriesExpensesSortedByCurrenDate"))[i].cost;
+            document.querySelector(".slider-categories__total-num").textContent = total;
+        })
+    }
+    function chart(arrOfCategories) {
+        let titles = [];
+        let bgArr = [];
+        let costArr = [];
+        console.log(titles, bgArr, costArr)
+        arrOfCategories.forEach(item => {
+            titles.push(item.title);
+            bgArr.push(item.bg);
+
+            if (item.cost == 0) {
+                costArr.push(1);
+            } else {
+                costArr.push(item.cost);
+            }
+        })
+        chartExpenses.data.datasets[0].data = costArr;
+        chartExpenses.data.datasets[0].backgroundColor = bgArr;
+        chartExpenses.update();
+    }
+    chart(JSON.parse(localStorage.getItem("itemCategoriesExpensesSortedByCurrenDate")))
+        // 
 
         return formattedDate;
     },

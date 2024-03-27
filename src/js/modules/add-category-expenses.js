@@ -1,5 +1,4 @@
 function addCategoryExpenses(chartExpenses, arrOfCategories) {
-    // let arrOfCategoriesSortedByDate = []
     let objCategory = {};
     let inpTitle = document.querySelector(".popup-category__input");
     let inpBg = document.querySelector(".popup-category__inp-bg");
@@ -112,7 +111,29 @@ function addCategoryExpenses(chartExpenses, arrOfCategories) {
             localStorage.setItem("categories", JSON.stringify(arrOfCategories));
             localStorage.setItem("operations", JSON.stringify(arrOfCategories));
 
-            chart(arrOfCategories);
+            // в operation кидать только категории при создании, не изменять cost
+            let mergedArray = [];
+            
+            if (localStorage.getItem("itemOperationExpensesSortedByCurrenDate")) {
+                mergedArray = [...JSON.parse(localStorage.getItem("operations")), ...JSON.parse(localStorage.getItem("itemOperationExpensesSortedByCurrenDate"))];
+            } else {
+                mergedArray = [...JSON.parse(localStorage.getItem("operations"))];
+            }
+
+            const grouped = mergedArray.reduce((acc, item) => {
+                const key = item.title;
+                if (!acc[key]) {
+                    acc[key] = {...item};
+                } else {
+                    acc[key].cost += item.cost;
+                }
+                return acc;
+            }, {});
+        
+        const res = Object.values(grouped);
+        localStorage.setItem("itemCategoriesExpensesSortedByCurrenDate", JSON.stringify(res))
+
+            chart(res);
 
             setTimeout(function() {
                 resetValues(objCategory);
@@ -167,6 +188,7 @@ function addCategoryExpenses(chartExpenses, arrOfCategories) {
         let titles = [];
         let bgArr = [];
         let costArr = [];
+        console.log(titles, bgArr, costArr)
         arrOfCategories.forEach(item => {
             titles.push(item.title);
             bgArr.push(item.bg);
