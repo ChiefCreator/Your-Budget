@@ -22,7 +22,7 @@ function addOperationIncome(chartExpenses, objOperationsDate, arrDate, chartExpe
         let blockToPaste = document.querySelector(".operation-list__item_income");
 
         if (JSON.parse(localStorage.getItem("itemOperationIncome")).length < 3) {
-            for (let [key, value] of Object.entries(JSON.parse(localStorage.getItem("operationsIncomeDate")))) {
+            for (let [key, value] of Object.entries(JSON.parse(localStorage.getItem("operationsIncomeDate"))).reverse()) {
 
                 let block = `<div class="list-operation__wrapper" data-dat="income${key}">
                         <p class="list-operation__date">${key}</p>
@@ -55,7 +55,7 @@ function addOperationIncome(chartExpenses, objOperationsDate, arrDate, chartExpe
             }  
         } else {
             let count = 0;
-            for (let [key, value] of Object.entries(JSON.parse(localStorage.getItem("operationsIncomeDate")))) {
+            for (let [key, value] of Object.entries(JSON.parse(localStorage.getItem("operationsIncomeDate"))).reverse()) {
 
                 let block = `<div class="list-operation__wrapper" data-dat="income${key}">
                         <p class="list-operation__date">${key}</p>
