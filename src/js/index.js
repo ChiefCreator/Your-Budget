@@ -101,9 +101,6 @@ if (localStorage.getItem("objOfBgOfOperationsExpenses")) {
         categoryCosts.push(bg)
     }
 }
-console.log(categoryCosts)
-console.log(categoryBg)
-console.log(arrDate)
 const ctxExpensesAndIncome = document.getElementById('chartExpensesAndIncome');
 const chartExpensesAndIncome = new Chart(ctxExpensesAndIncome, {
     type: 'bar',
@@ -240,9 +237,9 @@ chartIncomeBar.update();
 
 // =================================
 
-let operationsDateAll = {};
+let operationsAllDates = {};
 if (localStorage.getItem("operationsAllDate")) {
-    operationsDateAll = JSON.parse(localStorage.getItem("operationsAllDate"));
+    operationsAllDates = JSON.parse(localStorage.getItem("operationsAllDate"));
 }
 
 // ==================================
@@ -713,6 +710,38 @@ let mainDatePicker = new AirDatepicker('#main-picker', {
             }
             chart(JSON.parse(localStorage.getItem("itemCategoriesIncomeSortedByCurrenDate")));
         } 
+
+        function uniteObjectsByDate(obj1, obj2) {
+            if ((localStorage.getItem("operationsExpensesDate") && localStorage.getItem("operationsIncomeDate"))) {
+                return mergeObjectsByDate(obj1, obj2);
+            } else if (localStorage.getItem("operationsIncomeDate")) {
+                return JSON.parse(localStorage.getItem("operationsIncomeDate"))
+            } else if (localStorage.getItem("operationsExpensesDate")) {
+                return JSON.parse(localStorage.getItem("operationsExpensesDate"));
+            }
+    
+            function mergeObjectsByDate(obj1, obj2) {
+                const result = {};
+            
+                for (const date in obj1) {
+                    if (obj2[date]) {
+                        result[date] = [...obj1[date], ...obj2[date]];
+                    } else {
+                        result[date] = obj1[date];
+                    }
+                }
+                
+                for (const date in obj2) {
+                    if (!result[date]) {
+                    result[date] = obj2[date];
+                    }
+                }
+                
+                return result;
+            }
+        }
+        operationsAllDates = uniteObjectsByDate(JSON.parse(localStorage.getItem("operationsExpensesDate")), JSON.parse(localStorage.getItem("operationsIncomeDate")))
+        localStorage.setItem("operationsAllDate", JSON.stringify(operationsAllDates));
     
         return formattedDate;
         },
@@ -778,10 +807,10 @@ import addCategoryIncome from "./modules/add-category-income";
 addCategoryIncome(chartIncome, categoriesIncome);
 
 import addOperationExpenses from "./modules/add-operation-expenses";
-addOperationExpenses(chartExpenses, objOperationsDate, arrDate, chartExpensesAndIncome, operationsDateAll);
+addOperationExpenses(chartExpenses, objOperationsDate, arrDate, chartExpensesAndIncome, operationsAllDates);
 
 import addOperationIncome from "./modules/add-operation-income";
-addOperationIncome(chartIncome, objOperationsDateIncome, arrDateIncome, chartIncomeBar, operationsDateAll);
+addOperationIncome(chartIncome, objOperationsDateIncome, arrDateIncome, chartIncomeBar, operationsAllDates);
 
 import switchCategory from "./modules/switch-category";
 switchCategory();

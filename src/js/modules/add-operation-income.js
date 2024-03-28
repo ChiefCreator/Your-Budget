@@ -1,4 +1,4 @@
-function addOperationIncome(chartExpenses, objOperationsDate, arrDate, chartExpensesAndIncome, operationsDateAll) {
+function addOperationIncome(chartExpenses, objOperationsDate, arrDate, chartExpensesAndIncome, operationsAllDates) {
     let popupOperation = document.querySelector(".popup-operation_income");
     let overblock = document.querySelector(".overblock");
     let btnCreate = popupOperation.querySelector(".popup-operation__button");
@@ -359,9 +359,41 @@ function addOperationIncome(chartExpenses, objOperationsDate, arrDate, chartExpe
         });
        
         localStorage.setItem("operationsIncomeDate", JSON.stringify(sortDates(newObjDate)));
-        localStorage.setItem("operationsAllDate", JSON.stringify(sortDates(operationsDateAll)));
+
+        operationsAllDates = uniteObjectsByDate(JSON.parse(localStorage.getItem("operationsExpensesDate")), JSON.parse(localStorage.getItem("operationsIncomeDate")))
+        localStorage.setItem("operationsAllDate", JSON.stringify(operationsAllDates));
 
         return objOperationsDate;
+        }
+    }
+
+    function uniteObjectsByDate(obj1, obj2) {
+        if ((localStorage.getItem("operationsExpensesDate") && localStorage.getItem("operationsIncomeDate"))) {
+            return mergeObjectsByDate(obj1, obj2);
+        } else if (localStorage.getItem("operationsIncomeDate")) {
+            return JSON.parse(localStorage.getItem("operationsIncomeDate"))
+        } else if (localStorage.getItem("operationsExpensesDate")) {
+            return JSON.parse(localStorage.getItem("operationsExpensesDate"));
+        }
+
+        function mergeObjectsByDate(obj1, obj2) {
+            const result = {};
+        
+            for (const date in obj1) {
+                if (obj2[date]) {
+                    result[date] = [...obj1[date], ...obj2[date]];
+                } else {
+                    result[date] = obj1[date];
+                }
+            }
+            
+            for (const date in obj2) {
+                if (!result[date]) {
+                result[date] = obj2[date];
+                }
+            }
+            
+            return result;
         }
     }
 
