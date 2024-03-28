@@ -350,33 +350,19 @@ function addOperationExpenses(chartExpenses, objOperationsDate, arrDate, chartEx
         }
         let newObjDate = {};
         if (isObjectBelongToCurrentDate(objectOperation)) {
-        //     arrDate.push(objectOperation.date)
-        //     console.log(arrDate)
+            
+            sortedData.forEach(item => {
+                if (!newObjDate[item.date]) {
+                    newObjDate[item.date] = [item];
+                } else {
+                    newObjDate[item.date].push(item);
+                }
+            });
+        
+            localStorage.setItem("operationsExpensesDate", JSON.stringify(sortDates(newObjDate)));
+            localStorage.setItem("operationsAllDate", JSON.stringify(sortDates(operationsDateAll)));
 
-        // if (!objOperationsDate[objectOperation.date]) {
-        //     objOperationsDate[objectOperation.date] = [objectOperation]
-        // } else {
-        //     objOperationsDate[objectOperation.date].push(objectOperation)
-        // }
-
-        // if (!operationsDateAll[objectOperation.date]) {
-        //     operationsDateAll[objectOperation.date] = [objectOperation];
-        // } else {
-        //     operationsDateAll[objectOperation.date].push(objectOperation)
-        // }
-        // console.log("xwe", objOperationsDate)
-        sortedData.forEach(item => {
-            if (!newObjDate[item.date]) {
-                newObjDate[item.date] = [item];
-            } else {
-                newObjDate[item.date].push(item);
-            }
-        });
-       
-        localStorage.setItem("operationsExpensesDate", JSON.stringify(sortDates(newObjDate)));
-        localStorage.setItem("operationsAllDate", JSON.stringify(sortDates(operationsDateAll)));
-
-        return objOperationsDate;
+            return objOperationsDate;
         }
     }
 

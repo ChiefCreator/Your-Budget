@@ -302,114 +302,317 @@ let mainDatePicker = new AirDatepicker('#main-picker', {
         }
         
         localStorage.setItem("currentDate", formattedDate);
-        sortArrayByCurrentDate(JSON.parse(localStorage.getItem("itemOperationExpenses")));
+        
+        if (localStorage.getItem("itemOperationExpenses")) {
+            sortArrayByCurrentDate(JSON.parse(localStorage.getItem("itemOperationExpenses")), "itemOperationExpensesSortedByCurrenDate");
 
-        let newObjDate = {}
-        JSON.parse(localStorage.getItem("itemOperationExpensesSortedByCurrenDate")).forEach(item => {
-            if (!newObjDate[item.date]) {
-                newObjDate[item.date] = [item];
-            } else {
-                newObjDate[item.date].push(item);
-            }
-        });
-
-
-
-        // 
-
-        let blockToPaste = document.querySelector(".operation-list__item_expenses");
-
-        blockToPaste.querySelectorAll(".list-operation__wrapper").forEach(block => {
-            block.remove()
-        })
-        let sortedData = JSON.parse(localStorage.getItem("itemOperationExpensesSortedByCurrenDate"));
-        let more = document.querySelector(".operation-list__more_expenses");
-
-        for (let i = 0;i < sortedData.length;i++) {
-            let block = `<div class="list-operation__wrapper" data-dat="expenses${sortedData[i].date}">
-            <p class="list-operation__date">${sortedData[i].date}</p>
-            </div>`;
-        let itemCategory = `<div class="list-category__item item-category">
+            let newObjDate = {}
+            JSON.parse(localStorage.getItem("itemOperationExpensesSortedByCurrenDate")).forEach(item => {
+                if (!newObjDate[item.date]) {
+                    newObjDate[item.date] = [item];
+                } else {
+                    newObjDate[item.date].push(item);
+                }
+            });
+    
+            function setOperationToList() {
+                let blockToPaste = document.querySelector(".operation-list__item_expenses");
+    
+                blockToPaste.querySelectorAll(".list-operation__wrapper").forEach(block => {
+                    block.remove()
+                })
+                let sortedData = JSON.parse(localStorage.getItem("itemOperationExpensesSortedByCurrenDate"));
+                let more = document.querySelector(".operation-list__more_expenses");
+    
+                for (let i = 0;i < sortedData.length;i++) {
+                    let block = `<div class="list-operation__wrapper" data-dat="expenses${sortedData[i].date}">
+                        <p class="list-operation__date">${sortedData[i].date}</p>
+                        </div>`;
+                    let itemCategory = `<div class="list-category__item item-category">
                         <div class="item-category__icon ${sortedData[i].icon}" style="background-color:${sortedData[i].bg}"></div>
                         <div class="item-category__info">
                             <p class="item-category__name">${sortedData[i].title}</p>
                         </div>
                         <div class="item-category__total">${sortedData[i].cost} BYN</div>
                         </div>`;
-                        
-        function parser(itemCategory) {
-            var parser = new DOMParser();
-            let teg = parser.parseFromString(itemCategory, 'text/html');
-            let item = teg.querySelector(".item-category");
-            return item;
-        }
-        function parserBlockToPaste(block) {
-            var parser = new DOMParser();
-            let teg = parser.parseFromString(block, 'text/html');
-            let item = teg.querySelector(".list-operation__wrapper");
-            return item;
-        }
-
-        if (JSON.parse(localStorage.getItem("itemOperationExpensesSortedByCurrenDate")).length < 4) {
-            blockToPaste.append(parserBlockToPaste(block));
-            document.querySelector(`[data-dat="expenses${sortedData[i].date}"]`).append(parser(itemCategory));
-
-            if (document.querySelectorAll(`[data-dat="expenses${sortedData[i].date}"]`).length > 1) {
-                document.querySelectorAll(`[data-dat="expenses${sortedData[i].date}"]`)[document.querySelectorAll(`[data-dat="expenses${sortedData[i].date}"]`).length - 1].remove()
+    
+                    function parser(itemCategory) {
+                        var parser = new DOMParser();
+                        let teg = parser.parseFromString(itemCategory, 'text/html');
+                        let item = teg.querySelector(".item-category");
+                        return item;
+                    }
+                    function parserBlockToPaste(block) {
+                        var parser = new DOMParser();
+                        let teg = parser.parseFromString(block, 'text/html');
+                        let item = teg.querySelector(".list-operation__wrapper");
+                        return item;
+                    }
+                
+                    if (JSON.parse(localStorage.getItem("itemOperationExpensesSortedByCurrenDate")).length < 4) {
+                        blockToPaste.append(parserBlockToPaste(block));
+                        document.querySelector(`[data-dat="expenses${sortedData[i].date}"]`).append(parser(itemCategory));
+                    
+                        if (document.querySelectorAll(`[data-dat="expenses${sortedData[i].date}"]`).length > 1) {
+                            document.querySelectorAll(`[data-dat="expenses${sortedData[i].date}"]`)[document.querySelectorAll(`[data-dat="expenses${sortedData[i].date}"]`).length - 1].remove()
+                        }
+                        more.classList.remove("operation-list__more_act")
+                    } else {
+                        blockToPaste.append(parserBlockToPaste(block));
+                        document.querySelector(`[data-dat="expenses${sortedData[i].date}"]`).append(parser(itemCategory));
+                    
+                        if (document.querySelectorAll(`[data-dat="expenses${sortedData[i].date}"]`).length > 1) {
+                            document.querySelectorAll(`[data-dat="expenses${sortedData[i].date}"]`)[document.querySelectorAll(`[data-dat="expenses${sortedData[i].date}"]`).length - 1].remove()
+                        }
+                    
+                        blockToPaste.querySelectorAll(".item-category").forEach((operation, index) => {
+                            if (index > 2) operation.remove()
+                        })
+                        blockToPaste.querySelectorAll(".list-operation__wrapper").forEach((block, index) => {
+                            if (block.children.length <= 1) block.remove()
+                        })
+                    
+                        more.classList.add("operation-list__more_act")
+                    }
+                }
             }
-            more.classList.remove("operation-list__more_act")
-        } else {
-            blockToPaste.append(parserBlockToPaste(block));
-            document.querySelector(`[data-dat="expenses${sortedData[i].date}"]`).append(parser(itemCategory));
-
-            if (document.querySelectorAll(`[data-dat="expenses${sortedData[i].date}"]`).length > 1) {
-                document.querySelectorAll(`[data-dat="expenses${sortedData[i].date}"]`)[document.querySelectorAll(`[data-dat="expenses${sortedData[i].date}"]`).length - 1].remove()
+            setOperationToList()
+    
+            if (JSON.parse(localStorage.getItem("itemOperationExpensesSortedByCurrenDate").length > 0)) {
+                localStorage.setItem("operationsExpensesDate", JSON.stringify(sortDates(newObjDate)));
             }
+    
+            function operationToChart() {
+                let obj = {}
+                if (localStorage.getItem("operationsExpensesDate")) obj = sortDates(JSON.parse(localStorage.getItem("operationsExpensesDate")))
+        
+                let uniqueTitles = [];
+        
+                for (let date in obj) {
+                    obj[date].forEach(item => {
+                        if (!uniqueTitles.includes(item.title)) {
+                            uniqueTitles.push(item.title);
+                        }
+                    });
+                }
+        
+        
+                let costArray = {};
+        
+                uniqueTitles.forEach(title => {
+                  costArray[title] = [];
+                
+                  for (let key in obj) {
+                    let totalCost = obj[key].reduce((acc, curr) => curr.title === title ? acc + curr.cost : acc, 0);
+        
+                    costArray[title].push(totalCost);
+                  }
+                });
+                
+                let OperationSumCosts = []
+                for (let value of Object.values(costArray)) {
+                    OperationSumCosts.push(value)
+                }
+        
+                let bgArray = [];
+        
+                for (let date in obj) {
+                    obj[date].forEach(item => {
+                    if (!bgArray.includes(item.bg)) {
+                      bgArray.push(item.bg);
+                    }
+                  })
+                }
+        
+                let arrDate = []
+                for (let key of Object.keys(JSON.parse(localStorage.getItem("operationsExpensesDate")))) {
+                    let temp = key.split(".").reverse()
+                    temp = temp.join("-")
+                    arrDate.push(temp);
+                }
+        
+                chartExpensesAndIncome.data.labels = arrDate
+                for (let i = 0;i < arrDate.length;i++) {
+                    if (!chartExpensesAndIncome.data.datasets[i]) {
+                        chartExpensesAndIncome.data.datasets.push({type: 'bar',
+                        label: 'Dataset 1',
+                        backgroundColor: [],
+                        data: [],})
+                    }
+        
+                    chartExpensesAndIncome.data.datasets[i].data = OperationSumCosts[i];
+                    chartExpensesAndIncome.data.datasets[i].backgroundColor = bgArray[i];
+                }
+                chartExpensesAndIncome.update();
+        
+                localStorage.setItem("objOfBgOfOperationsExpenses", JSON.stringify(bgArray))
+                localStorage.setItem("arrOfCostsOfOperationsExpenses", JSON.stringify(OperationSumCosts))
+            }
+            operationToChart();
+    
+            // категории
+            // в operation кидать только категории при создании, не изменять cost
+            function chartExpensesBar() {
+                let mergedArray = [];
+                
+                if (localStorage.getItem("itemOperationExpensesSortedByCurrenDate")) {
+                    mergedArray = [...JSON.parse(localStorage.getItem("operations")), ...JSON.parse(localStorage.getItem("itemOperationExpensesSortedByCurrenDate"))];
+                } else {
+                    mergedArray = [...JSON.parse(localStorage.getItem("operations"))];
+                }
+    
+                const grouped = mergedArray.reduce((acc, item) => {
+                    const key = item.title;
+                    if (!acc[key]) {
+                        acc[key] = {...item};
+                    } else {
+                        acc[key].cost += item.cost;
+                    }
+                    return acc;
+                }, {});
+            
+                const res = Object.values(grouped);
+                localStorage.setItem("itemCategoriesExpensesSortedByCurrenDate", JSON.stringify(res))
+    
+                if (localStorage.getItem("itemCategoriesExpensesSortedByCurrenDate")) {
+                    let total = 0;
+                    document.querySelectorAll(".list-categories_expenses .list-categories__item").forEach((category, i) => {
+                    
+                        category.querySelector(".item-category__total").textContent = `${JSON.parse(localStorage.getItem("itemCategoriesExpensesSortedByCurrenDate"))[i].cost} BYN`;
+                        total += JSON.parse(localStorage.getItem("itemCategoriesExpensesSortedByCurrenDate"))[i].cost;
+                        document.querySelector(".slider-categories__total-num").textContent = total;
+                    })
+                }
+            }
+            chartExpensesBar();
+    
+            function chart(arrOfCategories) {
+                let titles = [];
+                let bgArr = [];
+                let costArr = [];
+    
+                arrOfCategories.forEach(item => {
+                    titles.push(item.title);
+                    bgArr.push(item.bg);
+                
+                    if (item.cost == 0) {
+                        costArr.push(1);
+                    } else {
+                        costArr.push(item.cost);
+                    }
+                })
+                chartExpenses.data.datasets[0].data = costArr;
+                chartExpenses.data.datasets[0].backgroundColor = bgArr;
+                chartExpenses.update();
+            }
+            chart(JSON.parse(localStorage.getItem("itemCategoriesExpensesSortedByCurrenDate")));
+        }
 
-            blockToPaste.querySelectorAll(".item-category").forEach((operation, index) => {
-                if (index > 2) operation.remove()
+
+        if (localStorage.getItem("itemOperationIncome")) {
+            sortArrayByCurrentDate(JSON.parse(localStorage.getItem("itemOperationIncome")), "itemOperationIncomeSortedByCurrenDate");
+
+        let newObjDateIncome = {}
+        JSON.parse(localStorage.getItem("itemOperationIncomeSortedByCurrenDate")).forEach(item => {
+            if (!newObjDateIncome[item.date]) {
+                newObjDateIncome[item.date] = [item];
+            } else {
+                newObjDateIncome[item.date].push(item);
+            }
+        });
+
+        function setOperationIncomeToList() {
+            let blockToPaste = document.querySelector(".operation-list__item_income");
+
+            blockToPaste.querySelectorAll(".list-operation__wrapper").forEach(block => {
+                block.remove()
             })
-            blockToPaste.querySelectorAll(".list-operation__wrapper").forEach((block, index) => {
-                if (block.children.length <= 1) block.remove()
-            })
+            let sortedData = JSON.parse(localStorage.getItem("itemOperationIncomeSortedByCurrenDate"));
+            let more = document.querySelector(".operation-list__more_income");
 
-            more.classList.add("operation-list__more_act")
+            for (let i = 0;i < sortedData.length;i++) {
+                let block = `<div class="list-operation__wrapper" data-dat="income${sortedData[i].date}">
+                    <p class="list-operation__date">${sortedData[i].date}</p>
+                    </div>`;
+                let itemCategory = `<div class="list-category__item item-category">
+                    <div class="item-category__icon ${sortedData[i].icon}" style="background-color:${sortedData[i].bg}"></div>
+                    <div class="item-category__info">
+                        <p class="item-category__name">${sortedData[i].title}</p>
+                    </div>
+                    <div class="item-category__total">${sortedData[i].cost} BYN</div>
+                    </div>`;
+
+                function parser(itemCategory) {
+                    var parser = new DOMParser();
+                    let teg = parser.parseFromString(itemCategory, 'text/html');
+                    let item = teg.querySelector(".item-category");
+                    return item;
+                }
+                function parserBlockToPaste(block) {
+                    var parser = new DOMParser();
+                    let teg = parser.parseFromString(block, 'text/html');
+                    let item = teg.querySelector(".list-operation__wrapper");
+                    return item;
+                }
+            
+                if (JSON.parse(localStorage.getItem("itemOperationIncomeSortedByCurrenDate")).length < 4) {
+                    blockToPaste.append(parserBlockToPaste(block));
+                    document.querySelector(`[data-dat="income${sortedData[i].date}"]`).append(parser(itemCategory));
+        
+                    if (document.querySelectorAll(`[data-dat="income${sortedData[i].date}"]`).length > 1) {
+                        document.querySelectorAll(`[data-dat="income${sortedData[i].date}"]`)[document.querySelectorAll(`[data-dat="income${sortedData[i].date}"]`).length - 1].remove()
+                    }
+                    more.classList.remove("operation-list__more_act")
+                } else {
+                    blockToPaste.append(parserBlockToPaste(block));
+                    document.querySelector(`[data-dat="income${sortedData[i].date}"]`).append(parser(itemCategory));
+        
+                    if (document.querySelectorAll(`[data-dat="income${sortedData[i].date}"]`).length > 1) {
+                        document.querySelectorAll(`[data-dat="income${sortedData[i].date}"]`)[document.querySelectorAll(`[data-dat="income${sortedData[i].date}"]`).length - 1].remove()
+                    }
+        
+                    blockToPaste.querySelectorAll(".item-category").forEach((operation, index) => {
+                        if (index > 2) operation.remove()
+                    })
+                    blockToPaste.querySelectorAll(".list-operation__wrapper").forEach((block, index) => {
+                        if (block.children.length <= 1) block.remove()
+                    })
+        
+                    more.classList.add("operation-list__more_act")
+                }
+            }
         }
+        setOperationIncomeToList()
+
+        if (JSON.parse(localStorage.getItem("itemOperationIncomeSortedByCurrenDate").length > 0)) {
+            localStorage.setItem("operationsIncomeDate", JSON.stringify(sortDates(newObjDateIncome)));
         }
 
-        // 
-
-        if (JSON.parse(localStorage.getItem("itemOperationExpensesSortedByCurrenDate").length > 0)) {
-            localStorage.setItem("operationsExpensesDate", JSON.stringify(sortDates(newObjDate)));
-        }
-
-        function operationToChart() {
+        function operationIncomeToChart() {
             let obj = {}
-            if (localStorage.getItem("operationsExpensesDate")) obj = sortDates(JSON.parse(localStorage.getItem("operationsExpensesDate")))
-            // if (obj = {}) return
-            console.log(obj)
+            if (localStorage.getItem("operationsIncomeDate")) obj = sortDates(JSON.parse(localStorage.getItem("operationsIncomeDate")))
     
             let uniqueTitles = [];
     
             for (let date in obj) {
-              obj[date].forEach(item => {
-                if (!uniqueTitles.includes(item.title)) {
-                  uniqueTitles.push(item.title);
-                }
-              });
+                obj[date].forEach(item => {
+                    if (!uniqueTitles.includes(item.title)) {
+                        uniqueTitles.push(item.title);
+                    }
+                });
             }
     
     
             let costArray = {};
     
             uniqueTitles.forEach(title => {
-              costArray[title] = [];
-            
-              for (let key in obj) {
-                let totalCost = obj[key].reduce((acc, curr) => curr.title === title ? acc + curr.cost : acc, 0);
-    
-                costArray[title].push(totalCost);
-              }
+                costArray[title] = [];
+                
+                for (let key in obj) {
+                  let totalCost = obj[key].reduce((acc, curr) => curr.title === title ? acc + curr.cost : acc, 0);
+                
+                  costArray[title].push(totalCost);
+                }
             });
             
             let OperationSumCosts = []
@@ -421,98 +624,98 @@ let mainDatePicker = new AirDatepicker('#main-picker', {
     
             for (let date in obj) {
                 obj[date].forEach(item => {
-                if (!bgArray.includes(item.bg)) {
-                  bgArray.push(item.bg);
-                }
-              })
+                    if (!bgArray.includes(item.bg)) {
+                        bgArray.push(item.bg);
+                    }
+                })
             }
     
             let arrDate = []
-            for (let key of Object.keys(JSON.parse(localStorage.getItem("operationsExpensesDate")))) {
+            for (let key of Object.keys(JSON.parse(localStorage.getItem("operationsIncomeDate")))) {
                 let temp = key.split(".").reverse()
                 temp = temp.join("-")
                 arrDate.push(temp);
             }
-            console.log(uniqueTitles,arrDate,costArray,OperationSumCosts,bgArray)
     
-            chartExpensesAndIncome.data.labels = arrDate
+            chartIncomeBar.data.labels = arrDate
             for (let i = 0;i < arrDate.length;i++) {
-                if (!chartExpensesAndIncome.data.datasets[i]) {
-                    chartExpensesAndIncome.data.datasets.push({type: 'bar',
+                if (!chartIncomeBar.data.datasets[i]) {
+                    chartIncomeBar.data.datasets.push({type: 'bar',
                     label: 'Dataset 1',
                     backgroundColor: [],
                     data: [],})
                 }
     
-                chartExpensesAndIncome.data.datasets[i].data = OperationSumCosts[i];
-                chartExpensesAndIncome.data.datasets[i].backgroundColor = bgArray[i];
+                chartIncomeBar.data.datasets[i].data = OperationSumCosts[i];
+                chartIncomeBar.data.datasets[i].backgroundColor = bgArray[i];
             }
-            chartExpensesAndIncome.update();
-            console.log(chartExpensesAndIncome)
+            chartIncomeBar.update();
     
-            localStorage.setItem("objOfBgOfOperationsExpenses", JSON.stringify(bgArray))
-            localStorage.setItem("arrOfCostsOfOperationsExpenses", JSON.stringify(OperationSumCosts))
+            localStorage.setItem("objOfBgOfOperationsIncome", JSON.stringify(bgArray))
+            localStorage.setItem("arrOfCostsOfOperationsIncome", JSON.stringify(OperationSumCosts))
         }
-        operationToChart() 
-
+        operationIncomeToChart();
 
         // категории
-        // в operation кидать только категории при создании, не изменять cost
-        let mergedArray = [];
-            
-        if (localStorage.getItem("itemOperationExpensesSortedByCurrenDate")) {
-            mergedArray = [...JSON.parse(localStorage.getItem("operations")), ...JSON.parse(localStorage.getItem("itemOperationExpensesSortedByCurrenDate"))];
-        } else {
-            mergedArray = [...JSON.parse(localStorage.getItem("operations"))];
-        }
-
-        const grouped = mergedArray.reduce((acc, item) => {
-            const key = item.title;
-            if (!acc[key]) {
-                acc[key] = {...item};
-            } else {
-                acc[key].cost += item.cost;
-            }
-            return acc;
-        }, {});
+            // в operation кидать только категории при создании, не изменять cost
+            function chartIncomeBarFunction() {
+                let mergedArray = [];
+                
+                if (localStorage.getItem("itemOperationIncomeSortedByCurrenDate")) {
+                    mergedArray = [...JSON.parse(localStorage.getItem("operationsIncome")), ...JSON.parse(localStorage.getItem("itemOperationIncomeSortedByCurrenDate"))];
+                } else {
+                    mergedArray = [...JSON.parse(localStorage.getItem("operationsIncome"))];
+                }
     
-    const res = Object.values(grouped);
-    console.log(res)
-    localStorage.setItem("itemCategoriesExpensesSortedByCurrenDate", JSON.stringify(res))
-
-    if (localStorage.getItem("itemCategoriesExpensesSortedByCurrenDate")) {
-        let total = 0;
-        document.querySelectorAll(".list-categories_expenses .list-categories__item").forEach((category, i) => {
-
-            category.querySelector(".item-category__total").textContent = `${JSON.parse(localStorage.getItem("itemCategoriesExpensesSortedByCurrenDate"))[i].cost} BYN`;
-            total += JSON.parse(localStorage.getItem("itemCategoriesExpensesSortedByCurrenDate"))[i].cost;
-            document.querySelector(".slider-categories__total-num").textContent = total;
-        })
-    }
-    function chart(arrOfCategories) {
-        let titles = [];
-        let bgArr = [];
-        let costArr = [];
-        console.log(titles, bgArr, costArr)
-        arrOfCategories.forEach(item => {
-            titles.push(item.title);
-            bgArr.push(item.bg);
-
-            if (item.cost == 0) {
-                costArr.push(1);
-            } else {
-                costArr.push(item.cost);
+                const grouped = mergedArray.reduce((acc, item) => {
+                    const key = item.title;
+                    if (!acc[key]) {
+                        acc[key] = {...item};
+                    } else {
+                        acc[key].cost += item.cost;
+                    }
+                    return acc;
+                }, {});
+            
+                const res = Object.values(grouped);
+                localStorage.setItem("itemCategoriesIncomeSortedByCurrenDate", JSON.stringify(res))
+    
+                if (localStorage.getItem("itemCategoriesIncomeSortedByCurrenDate")) {
+                    let total = 0;
+                    document.querySelectorAll(".list-categories_income .list-categories__item").forEach((category, i) => {
+                    
+                        category.querySelector(".item-category__total").textContent = `${JSON.parse(localStorage.getItem("itemCategoriesIncomeSortedByCurrenDate"))[i].cost} BYN`;
+                        total += JSON.parse(localStorage.getItem("itemCategoriesIncomeSortedByCurrenDate"))[i].cost;
+                        document.querySelector(".slider-categories__item_income .slider-categories__total-num").textContent = total;
+                    })
+                }
             }
-        })
-        chartExpenses.data.datasets[0].data = costArr;
-        chartExpenses.data.datasets[0].backgroundColor = bgArr;
-        chartExpenses.update();
-    }
-    chart(JSON.parse(localStorage.getItem("itemCategoriesExpensesSortedByCurrenDate")))
-        // 
+            chartIncomeBarFunction();
 
+            function chart(arrOfCategories) {
+                let titles = [];
+                let bgArr = [];
+                let costArr = [];
+    
+                arrOfCategories.forEach(item => {
+                    titles.push(item.title);
+                    bgArr.push(item.bg);
+                
+                    if (item.cost == 0) {
+                        costArr.push(1);
+                    } else {
+                        costArr.push(item.cost);
+                    }
+                })
+                chartIncome.data.datasets[0].data = costArr;
+                chartIncome.data.datasets[0].backgroundColor = bgArr;
+                chartIncome.update();
+            }
+            chart(JSON.parse(localStorage.getItem("itemCategoriesIncomeSortedByCurrenDate")));
+        } 
+    
         return formattedDate;
-    },
+        },
     buttons: buttonYear,
 })
 
@@ -526,7 +729,7 @@ function sortDates(obj) {
     return sortedObj;
 }
 
-function sortArrayByCurrentDate(arr) {
+function sortArrayByCurrentDate(arr, nameOfArayOperations) {
     function filterExpensesByMonth(arr, yearMonth) {
         const [year, month] = yearMonth.split('-');
         return arr.filter(expense => {
@@ -538,7 +741,7 @@ function sortArrayByCurrentDate(arr) {
     const yearMonthToFilter = localStorage.getItem("currentDate");
     const expensesInYearMonth = filterExpensesByMonth(arr, yearMonthToFilter);
 
-    localStorage.setItem("itemOperationExpensesSortedByCurrenDate", JSON.stringify(expensesInYearMonth));
+    localStorage.setItem(nameOfArayOperations, JSON.stringify(expensesInYearMonth));
 }
 
 function transformDate(date) {
