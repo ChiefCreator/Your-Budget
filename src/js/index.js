@@ -790,7 +790,9 @@ currentDateStorage.push(JSON.parse(localStorage.getItem("itemOperationExpenses")
 localStorage.setItem("currentDateStorage", JSON.stringify(currentDateStorage))
 
 let dateOperationExpenses = new AirDatepicker('#date-operation-expenses', {
-    inline: true
+    inline: false,
+    position:'right top',
+    container: '.popup-operation-datepicker'
 })
 
 let dateOperationIncome = new AirDatepicker('#date-operation-income', {
@@ -814,3 +816,6 @@ addOperationIncome(chartIncome, objOperationsDateIncome, arrDateIncome, chartInc
 
 import switchCategory from "./modules/switch-category";
 switchCategory();
+
+import inputTextarrea from "./modules/textarrea";
+inputTextarrea();

@@ -1,11 +1,22 @@
+.air-datepicker-global-container {
+    width: 200px !important;
+    .air-datepicker{
+        top: 15px !important;
+    }
+}
+.popup-operation-datepicker{
+    height: 100%;
+    .air-datepicker {
+        width: 250px !important;
+        top: -35px !important;
+    }
+}
 .air-datepicker {
-    margin-top: 10px;
-    border: 2px solid $main-color !important;
     border-radius: 10px !important;
-    width: 100% !important;
     background: white !important;
     z-index: 100 !important;
     position: relative !important;
+    border: none !important;
 }
 .air-datepicker-body--day-name {
     color: #0c6cde !important;
