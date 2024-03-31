@@ -182,6 +182,11 @@ function addOperationExpenses(chartExpenses, objOperationsDate, arrDate, chartEx
         }
     })
 
+    let count = 0;
+    if (localStorage.getItem("countOperationsExpenses")) {
+        count = JSON.parse(localStorage.getItem("countOperationsExpenses"));
+    }
+
     btnCreate.addEventListener("click", function() {
         let total = 0;
         
@@ -201,8 +206,10 @@ function addOperationExpenses(chartExpenses, objOperationsDate, arrDate, chartEx
         let commentOfOperation = textarreaComment.value;
 
         let ind = "expenses0";
-        if (localStorage.getItem("itemOperationExpenses")) {
-            ind = "expenses" + JSON.parse(localStorage.getItem("itemOperationExpenses")).length;
+        count++;
+        localStorage.setItem("countOperationsExpenses", JSON.stringify(count))
+        if (localStorage.getItem("countOperationsExpenses")) {
+            ind = "expenses" + JSON.parse(localStorage.getItem("countOperationsExpenses"));
         }
 
         addOperation(priceOfOperation, objectCategory, dateOfOperation, commentOfOperation, ind);
