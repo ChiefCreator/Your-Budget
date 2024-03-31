@@ -1,8 +1,8 @@
-function deleteOperationExpenses(chartExpenses, chartExpensesAndIncome) {
+function deleteOperationIncome(chartExpenses, chartExpensesAndIncome) {
 
     window.addEventListener("click", function(e) {
-        if (e.target.closest(".operation-list__item_expenses .item-category__button_delete")) {
-            let deleteBtn = e.target.closest(".operation-list__item_expenses .item-category__button_delete");
+        if (e.target.closest(".operation-list__item_income .item-category__button_delete")) {
+            let deleteBtn = e.target.closest(".operation-list__item_income .item-category__button_delete");
 
             del(deleteBtn)
         }
@@ -14,7 +14,7 @@ function deleteOperationExpenses(chartExpenses, chartExpensesAndIncome) {
         sortOperationsExpenses(operation);
         sortOperationsExpensesDate(operation);
 
-        sortArrayByCurrentDate(JSON.parse(localStorage.getItem("itemOperationExpenses")))
+        sortArrayByCurrentDate(JSON.parse(localStorage.getItem("itemOperationIncome")))
 
         changeCategories();
 
@@ -27,7 +27,7 @@ function deleteOperationExpenses(chartExpenses, chartExpensesAndIncome) {
     function sortOperationsExpensesDate(operation) {
         let res = {};
 
-        for (let [key, value] of Object.entries(JSON.parse(localStorage.getItem("operationsExpensesDate")))) {
+        for (let [key, value] of Object.entries(JSON.parse(localStorage.getItem("operationsIncomeDate")))) {
 
             let newValue = value.filter(item => item.index != operation.dataset.index);
             res[key] = newValue;
@@ -35,14 +35,14 @@ function deleteOperationExpenses(chartExpenses, chartExpensesAndIncome) {
             if (res[key].length == 0) delete res[key]
         }
 
-        localStorage.setItem("operationsExpensesDate", JSON.stringify(res));
+        localStorage.setItem("operationsIncomeDate", JSON.stringify(res));
 
         setOperationToList(res)
     }
 
     function setOperationToList(res) {
-        let blockToPaste = document.querySelector(".operation-list__item_expenses");
-        let more = document.querySelector(".operation-list__more_expenses");
+        let blockToPaste = document.querySelector(".operation-list__item_income");
+        let more = document.querySelector(".operation-list__more_income");
 
         blockToPaste.querySelectorAll(".list-operation__wrapper").forEach(block => {
             block.remove()
@@ -50,7 +50,7 @@ function deleteOperationExpenses(chartExpenses, chartExpensesAndIncome) {
 
         for (let [key, value] of Object.entries(res).reverse()) {
 
-            let block = `<div class="list-operation__wrapper" data-dat="expenses${key}">
+            let block = `<div class="list-operation__wrapper" data-dat="income${key}">
                     <p class="list-operation__date">${key}</p>
                 </div>`;
             function parserBlockToPaste(block) {
@@ -112,20 +112,20 @@ function deleteOperationExpenses(chartExpenses, chartExpensesAndIncome) {
                     return item;
                 }
 
-                if (JSON.parse(localStorage.getItem("itemOperationExpensesSortedByCurrenDate")).length < 4) {
+                if (JSON.parse(localStorage.getItem("itemOperationIncomeSortedByCurrenDate")).length < 4) {
                     blockToPaste.append(parserBlockToPaste(block));
-                    document.querySelector(`[data-dat="expenses${value[i].date}"]`).append(parser(itemCategory));
+                    document.querySelector(`[data-dat="income${value[i].date}"]`).append(parser(itemCategory));
         
-                    if (document.querySelectorAll(`[data-dat="expenses${value[i].date}"]`).length > 1) {
-                        document.querySelectorAll(`[data-dat="expenses${value[i].date}"]`)[document.querySelectorAll(`[data-dat="expenses${value[i].date}"]`).length - 1].remove()
+                    if (document.querySelectorAll(`[data-dat="income${value[i].date}"]`).length > 1) {
+                        document.querySelectorAll(`[data-dat="income${value[i].date}"]`)[document.querySelectorAll(`[data-dat="income${value[i].date}"]`).length - 1].remove()
                     }
                     more.classList.remove("operation-list__more_act")
                 } else {
                     blockToPaste.append(parserBlockToPaste(block));
-                    document.querySelector(`[data-dat="expenses${value[i].date}"]`).append(parser(itemCategory));
+                    document.querySelector(`[data-dat="income${value[i].date}"]`).append(parser(itemCategory));
         
-                    if (document.querySelectorAll(`[data-dat="expenses${value[i].date}"]`).length > 1) {
-                        document.querySelectorAll(`[data-dat="expenses${value[i].date}"]`)[document.querySelectorAll(`[data-dat="expenses${value[i].date}"]`).length - 1].remove()
+                    if (document.querySelectorAll(`[data-dat="income${value[i].date}"]`).length > 1) {
+                        document.querySelectorAll(`[data-dat="income${value[i].date}"]`)[document.querySelectorAll(`[data-dat="income${value[i].date}"]`).length - 1].remove()
                     }
         
                     blockToPaste.querySelectorAll(".item-category").forEach((operation, index) => {
@@ -143,9 +143,9 @@ function deleteOperationExpenses(chartExpenses, chartExpensesAndIncome) {
 
     function sortOperationsExpenses(operation) {
 
-        let res = JSON.parse(localStorage.getItem("itemOperationExpenses")).filter(item => item.index != operation.dataset.index);
+        let res = JSON.parse(localStorage.getItem("itemOperationIncome")).filter(item => item.index != operation.dataset.index);
 
-        localStorage.setItem("itemOperationExpenses", JSON.stringify(res));
+        localStorage.setItem("itemOperationIncome", JSON.stringify(res));
     }
 
     function sortArrayByCurrentDate(arr) {
@@ -159,7 +159,7 @@ function deleteOperationExpenses(chartExpenses, chartExpensesAndIncome) {
 
         const yearMonthToFilter = localStorage.getItem("currentDate");
         const expensesInYearMonth = filterExpensesByMonth(arr, yearMonthToFilter);
-        localStorage.setItem("itemOperationExpensesSortedByCurrenDate", JSON.stringify(expensesInYearMonth));
+        localStorage.setItem("itemOperationIncomeSortedByCurrenDate", JSON.stringify(expensesInYearMonth));
 
         return expensesInYearMonth;
     }
@@ -167,10 +167,10 @@ function deleteOperationExpenses(chartExpenses, chartExpensesAndIncome) {
     function changeCategories() {
         let mergedArray = [];
         
-        if (localStorage.getItem("itemOperationExpensesSortedByCurrenDate")) {
-            mergedArray = [...JSON.parse(localStorage.getItem("operations")), ...JSON.parse(localStorage.getItem("itemOperationExpensesSortedByCurrenDate"))];
+        if (localStorage.getItem("itemOperationIncomeSortedByCurrenDate")) {
+            mergedArray = [...JSON.parse(localStorage.getItem("operationsIncome")), ...JSON.parse(localStorage.getItem("itemOperationIncomeSortedByCurrenDate"))];
         } else {
-            mergedArray = [...JSON.parse(localStorage.getItem("operations"))];
+            mergedArray = [...JSON.parse(localStorage.getItem("operationsIncome"))];
         }
 
         const grouped = mergedArray.reduce((acc, item) => {
@@ -185,15 +185,15 @@ function deleteOperationExpenses(chartExpenses, chartExpensesAndIncome) {
     
         const res = Object.values(grouped);
         console.log(res)
-        localStorage.setItem("itemCategoriesExpensesSortedByCurrenDate", JSON.stringify(res))
+        localStorage.setItem("itemCategoriesIncomeSortedByCurrenDate", JSON.stringify(res))
 
-        if (localStorage.getItem("itemCategoriesExpensesSortedByCurrenDate")) {
+        if (localStorage.getItem("itemCategoriesIncomeSortedByCurrenDate")) {
             let total = 0;
-            document.querySelectorAll(".list-categories_expenses .list-categories__item").forEach((category, i) => {
+            document.querySelectorAll(".list-categories_income .list-categories__item").forEach((category, i) => {
             
-                category.querySelector(".item-category__total").textContent = `${JSON.parse(localStorage.getItem("itemCategoriesExpensesSortedByCurrenDate"))[i].cost} BYN`;
-                total += JSON.parse(localStorage.getItem("itemCategoriesExpensesSortedByCurrenDate"))[i].cost;
-                document.querySelector(".slider-categories__total-num").textContent = total;
+                category.querySelector(".item-category__total").textContent = `${JSON.parse(localStorage.getItem("itemCategoriesIncomeSortedByCurrenDate"))[i].cost} BYN`;
+                total += JSON.parse(localStorage.getItem("itemCategoriesIncomeSortedByCurrenDate"))[i].cost;
+                document.querySelector(".slider-categories__item_income .slider-categories__total-num").textContent = total;
             })
         }
     }
@@ -203,7 +203,7 @@ function deleteOperationExpenses(chartExpenses, chartExpensesAndIncome) {
         let bgArr = [];
         let costArr = [];
 
-        JSON.parse(localStorage.getItem("itemCategoriesExpensesSortedByCurrenDate")).forEach(item => {
+        JSON.parse(localStorage.getItem("itemCategoriesIncomeSortedByCurrenDate")).forEach(item => {
             titles.push(item.title);
             bgArr.push(item.bg);
 
@@ -212,11 +212,13 @@ function deleteOperationExpenses(chartExpenses, chartExpensesAndIncome) {
         chartExpenses.data.datasets[0].data = costArr;
         chartExpenses.data.datasets[0].backgroundColor = bgArr;
         chartExpenses.update();
+
+        console.log(titles, bgArr, costArr)
     }
 
     function operationToChart() {
         let obj = {}
-        if (localStorage.getItem("operationsExpensesDate")) obj = JSON.parse(localStorage.getItem("operationsExpensesDate"))
+        if (localStorage.getItem("operationsIncomeDate")) obj = JSON.parse(localStorage.getItem("operationsIncomeDate"))
 
         let uniqueTitles = [];
 
@@ -256,7 +258,7 @@ function deleteOperationExpenses(chartExpenses, chartExpensesAndIncome) {
         }
 
         let arrDate = []
-        for (let key of Object.keys(JSON.parse(localStorage.getItem("operationsExpensesDate")))) {
+        for (let key of Object.keys(JSON.parse(localStorage.getItem("operationsIncomeDate")))) {
             let temp = key.split(".").reverse()
             temp = temp.join("-")
             arrDate.push(temp);
@@ -278,8 +280,8 @@ function deleteOperationExpenses(chartExpenses, chartExpensesAndIncome) {
         }
         chartExpensesAndIncome.update();
 
-        localStorage.setItem("objOfBgOfOperationsExpenses", JSON.stringify(bgArray))
-        localStorage.setItem("arrOfCostsOfOperationsExpenses", JSON.stringify(OperationSumCosts))
+        localStorage.setItem("objOfBgOfOperationsIncome", JSON.stringify(bgArray))
+        localStorage.setItem("arrOfCostsOfOperationsIncome", JSON.stringify(OperationSumCosts))
     }
 
     function operationsAllDateUpdate() {
@@ -318,4 +320,4 @@ function deleteOperationExpenses(chartExpenses, chartExpensesAndIncome) {
     }
 }
 
-export default deleteOperationExpenses;
+export default deleteOperationIncome;

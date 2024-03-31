@@ -194,7 +194,6 @@ function addOperationExpenses(chartExpenses, objOperationsDate, arrDate, chartEx
 
         let category = document.querySelector(".list-categories__item.act")
         let objectCategory = operationsStorage[category.dataset.index - 1];
-        console.log(operationsStorage, objectCategory)
 
         let priceOfOperation = +inputCost.value;
         objectCategory.cost += priceOfOperation;

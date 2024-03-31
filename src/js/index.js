@@ -566,7 +566,7 @@ let mainDatePicker = new AirDatepicker('#main-picker', {
                     </div>`;
                     let itemCategory = "";
                     if (sortedData[i].comment) {
-                        itemCategory = `<div class="list-category__item item-category expand-operation">
+                        itemCategory = `<div class="list-category__item item-category expand-operation" data-index="${sortedData[i].index}">
                     <div class="item-category__head">
                         <div class="item-category__icon ${sortedData[i].icon}" style="background-color:${sortedData[i].bg}"></div>
                         <div class="item-category__info">
@@ -588,7 +588,7 @@ let mainDatePicker = new AirDatepicker('#main-picker', {
                     </div>
                         </div>`;
                     } else {
-                        itemCategory = `<div class="list-category__item item-category expand-operation">
+                        itemCategory = `<div class="list-category__item item-category expand-operation" data-index="${sortedData[i].index}">
                     <div class="item-category__head">
                         <div class="item-category__icon ${sortedData[i].icon}" style="background-color:${sortedData[i].bg}"></div>
                         <div class="item-category__info">
@@ -864,7 +864,9 @@ let dateOperationExpenses = new AirDatepicker('#date-operation-expenses', {
 })
 
 let dateOperationIncome = new AirDatepicker('#date-operation-income', {
-    inline: true
+    inline: false,
+    position:'right top',
+    container: '.popup-operation-datepicker_income'
 })
 
 import togglePopup from "./modules/toggle-popup";
@@ -893,3 +895,6 @@ expandOperation();
 
 import deleteOperationExpenses from "./modules/delete-operation-expenses";
 deleteOperationExpenses(chartExpenses, chartExpensesAndIncome);
+
+import deleteOperationIncome from "./modules/delete-operation-income";
+deleteOperationIncome(chartIncome, chartIncomeBar);

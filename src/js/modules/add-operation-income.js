@@ -38,7 +38,7 @@ function addOperationIncome(chartExpenses, objOperationsDate, arrDate, chartExpe
     
                     let itemCategory = "";
                         if (value[i].comment) {
-                            itemCategory = `<div class="list-category__item item-category expand-operation">
+                            itemCategory = `<div class="list-category__item item-category expand-operation" data-index="${value[i].index}">
                         <div class="item-category__head">
                             <div class="item-category__icon ${value[i].icon}" style="background-color:${value[i].bg}"></div>
                             <div class="item-category__info">
@@ -60,7 +60,7 @@ function addOperationIncome(chartExpenses, objOperationsDate, arrDate, chartExpe
                         </div>
                             </div>`;
                         } else {
-                            itemCategory = `<div class="list-category__item item-category expand-operation">
+                            itemCategory = `<div class="list-category__item item-category expand-operation" data-index="${value[i].index}">
                         <div class="item-category__head">
                             <div class="item-category__icon ${value[i].icon}" style="background-color:${value[i].bg}"></div>
                             <div class="item-category__info">
@@ -111,7 +111,7 @@ function addOperationIncome(chartExpenses, objOperationsDate, arrDate, chartExpe
 
                         let itemCategory = "";
                         if (value[i].comment) {
-                            itemCategory = `<div class="list-category__item item-category expand-operation">
+                            itemCategory = `<div class="list-category__item item-category expand-operation" data-index="${value[i].index}">
                         <div class="item-category__head">
                             <div class="item-category__icon ${value[i].icon}" style="background-color:${value[i].bg}"></div>
                             <div class="item-category__info">
@@ -133,7 +133,7 @@ function addOperationIncome(chartExpenses, objOperationsDate, arrDate, chartExpe
                         </div>
                             </div>`;
                         } else {
-                            itemCategory = `<div class="list-category__item item-category expand-operation">
+                            itemCategory = `<div class="list-category__item item-category expand-operation" data-index="${value[i].index}">
                         <div class="item-category__head">
                             <div class="item-category__icon ${value[i].icon}" style="background-color:${value[i].bg}"></div>
                             <div class="item-category__info">
@@ -181,6 +181,11 @@ function addOperationIncome(chartExpenses, objOperationsDate, arrDate, chartExpe
         }
     })
 
+    let count = 0;
+    if (localStorage.getItem("countOperationsIncome")) {
+        count = JSON.parse(localStorage.getItem("countOperationsIncome"));
+    }
+
     btnCreate.addEventListener("click", function() {
         let total = 0;
         
@@ -198,7 +203,14 @@ function addOperationIncome(chartExpenses, objOperationsDate, arrDate, chartExpe
 
         let commentOfOperation = textarreaComment.value;
 
-        addOperation(priceOfOperation, objectCategory, dateOfOperation, commentOfOperation);
+        let ind = "income0";
+        count++;
+        localStorage.setItem("countOperationsIncome", JSON.stringify(count))
+        if (localStorage.getItem("countOperationsIncome")) {
+            ind = "income" + JSON.parse(localStorage.getItem("countOperationsIncome"));
+        }
+
+        addOperation(priceOfOperation, objectCategory, dateOfOperation, commentOfOperation, ind);
 
         const groupedItems = JSON.parse(localStorage.getItem("itemOperationIncomeSortedByCurrenDate")).reduce((acc, item) => {
             const key = item.title;
@@ -301,7 +313,7 @@ function addOperationIncome(chartExpenses, objOperationsDate, arrDate, chartExpe
         blockToPaste.append(parser(itemCategory));
     }
 
-    function addOperation(priceOfOperation, objectCategory, dateOfOperation, commentOfOperation) {
+    function addOperation(priceOfOperation, objectCategory, dateOfOperation, commentOfOperation, ind) {
         let arrOperation = [];
 
         if (localStorage.getItem("itemOperationIncome")) {
@@ -309,6 +321,7 @@ function addOperationIncome(chartExpenses, objOperationsDate, arrDate, chartExpe
         }
 
         let objectOperation = {};
+        objectOperation.index = ind;
         objectOperation.cost = priceOfOperation;
         objectOperation.title = objectCategory.title;
         objectOperation.icon = objectCategory.icon;
@@ -328,8 +341,6 @@ function addOperationIncome(chartExpenses, objOperationsDate, arrDate, chartExpe
 
         sortArrayByCurrentDate(sortedData);
         if (isObjectBelongToCurrentDate(objectOperation)) setOperationToList(sortArrayByCurrentDate(sortedData), objectOperation);
-
-        setOperationToList(sortedData, objectOperation);
 
         return objectOperation;
     }
@@ -373,7 +384,7 @@ function addOperationIncome(chartExpenses, objOperationsDate, arrDate, chartExpe
 
         let itemCategory = "";
             if (sortedData[i].comment) {
-                itemCategory = `<div class="list-category__item item-category expand-operation">
+                itemCategory = `<div class="list-category__item item-category expand-operation" data-index="${sortedData[i].index}">
             <div class="item-category__head">
                 <div class="item-category__icon ${sortedData[i].icon}" style="background-color:${sortedData[i].bg}"></div>
                 <div class="item-category__info">
@@ -395,7 +406,7 @@ function addOperationIncome(chartExpenses, objOperationsDate, arrDate, chartExpe
             </div>
                 </div>`;
             } else {
-                itemCategory = `<div class="list-category__item item-category expand-operation">
+                itemCategory = `<div class="list-category__item item-category expand-operation" data-index="${sortedData[i].index}">
                 <div class="item-category__head">
                     <div class="item-category__icon ${sortedData[i].icon}" style="background-color:${sortedData[i].bg}"></div>
                     <div class="item-category__info">
@@ -428,6 +439,7 @@ function addOperationIncome(chartExpenses, objOperationsDate, arrDate, chartExpe
         }
 
 
+        console.log(sortedData)
         if (JSON.parse(localStorage.getItem("itemOperationIncome")).length < 4) {
             blockToPaste.append(parserBlockToPaste(block));
             document.querySelector(`[data-dat="income${sortedData[i].date}"]`).append(parser(itemCategory));
