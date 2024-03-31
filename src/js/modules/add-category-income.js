@@ -13,12 +13,15 @@ function addCategoryIncome(chartExpenses, arrOfCategories) {
         let blockToPaste = document.querySelector(".list-categories_income");
         for (let i = 0;i < JSON.parse(localStorage.getItem("categoriesIncome")).length;i++) {
             let itemCategory = `<div class="list-categories__item item-category item-category_income" data-index="${JSON.parse(localStorage.getItem("categoriesIncome"))[i].index}">
-                        <div class="item-category__icon ${JSON.parse(localStorage.getItem("categoriesIncome"))[i].icon}" style="background-color:${JSON.parse(localStorage.getItem("categoriesIncome"))[i].bg}"></div>
-                        <div class="item-category__info">
-                            <p class="item-category__name">${JSON.parse(localStorage.getItem("categoriesIncome"))[i].title}</p>
-                        </div>
-                        <div class="item-category__total">0 BYN</div>
-                        </div>`;
+            <div class="item-category__head">
+                <div class="item-category__icon ${JSON.parse(localStorage.getItem("categoriesIncome"))[i].icon}" style="background-color:${JSON.parse(localStorage.getItem("categoriesIncome"))[i].bg}"></div>
+                <div class="item-category__info">
+                    <p class="item-category__name">${JSON.parse(localStorage.getItem("categoriesIncome"))[i].title}</p>
+                </div>
+                <div class="item-category__total">${JSON.parse(localStorage.getItem("categoriesIncome"))[i].cost} BYN</div>
+            </div>
+                </div>`;
+           
         function parser(itemCategory) {
             var parser = new DOMParser();
             let teg = parser.parseFromString(itemCategory, 'text/html');
@@ -169,14 +172,16 @@ function addCategoryIncome(chartExpenses, arrOfCategories) {
 
     function setItemToList() {
         let blockToPaste = document.querySelector(".list-categories_income");
-        console.log(blockToPaste)
-        let itemCategory = `<div class="list-categories__item item-category item-category_income" data-index="${objCategory.index}">
-                        <div class="item-category__icon ${objCategory.icon}" style="background-color:${objCategory.bg}"></div>
-                        <div class="item-category__info">
-                            <p class="item-category__name">${objCategory.title}</p>
-                        </div>
-                        <div class="item-category__total">0 BYN</div>
-                        </div>`;
+                       
+        let itemCategory = `<div class="list-categories__item item-category item-category_income">
+        <div class="item-category__head">
+            <div class="item-category__icon ${objCategory.icon}" style="background-color:${objCategory.bg}"></div>
+            <div class="item-category__info">
+                <p class="item-category__name">${objCategory.title}</p>
+            </div>
+            <div class="item-category__total">${objCategory.cost} BYN</div>
+        </div>
+            </div>`;
         function parser(itemCategory) {
             var parser = new DOMParser();
             let teg = parser.parseFromString(itemCategory, 'text/html');

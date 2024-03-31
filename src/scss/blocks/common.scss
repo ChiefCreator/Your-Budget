@@ -33,10 +33,15 @@
     cursor: pointer;
 }
 .item-category{
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    // display: flex;
+    // align-items: center;
+    // gap: 10px;
     cursor: pointer;
+    &__head{
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
     &_add{
         .list-categories__icon{
             background-color: gray;
@@ -122,5 +127,51 @@
         font-weight: 500;
         padding: 5px 0;
         margin-left: auto;
+    }
+    &__footer{
+        display: grid;
+        grid-template-rows: 0fr;
+        overflow: hidden;
+        transition: grid-template-rows .3s ease;
+        &_act{
+            grid-template-rows: 1fr;
+        }
+        &_act  .item-category__footer-content{
+            height: auto;
+        }
+    }
+    &__footer-content{
+        min-height: 0;
+    }
+    &__comment-wrapper{
+        margin-top: 10px;
+        display: flex;
+        gap: 8px;
+    }
+    &__comment-icon{
+        // margin-top: 3px;
+        // &::before{
+        //     content: "\f075";
+        //     font-size: 18px;
+        //     color: rgb(192, 192, 192);
+        //     @include font-awesome;
+        // }
+    }
+    &__buttons{
+        margin-top: 10px;
+        display: flex;
+        gap: 10px;
+    }
+    &__button{
+        flex: 1 1 50%;
+        padding: 10px 12px;
+        background-color: $main-color;
+        border-radius: 10px;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+        &_delete{
+            background-color: rgb(197, 18, 18);
+        }
     }
 }

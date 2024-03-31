@@ -325,13 +325,48 @@ let mainDatePicker = new AirDatepicker('#main-picker', {
                     let block = `<div class="list-operation__wrapper" data-dat="expenses${sortedData[i].date}">
                         <p class="list-operation__date">${sortedData[i].date}</p>
                         </div>`;
-                    let itemCategory = `<div class="list-category__item item-category">
-                        <div class="item-category__icon ${sortedData[i].icon}" style="background-color:${sortedData[i].bg}"></div>
-                        <div class="item-category__info">
-                            <p class="item-category__name">${sortedData[i].title}</p>
+                        let itemCategory = "";
+                        if (sortedData[i].comment) {
+                            itemCategory = `<div class="list-category__item item-category expand-operation" data-index="${sortedData[i].index}">
+                        <div class="item-category__head">
+                            <div class="item-category__icon ${sortedData[i].icon}" style="background-color:${sortedData[i].bg}"></div>
+                            <div class="item-category__info">
+                                <p class="item-category__name">${sortedData[i].title}</p>
+                            </div>
+                            <div class="item-category__total">${sortedData[i].cost} BYN</div>
                         </div>
-                        <div class="item-category__total">${sortedData[i].cost} BYN</div>
-                        </div>`;
+                        <div class="item-category__footer">
+                            <div class="item-category__footer-content">
+                                <div class="item-category__comment-wrapper">
+                                    <div class="item-category__comment-icon"></div>
+                                    <p class="item-category__comment">${sortedData[i].comment}</p>
+                                </div>
+                                <div class="item-category__buttons">
+                                    <button class="item-category__button item-category__button_change">Изменить</button>
+                                    <button class="item-category__button item-category__button_delete">Удалить</button>
+                                </div>
+                            </div>
+                        </div>
+                            </div>`;
+                        } else {
+                            itemCategory = `<div class="list-category__item item-category expand-operation" data-index="${sortedData[i].index}">
+                        <div class="item-category__head">
+                            <div class="item-category__icon ${sortedData[i].icon}" style="background-color:${sortedData[i].bg}"></div>
+                            <div class="item-category__info">
+                                <p class="item-category__name">${sortedData[i].title}</p>
+                            </div>
+                            <div class="item-category__total">${sortedData[i].cost} BYN</div>
+                        </div>
+                        <div class="item-category__footer">
+                            <div class="item-category__footer-content">
+                                <div class="item-category__buttons">
+                                    <button class="item-category__button item-category__button_change">Изменить</button>
+                                    <button class="item-category__button item-category__button_delete">Удалить</button>
+                                </div>
+                            </div>
+                        </div>
+                            </div>`;
+                        }
     
                     function parser(itemCategory) {
                         var parser = new DOMParser();
@@ -447,8 +482,6 @@ let mainDatePicker = new AirDatepicker('#main-picker', {
             }
             operationToChart();
     
-            // категории
-            // в operation кидать только категории при создании, не изменять cost
             function chartExpensesBar() {
                 let mergedArray = [];
                 
@@ -531,13 +564,48 @@ let mainDatePicker = new AirDatepicker('#main-picker', {
                 let block = `<div class="list-operation__wrapper" data-dat="income${sortedData[i].date}">
                     <p class="list-operation__date">${sortedData[i].date}</p>
                     </div>`;
-                let itemCategory = `<div class="list-category__item item-category">
-                    <div class="item-category__icon ${sortedData[i].icon}" style="background-color:${sortedData[i].bg}"></div>
-                    <div class="item-category__info">
-                        <p class="item-category__name">${sortedData[i].title}</p>
+                    let itemCategory = "";
+                    if (sortedData[i].comment) {
+                        itemCategory = `<div class="list-category__item item-category expand-operation">
+                    <div class="item-category__head">
+                        <div class="item-category__icon ${sortedData[i].icon}" style="background-color:${sortedData[i].bg}"></div>
+                        <div class="item-category__info">
+                            <p class="item-category__name">${sortedData[i].title}</p>
+                        </div>
+                        <div class="item-category__total">${sortedData[i].cost} BYN</div>
                     </div>
-                    <div class="item-category__total">${sortedData[i].cost} BYN</div>
-                    </div>`;
+                    <div class="item-category__footer">
+                        <div class="item-category__footer-content">
+                            <div class="item-category__comment-wrapper">
+                                <div class="item-category__comment-icon"></div>
+                                <p class="item-category__comment">${sortedData[i].comment}</p>
+                            </div>
+                            <div class="item-category__buttons">
+                                <button class="item-category__button item-category__button_change">Изменить</button>
+                                <button class="item-category__button item-category__button_delete">Удалить</button>
+                            </div>
+                        </div>
+                    </div>
+                        </div>`;
+                    } else {
+                        itemCategory = `<div class="list-category__item item-category expand-operation">
+                    <div class="item-category__head">
+                        <div class="item-category__icon ${sortedData[i].icon}" style="background-color:${sortedData[i].bg}"></div>
+                        <div class="item-category__info">
+                            <p class="item-category__name">${sortedData[i].title}</p>
+                        </div>
+                        <div class="item-category__total">${sortedData[i].cost} BYN</div>
+                    </div>
+                    <div class="item-category__footer">
+                        <div class="item-category__footer-content">
+                            <div class="item-category__buttons">
+                                <button class="item-category__button item-category__button_change">Изменить</button>
+                                <button class="item-category__button item-category__button_delete">Удалить</button>
+                            </div>
+                        </div>
+                    </div>
+                        </div>`;
+                    }
 
                 function parser(itemCategory) {
                     var parser = new DOMParser();
@@ -819,3 +887,9 @@ switchCategory();
 
 import inputTextarrea from "./modules/textarrea";
 inputTextarrea();
+
+import expandOperation from "./modules/expand-operation";
+expandOperation();
+
+import deleteOperationExpenses from "./modules/delete-operation-expenses";
+deleteOperationExpenses(chartExpenses, chartExpensesAndIncome);

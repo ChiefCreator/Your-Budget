@@ -15,13 +15,48 @@ if (localStorage.getItem("operationsAllDate")) {
                 blockToPaste.append(parserBlockToPaste(block));
                 for (let i = 0;i < value.length;i++) {
     
-                    let itemCategory = `<div class="list-category__item item-category">
-                    <div class="item-category__icon ${value[i].icon}" style="background-color:${value[i].bg}"></div>
-                    <div class="item-category__info">
-                        <p class="item-category__name">${value[i].title}</p>
-                    </div>
-                    <div class="item-category__total">${value[i].cost} BYN</div>
-                    </div>`;
+                    let itemCategory = "";
+                        if (value[i].comment) {
+                            itemCategory = `<div class="list-category__item item-category expand-operation">
+                        <div class="item-category__head">
+                            <div class="item-category__icon ${value[i].icon}" style="background-color:${value[i].bg}"></div>
+                            <div class="item-category__info">
+                                <p class="item-category__name">${value[i].title}</p>
+                            </div>
+                            <div class="item-category__total">${value[i].cost} BYN</div>
+                        </div>
+                        <div class="item-category__footer">
+                            <div class="item-category__footer-content">
+                                <div class="item-category__comment-wrapper">
+                                    <div class="item-category__comment-icon"></div>
+                                    <p class="item-category__comment">${value[i].comment}</p>
+                                </div>
+                                <div class="item-category__buttons">
+                                    <button class="item-category__button item-category__button_change">Изменить</button>
+                                    <button class="item-category__button item-category__button_delete">Удалить</button>
+                                </div>
+                            </div>
+                        </div>
+                            </div>`;
+                        } else {
+                            itemCategory = `<div class="list-category__item item-category expand-operation">
+                        <div class="item-category__head">
+                            <div class="item-category__icon ${value[i].icon}" style="background-color:${value[i].bg}"></div>
+                            <div class="item-category__info">
+                                <p class="item-category__name">${value[i].title}</p>
+                            </div>
+                            <div class="item-category__total">${value[i].cost} BYN</div>
+                        </div>
+                        <div class="item-category__footer">
+                            <div class="item-category__footer-content">
+                                <div class="item-category__buttons">
+                                    <button class="item-category__button item-category__button_change">Изменить</button>
+                                    <button class="item-category__button item-category__button_delete">Удалить</button>
+                                </div>
+                            </div>
+                        </div>
+                            </div>`;
+                        }
         
                     function parser(itemCategory) {
                         var parser = new DOMParser();
@@ -157,3 +192,9 @@ function operationToChart() {
     chartOperationsBubbles.update();
 }
 operationToChart()
+
+import expandOperation from "./modules/expand-operation";
+expandOperation();
+
+import deleteOperationExpenses from "./modules/delete-operation-expenses";
+deleteOperationExpenses();

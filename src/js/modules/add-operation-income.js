@@ -36,13 +36,48 @@ function addOperationIncome(chartExpenses, objOperationsDate, arrDate, chartExpe
                 blockToPaste.append(parserBlockToPaste(block));
                 for (let i = 0;i < value.length;i++) {
     
-                    let itemCategory = `<div class="list-category__item item-category">
-                    <div class="item-category__icon ${value[i].icon}" style="background-color:${value[i].bg}"></div>
-                    <div class="item-category__info">
-                        <p class="item-category__name">${value[i].title}</p>
-                    </div>
-                    <div class="item-category__total">${value[i].cost} BYN</div>
-                    </div>`;
+                    let itemCategory = "";
+                        if (value[i].comment) {
+                            itemCategory = `<div class="list-category__item item-category expand-operation">
+                        <div class="item-category__head">
+                            <div class="item-category__icon ${value[i].icon}" style="background-color:${value[i].bg}"></div>
+                            <div class="item-category__info">
+                                <p class="item-category__name">${value[i].title}</p>
+                            </div>
+                            <div class="item-category__total">${value[i].cost} BYN</div>
+                        </div>
+                        <div class="item-category__footer">
+                            <div class="item-category__footer-content">
+                                <div class="item-category__comment-wrapper">
+                                    <div class="item-category__comment-icon"></div>
+                                    <p class="item-category__comment">${value[i].comment}</p>
+                                </div>
+                                <div class="item-category__buttons">
+                                    <button class="item-category__button item-category__button_change">Изменить</button>
+                                    <button class="item-category__button item-category__button_delete">Удалить</button>
+                                </div>
+                            </div>
+                        </div>
+                            </div>`;
+                        } else {
+                            itemCategory = `<div class="list-category__item item-category expand-operation">
+                        <div class="item-category__head">
+                            <div class="item-category__icon ${value[i].icon}" style="background-color:${value[i].bg}"></div>
+                            <div class="item-category__info">
+                                <p class="item-category__name">${value[i].title}</p>
+                            </div>
+                            <div class="item-category__total">${value[i].cost} BYN</div>
+                        </div>
+                        <div class="item-category__footer">
+                            <div class="item-category__footer-content">
+                                <div class="item-category__buttons">
+                                    <button class="item-category__button item-category__button_change">Изменить</button>
+                                    <button class="item-category__button item-category__button_delete">Удалить</button>
+                                </div>
+                            </div>
+                        </div>
+                            </div>`;
+                        }
         
                     function parser(itemCategory) {
                         var parser = new DOMParser();
@@ -74,13 +109,48 @@ function addOperationIncome(chartExpenses, objOperationsDate, arrDate, chartExpe
                     if (count < 3) {
                         count++;
 
-                        let itemCategory = `<div class="list-category__item item-category">
-                        <div class="item-category__icon ${value[i].icon}" style="background-color:${value[i].bg}"></div>
-                        <div class="item-category__info">
-                            <p class="item-category__name">${value[i].title}</p>
+                        let itemCategory = "";
+                        if (value[i].comment) {
+                            itemCategory = `<div class="list-category__item item-category expand-operation">
+                        <div class="item-category__head">
+                            <div class="item-category__icon ${value[i].icon}" style="background-color:${value[i].bg}"></div>
+                            <div class="item-category__info">
+                                <p class="item-category__name">${value[i].title}</p>
+                            </div>
+                            <div class="item-category__total">${value[i].cost} BYN</div>
                         </div>
-                        <div class="item-category__total">${value[i].cost} BYN</div>
-                        </div>`;
+                        <div class="item-category__footer">
+                            <div class="item-category__footer-content">
+                                <div class="item-category__comment-wrapper">
+                                    <div class="item-category__comment-icon"></div>
+                                    <p class="item-category__comment">${value[i].comment}</p>
+                                </div>
+                                <div class="item-category__buttons">
+                                    <button class="item-category__button item-category__button_change">Изменить</button>
+                                    <button class="item-category__button item-category__button_delete">Удалить</button>
+                                </div>
+                            </div>
+                        </div>
+                            </div>`;
+                        } else {
+                            itemCategory = `<div class="list-category__item item-category expand-operation">
+                        <div class="item-category__head">
+                            <div class="item-category__icon ${value[i].icon}" style="background-color:${value[i].bg}"></div>
+                            <div class="item-category__info">
+                                <p class="item-category__name">${value[i].title}</p>
+                            </div>
+                            <div class="item-category__total">${value[i].cost} BYN</div>
+                        </div>
+                        <div class="item-category__footer">
+                            <div class="item-category__footer-content">
+                                <div class="item-category__buttons">
+                                    <button class="item-category__button item-category__button_change">Изменить</button>
+                                    <button class="item-category__button item-category__button_delete">Удалить</button>
+                                </div>
+                            </div>
+                        </div>
+                            </div>`;
+                        }
                         
                         function parser(itemCategory) {
                             var parser = new DOMParser();
@@ -212,13 +282,15 @@ function addOperationIncome(chartExpenses, objOperationsDate, arrDate, chartExpe
         })
 
         let blockToPaste = document.querySelector(".popup-operation_income .list-categories");
-        let itemCategory = `<div class="item-category item-category_income" data-index="${JSON.parse(localStorage.getItem("operationsIncome"))[indexCategory - 1].index}">
-                    <div class="item-category__icon ${JSON.parse(localStorage.getItem("operationsIncome"))[indexCategory - 1].icon}" style="background-color:${JSON.parse(localStorage.getItem("operationsIncome"))[indexCategory - 1].bg}"></div>
-                    <div class="item-category__info">
-                        <p class="item-category__name">${JSON.parse(localStorage.getItem("operationsIncome"))[indexCategory - 1].title}</p>
-                    </div>
-                    <div class="item-category__total">${JSON.parse(localStorage.getItem("operationsIncome"))[indexCategory - 1].cost} BYN</div>
-                    </div>`;
+        let itemCategory = `<div class="item-category item-category_income">
+        <div class="item-category__head">
+            <div class="item-category__icon ${JSON.parse(localStorage.getItem("itemCategoriesIncomeSortedByCurrenDate"))[indexCategory - 1].icon}" style="background-color:${JSON.parse(localStorage.getItem("itemCategoriesIncomeSortedByCurrenDate"))[indexCategory - 1].bg}"></div>
+            <div class="item-category__info">
+                <p class="item-category__name">${JSON.parse(localStorage.getItem("itemCategoriesIncomeSortedByCurrenDate"))[indexCategory - 1].title}</p>
+            </div>
+            <div class="item-category__total">${JSON.parse(localStorage.getItem("itemCategoriesIncomeSortedByCurrenDate"))[indexCategory - 1].cost} BYN</div>
+        </div>
+            </div>`;
         function parser(itemCategory) {
             var parser = new DOMParser();
             let teg = parser.parseFromString(itemCategory, 'text/html');
@@ -298,13 +370,49 @@ function addOperationIncome(chartExpenses, objOperationsDate, arrDate, chartExpe
             let block = `<div class="list-operation__wrapper" data-dat="income${sortedData[i].date}">
             <p class="list-operation__date">${sortedData[i].date}</p>
         </div>`;
-        let itemCategory = `<div class="list-category__item item-category">
-                        <div class="item-category__icon ${sortedData[i].icon}" style="background-color:${sortedData[i].bg}"></div>
-                        <div class="item-category__info">
-                            <p class="item-category__name">${sortedData[i].title}</p>
+
+        let itemCategory = "";
+            if (sortedData[i].comment) {
+                itemCategory = `<div class="list-category__item item-category expand-operation">
+            <div class="item-category__head">
+                <div class="item-category__icon ${sortedData[i].icon}" style="background-color:${sortedData[i].bg}"></div>
+                <div class="item-category__info">
+                    <p class="item-category__name">${sortedData[i].title}</p>
+                </div>
+                <div class="item-category__total">${sortedData[i].cost} BYN</div>
+            </div>
+            <div class="item-category__footer">
+                <div class="item-category__footer-content">
+                    <div class="item-category__comment-wrapper">
+                        <div class="item-category__comment-icon"></div>
+                        <p class="item-category__comment">${sortedData[i].comment}</p>
+                    </div>
+                    <div class="item-category__buttons">
+                        <button class="item-category__button item-category__button_change">Изменить</button>
+                        <button class="item-category__button item-category__button_delete">Удалить</button>
+                    </div>
+                </div>
+            </div>
+                </div>`;
+            } else {
+                itemCategory = `<div class="list-category__item item-category expand-operation">
+                <div class="item-category__head">
+                    <div class="item-category__icon ${sortedData[i].icon}" style="background-color:${sortedData[i].bg}"></div>
+                    <div class="item-category__info">
+                        <p class="item-category__name">${sortedData[i].title}</p>
+                    </div>
+                    <div class="item-category__total">${sortedData[i].cost} BYN</div>
+                </div>
+                <div class="item-category__footer">
+                    <div class="item-category__footer-content">
+                        <div class="item-category__buttons">
+                            <button class="item-category__button item-category__button_change">Изменить</button>
+                            <button class="item-category__button item-category__button_delete">Удалить</button>
                         </div>
-                        <div class="item-category__total">${sortedData[i].cost} BYN</div>
-                        </div>`;
+                    </div>
+                </div>
+                    </div>`;
+            }
                         
         function parser(itemCategory) {
             var parser = new DOMParser();
