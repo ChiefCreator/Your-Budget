@@ -27,6 +27,7 @@
   "dependencies": {
     "air-datepicker": "^3.5.0",
     "css-loader": "^6.10.0",
-    "style-loader": "^3.3.4"
+    "style-loader": "^3.3.4",
+    "swiper": "^11.1.0"
   }
 }

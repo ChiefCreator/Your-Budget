@@ -898,3 +898,26 @@ deleteOperationExpenses(chartExpenses, chartExpensesAndIncome);
 
 import deleteOperationIncome from "./modules/delete-operation-income";
 deleteOperationIncome(chartIncome, chartIncomeBar);
+
+import Swiper from 'swiper/bundle';
+import 'swiper/css/bundle';
+
+const swiperIconsExpenses = new Swiper('.swiper_icons-expenses', {
+    speed: 400,
+    spaceBetween: 0,
+    pagination: {
+        el: '.pagination_icons-expenses',
+        type: 'bullets',
+        clickable: true,
+    },
+});
+
+const swiperIconsIncome = new Swiper('.swiper_icons-income', {
+    speed: 400,
+    spaceBetween: 0,
+    pagination: {
+        el: '.pagination_icons-income',
+        type: 'bullets',
+        clickable: true,
+    },
+});

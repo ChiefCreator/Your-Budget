@@ -188,7 +188,7 @@
         left: calc(100% - 500px);
     }
     &__head{
-        border-bottom: 2px solid $main-color;
+        border-bottom: 1px solid rgb(218, 218, 218);
     }
     &__head-content{
         padding: 10px;
@@ -197,7 +197,9 @@
         justify-content: space-between;
     }
     &__title{
-        font-size: 25px;
+        font-size: 23px;
+        font-weight: 600;
+        color: black;
     }
     &__close{
         flex: 0 0 60px;
@@ -209,48 +211,85 @@
         &::before{
             content: "\f00d";
             @include font-awesome;
+            font-size: 28px;
             color: black;
-            font-size: 35px;
         }
     }
     &__body{
-        padding: 20px;
         display: flex;
         flex-direction: column;
-        gap: 20px;
         flex: 1 1 auto;
     }
     &__block-title{
         font-size: 18px;
         font-weight: 500;
     }
+    &__block-wrapper{
+        border-bottom: 1px solid rgb(218, 218, 218);
+        &_without-border{
+            border-bottom: none;
+        }
+    }
+    &__block{
+        padding: 15px;
+        &_no-padding{
+            padding: 0;
+        }
+        &_button{
+            margin-top: auto;
+        }
+    }
+    &__block-title{
+        font-size: 18px;
+        font-weight: 500;
+    }
     &__input-container{
-        margin-top: 10px;
-        position: relative;
         flex: 0 1 200px;
         height: 35px;
-        border-radius: 7px;
-        border: 2px solid $main-color;
+        display: flex;
+        gap: 8px;
+    }
+    &__input-icon{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        &::before{
+            font-size: 18px;
+            color: black;
+            @include font-awesome;
+        }
+        &_name{
+            &::before{
+                content: "\f5b7";
+            }
+        }
+    }
+    &__input-content{
+        position: relative;
     }
     &__input{
         background-color: transparent;
         width: 100%;
         height: 100%;
-        &:focus + .popup-category__input-label{
+        color: black;
+        &:focus + &-label{
             left: 10px;
             top:0;
             font-size: 12px;
         }
-        &:valid + .popup-category__input-label{
+        &:valid + &-label{
             left: 10px;
             top:0;
             font-size: 12px;
+        }
+        &_date{
+            width: auto;
         }
     }
     &__input-label{
         font-size: 14px;
+        font-weight: 500;
         background-color: white;
-        padding: 0 3px;
         color: black;
         position: absolute;
         left: 3px;
@@ -259,8 +298,15 @@
         pointer-events: none;
         transition: all .3s ease;
     }
+    &__icon-list-wrapper{
+        padding: 15px;
+    }   
+    &__icon-list-title{
+        margin-bottom: 10px;
+        font-size: 20px;
+        font-weight: 500;
+    }
     &__icon-list{
-        margin-top: 10px;
         display: flex;
         flex-wrap: wrap;
         gap: 20px;
@@ -281,54 +327,161 @@
             color: inherit;
             font-size: 30px;
         }
-        &_children::before{
-            content: "\f1ae";
+        &_food1::before{
+            content: "\f805";
         }
-        &_home::before{
-            content: "\f015";
+        &_food2::before{
+            content: "\f818";
         }
-        &_care::before{
-            content: "\f004";
+        &_food3::before{
+            content: "\f564";
         }
-        &_health::before{
-            content: "\f21e";
+        &_food4::before{
+            content: "\e4c6";
         }
-        &_cafe::before{
+        &_food5::before{
             content: "\f0f4";
         }
-        &_communal::before{
-            content: "\e585";
+        &_food6::before{
+            content: "\f7b6";
         }
-        &_car::before{
-            content: "\f5e4";
+        &_food7::before{
+            content: "\f72f";
         }
-        &_education::before{
+        &_food8::before{
+            content: "\f4e3";
+        }
+        &_food9::before{
+            content: "\f810";
+        }
+        &_food10::before{
+            content: "\f80f";
+        }
+        &_food11::before{
+            content: "\f1fd";
+        }
+        &_food12::before{
+            content: "\f5d1";
+        }
+        &_food13::before{
+            content: "\f816";
+        }
+        &_food14::before{
+            content: "\e2eb";
+        }
+        &_food15::before{
+            content: "\f7ec";
+        }
+        &_food16::before{
+            content: "\f7ef";
+        }
+        &_food17::before{
+            content: "\f7ec";
+        }
+        &_food18::before{
+            content: "\e448";
+        }
+        &_home1::before{
+            content: "\f015";
+        }
+        &_home2::before{
+            content: "\f4b8";
+        }
+        &_home3::before{
+            content: "\f6c0";
+        }
+        &_home4::before{
+            content: "\f236";
+        }
+        &_home5::before{
+            content: "\e006";
+        }
+        &_home6::before{
+            content: "\f2cd";
+        }
+        &_home7::before{
+            content: "\f2cc";
+        }
+        &_home8::before{
+            content: "\f7d8";
+        }
+        &_home9::before{
+            content: "\e06e";
+        }
+        &_home10::before{
+            content: "\f0eb";
+        }
+        &_home11::before{
+            content: "\f26c";
+        }
+        &_home12::before{
+            content: "\e06d";
+        }
+        &_home13::before{
+            content: "\f494";
+        }
+        &_building1::before{
+            content: "\f1ad";
+        }
+        &_building2::before{
+            content: "\f19c";
+        }
+        &_building3::before{
+            content: "\f64f";
+        }
+        &_building4::before{
+            content: "\f54f";
+        }
+        &_building5::before{
+            content: "\f66f";
+        }
+        &_building6::before{
+            content: "\f54e";
+        }
+        &_building7::before{
             content: "\f549";
         }
-        &_payment::before{
-            content: "\f53d";
+        &_building8::before{
+            content: "\f594";
         }
-        &_gift::before{
-            content: "\f06b";
+        &_building9::before{
+            content: "\f0f8";
         }
-        &_subscribe::before{
-            content: "\f0f3";
+        &_building10::before{
+            content: "\f51d";
         }
-        &_purchase::before{
-            content: "\f07a";
+        &_building11::before{
+            content: "\f6a7";
         }
-        &_product::before{
-            content: "\f290";
+        &_building12::before{
+            content: "\e587";
         }
-        &_journey::before{
-            content: "\f57d";
+        &_building13::before{
+            content: "\f678";
         }
-        &_entertainment::before{
-            content: "\f561";
+        &_building14::before{
+            content: "\f752";
         }
-        &_transport::before{
-            content: "\f207";
+        &_building15::before{
+            content: "\e586";
         }
+        &_building16::before{
+            content: "\e57d";
+        }
+        &_building17::before{
+            content: "\e532";
+        }
+        &_building18::before{
+            content: "\e52e";
+        }   
+    }
+    &__color-wrapper{
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    &__color-title{
+        font-weight: 500;
     }
     .act{
         transform: translateY(-7px);
@@ -336,6 +489,23 @@
     &__button{
         margin-top: auto;
         margin-right: auto;
+    }
+}
+.pagination{
+    margin: 15px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .swiper-pagination-bullet{
+        width: 15px;
+        height: 3px;
+        border-radius: 0;
+        background-color: black;
+        transition: transform .3s ease;
+        cursor: pointer;
+        &:hover{
+            transform: scale(1.3);
+        }
     }
 }
 .chart-expenses{

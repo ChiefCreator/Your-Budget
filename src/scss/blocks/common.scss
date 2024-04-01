@@ -65,54 +65,153 @@
             font-size: 25px;
         }
     }
-    .icon-children::before{
-        content: "\f1ae";
+    .icon-food1::before{
+        content: "\f805";
     }
-    .icon-home::before{
-        content: "\f015";
+    .icon-food2::before{
+        content: "\f818";
     }
-    .icon-care::before{
-        content: "\f004";
+    .icon-food3::before{
+        content: "\f564";
     }
-    .icon-health::before{
-        content: "\f21e";
+    .icon-food4::before{
+        content: "\e4c6";
     }
-    .icon-cafe::before{
+    .icon-food5::before{
         content: "\f0f4";
     }
-    .icon-communal::before{
-        content: "\e585";
+    .icon-food6::before{
+        content: "\f7b6";
     }
-    .icon-car::before{
-        content: "\f5e4";
+    .icon-food7::before{
+        content: "\f72f";
     }
-    .icon-education::before{
+    .icon-food8::before{
+        content: "\f4e3";
+    }
+    .icon-food9::before{
+        content: "\f810";
+    }
+    .icon-food10::before{
+        content: "\f80f";
+    }
+    .icon-food11::before{
+        content: "\f1fd";
+    }
+    .icon-food12::before{
+        content: "\f5d1";
+    }
+    .icon-food13::before{
+        content: "\f816";
+    }
+    .icon-food14::before{
+        content: "\e2eb";
+    }
+    .icon-food15::before{
+        content: "\f7ec";
+    }
+    .icon-food16::before{
+        content: "\f7ef";
+    }
+    .icon-food17::before{
+        content: "\f7ec";
+    }
+    .icon-food18::before{
+        content: "\e448";
+    }
+    .icon-home1::before{
+        content: "\f015";
+    }
+    .icon-home2::before{
+        content: "\f4b8";
+    }
+    .icon-home3::before{
+        content: "\f6c0";
+    }
+    .icon-home4::before{
+        content: "\f236";
+    }
+    .icon-home5::before{
+        content: "\e006";
+    }
+    .icon-home6::before{
+        content: "\f2cd";
+    }
+    .icon-home7::before{
+        content: "\f2cc";
+    }
+    .icon-home8::before{
+        content: "\f7d8";
+    }
+    .icon-home9::before{
+        content: "\e06e";
+    }
+    .icon-home10::before{
+        content: "\f0eb";
+    }
+    .icon-home11::before{
+        content: "\f26c";
+    }
+    .icon-home12::before{
+        content: "\e06d";
+    }
+    .icon-home13::before{
+        content: "\f494";
+    }
+    .icon-building1::before{
+        content: "\f1ad";
+    }
+    .icon-building2::before{
+        content: "\f19c";
+    }
+    .icon-building3::before{
+        content: "\f64f";
+    }
+    .icon-building4::before{
+        content: "\f54f";
+    }
+    .icon-building5::before{
+        content: "\f66f";
+    }
+    .icon-building6::before{
+        content: "\f54e";
+    }
+    .icon-building7::before{
         content: "\f549";
     }
-    .icon-payment::before{
-        content: "\f53d";
+    .icon-building8::before{
+        content: "\f594";
     }
-    .icon-gift::before{
-        content: "\f06b";
+    .icon-building9::before{
+        content: "\f0f8";
     }
-    .icon-subscribe::before{
-        content: "\f0f3";
+    .icon-building10::before{
+        content: "\f51d";
     }
-    .icon-purchase::before{
-        content: "\f07a";
+    .icon-building11::before{
+        content: "\f6a7";
     }
-    .icon-product::before{
-        content: "\f290";
+    .icon-building12::before{
+        content: "\e587";
     }
-    .icon-journey::before{
-        content: "\f57d";
+    .icon-building13::before{
+        content: "\f678";
     }
-    .icon-entertainment::before{
-        content: "\f561";
+    .icon-building14::before{
+        content: "\f752";
     }
-    .icon-transport::before{
-        content: "\f207";
+    .icon-building15::before{
+        content: "\e586";
     }
+    .icon-building16::before{
+        content: "\e57d";
+    }
+    .icon-building17::before{
+        content: "\e532";
+    }
+    .icon-building18::before{
+        content: "\e52e";
+    }   
     &__info{
         padding: 5px 0;
         display: flex;
