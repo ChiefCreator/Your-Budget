@@ -371,7 +371,7 @@ function addOperationExpenses(chartExpenses, objOperationsDate, arrDate, chartEx
     function isObjectBelongToCurrentDate(obj) {
         const expenseDate = new Date(obj.date).getFullYear() + "-" + ("0" + (+(new Date(obj.date)).getMonth() + 1)).slice(-2);
         const yearMonthToFilter = localStorage.getItem("currentDate");
-        console.log(expenseDate,yearMonthToFilter)
+    
         if (expenseDate === yearMonthToFilter) {
             return true
         }
@@ -491,6 +491,7 @@ function addOperationExpenses(chartExpenses, objOperationsDate, arrDate, chartEx
             return objOperationsDate;
         }
     }
+
     function uniteObjectsByDate(obj1, obj2) {
         if ((localStorage.getItem("operationsExpensesDate") && localStorage.getItem("operationsIncomeDate"))) {
             return mergeObjectsByDate(obj1, obj2);

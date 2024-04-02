@@ -921,3 +921,13 @@ const swiperIconsIncome = new Swiper('.swiper_icons-income', {
         clickable: true,
     },
 });
+
+import changeOperationExpenses from "./modules/change-operation-expenses";
+changeOperationExpenses(chartExpenses, objOperationsDate, arrDate, chartExpensesAndIncome, operationsAllDates);
+
+let dateChangeOperation = new AirDatepicker('#date-change-operation-expenses', {
+    inline: false,
+    position:'right top',
+    container: '.popup-change-operation-datepicker',
+    dateFormat: 'yyyy-MM-dd',
+})

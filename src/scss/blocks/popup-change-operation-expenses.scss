@@ -1,6 +1,7 @@
-.popup-operation{
+.popup-change-operation{
     position: fixed;
     left: calc(100% + 500px);
+    // left: 0;
     top:0;
     width: 500px;
     min-height: 100vh;
@@ -86,6 +87,9 @@
     }
     &__input-content{
         position: relative;
+        &_wide{
+            flex: 1 1 auto;
+        }
     }
     &__input{
         background-color: transparent;
