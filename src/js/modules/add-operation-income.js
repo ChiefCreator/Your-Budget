@@ -88,7 +88,8 @@ function addOperationIncome(chartExpenses, objOperationsDate, arrDate, chartExpe
                     document.querySelector(`[data-dat="income${key}"]`).append(parser(itemCategory))
                 }
             }  
-        } else {
+        }
+         else {
             let count = 0;
             for (let [key, value] of Object.entries(JSON.parse(localStorage.getItem("operationsIncomeDate"))).reverse()) {
 
@@ -438,8 +439,6 @@ function addOperationIncome(chartExpenses, objOperationsDate, arrDate, chartExpe
             return item;
         }
 
-
-        console.log(sortedData)
         if (JSON.parse(localStorage.getItem("itemOperationIncome")).length < 4) {
             blockToPaste.append(parserBlockToPaste(block));
             document.querySelector(`[data-dat="income${sortedData[i].date}"]`).append(parser(itemCategory));
@@ -448,7 +447,8 @@ function addOperationIncome(chartExpenses, objOperationsDate, arrDate, chartExpe
                 document.querySelectorAll(`[data-dat="income${sortedData[i].date}"]`)[document.querySelectorAll(`[data-dat="income${sortedData[i].date}"]`).length - 1].remove()
             }
             more.classList.remove("operation-list__more_act")
-        } else {
+        } 
+        else {
             blockToPaste.append(parserBlockToPaste(block));
             document.querySelector(`[data-dat="income${sortedData[i].date}"]`).append(parser(itemCategory));
 

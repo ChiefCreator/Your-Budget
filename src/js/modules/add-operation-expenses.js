@@ -89,7 +89,8 @@ function addOperationExpenses(chartExpenses, objOperationsDate, arrDate, chartEx
                 }
             } 
             more.classList.remove("operation-list__more_act")
-        } else {
+        }
+         else {
             let count = 0;
             for (let [key, value] of Object.entries(JSON.parse(localStorage.getItem("operationsExpensesDate"))).reverse()) {
 
@@ -454,7 +455,8 @@ function addOperationExpenses(chartExpenses, objOperationsDate, arrDate, chartEx
                 document.querySelectorAll(`[data-dat="expenses${sortedData[i].date}"]`)[document.querySelectorAll(`[data-dat="expenses${sortedData[i].date}"]`).length - 1].remove()
             }
             more.classList.remove("operation-list__more_act")
-        } else {
+        }
+         else {
             blockToPaste.append(parserBlockToPaste(block));
             document.querySelector(`[data-dat="expenses${sortedData[i].date}"]`).append(parser(itemCategory));
 

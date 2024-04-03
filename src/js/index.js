@@ -136,7 +136,7 @@ const chartExpensesAndIncome = new Chart(ctxExpensesAndIncome, {
             }
         },
         y: {
-            display: false
+            // display: false
         }
     },
     },
@@ -216,7 +216,7 @@ const chartIncomeBar = new Chart(ctxIncomeBar, {
             }
         },
         y: {
-            display: false
+            // display: false
         }
       }
     },

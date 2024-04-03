@@ -1,6 +1,6 @@
 .page-index__content{
     display: flex;
-    gap: 100px;
+    gap: 60px;
 }
 .categories{
     flex: 1 1 auto;
@@ -33,14 +33,23 @@
     cursor: pointer;
 }
 .item-category{
-    // display: flex;
-    // align-items: center;
-    // gap: 10px;
+    border-radius: 10px;
+    transition: all .3s ease;
+    &:hover{
+        background-color:rgb(242, 243, 247);
+    }
+    &:hover &__name{
+        margin-left: 5px;
+    }
+    &:hover &__total{
+        margin-right: 5px;
+    }
     cursor: pointer;
     &__head{
         display: flex;
         align-items: center;
         gap: 10px;
+        height: 50px;
     }
     &_add{
         .list-categories__icon{
@@ -51,13 +60,14 @@
         }
     }
     &__icon{
-        flex: 0 0 55px;
-        height: 55px;
+        flex: 0 0 50px;
+        height: 50px;
         background-color: orange;
         display: flex;
         align-items: center;
         justify-content: center;
-        border-radius: 50%;
+        border-radius: 10px;
+        transition: all .3s ease;
         &::before{
             @include font-awesome;
             content: "\f805";
@@ -221,11 +231,13 @@
     &__name{
         font-weight: 500;
         font-size: 18px;
+        transition: all .3s ease;
     }
     &__total{
         font-weight: 500;
         padding: 5px 0;
         margin-left: auto;
+        transition: all .3s ease;
     }
     &__footer{
         display: grid;

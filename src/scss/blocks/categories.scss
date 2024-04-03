@@ -1,7 +1,7 @@
 .categories{
     &__slider-wrapper{
         margin-top: 15px;
-        min-width: 420px;
+        min-width: 450px;
         min-height: 180px;
         position: relative;
     }
@@ -142,12 +142,12 @@
 .tools-categories{
     margin-top: 20px;
     display: flex;
-    flex-direction: column;
     gap: 20px;
-    &__item{
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
+    &__block{
+        flex: 1 1 auto;
+        border-radius: 10px;
+        background-color:rgb(242, 243, 247);
+        padding: 10px;
         cursor: pointer;
         &:hover .tools-categories__item-arrow{
             animation: anim-arrow .5s ease 2;
@@ -160,6 +160,36 @@
                 transform: translateX(8px);
             }
         }
+    }
+    .add-expenses{
+        .tools-categories__icon{
+            &::before{
+                content: "\2b";
+                font-size: 20px;
+            }
+        }
+    }
+    &__icon{
+        width: 35px;
+        height: 35px;
+        background-color: $main-color;
+        border-radius: 7px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        &::before{
+            content: "\e589";
+            @include font-awesome;
+            color: rgb(255, 255, 255);
+            font-size: 18px;
+        }
+    }
+    &__item{
+        margin-top: 5px;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
     }
     &__item-text{
         font-size: 16px;
