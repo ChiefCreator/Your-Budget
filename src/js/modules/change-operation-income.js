@@ -1,12 +1,12 @@
-function changeOperationExpenses(chartExpenses, objOperationsDate, arrDate, chartExpensesAndIncome, operationsAllDates) {
-    let popupChangeOperation = document.querySelector(".popup-change-operation_expenses");
+function changeOperationIncome(chartExpenses, objOperationsDate, arrDate, chartExpensesAndIncome, operationsAllDates) {
+    let popupChangeOperation = document.querySelector(".popup-change-operation_income");
     let closeBtn = popupChangeOperation.querySelector(".popup-change-operation__close");
     let overblock = document.querySelector(".overblock");
-    let more = document.querySelector(".operation-list__more_expenses");
+    let more = document.querySelector(".operation-list__more_income");
 
     window.addEventListener("click", function(e) {
-        if (e.target.closest(".item-category_expenses .item-category__button_change")) {
-            let button = e.target.closest(".item-category_expenses .item-category__button_change");
+        if (e.target.closest(".item-category_income .item-category__button_change")) {
+            let button = e.target.closest(".item-category_income .item-category__button_change");
             let operation = button.closest(".expand-operation");  
             operation.classList.add("expand-operation_act");
             
@@ -15,9 +15,10 @@ function changeOperationExpenses(chartExpenses, objOperationsDate, arrDate, char
             addPopup();
         }
 
-        if (e.target.closest(".popup-change-operation_expenses .popup-change-operation__button")) {
+        if (e.target.closest(".popup-change-operation_income .popup-change-operation__button")) {
             let operation = document.querySelector(".expand-operation_act");
-            
+            console.log(operation)
+            console.log(e.target.closest(".popup-change-operation_income .popup-change-operation__button"))
             changeOperation(operation);
             closePopup();
 
@@ -52,10 +53,11 @@ function changeOperationExpenses(chartExpenses, objOperationsDate, arrDate, char
     function findOperation(operation) {
         let index = operation.dataset.index;
         let modifiedObj = {}; 
+        console.log(index)
 
         let modifiedItemOperationExpenses = [];
 
-        for (let obj of JSON.parse(localStorage.getItem("itemOperationExpenses"))) {
+        for (let obj of JSON.parse(localStorage.getItem("itemOperationIncome"))) {
             if (obj.index == index) {
                 modifiedObj = Object.assign({}, obj);
                 obj = modifiedObj; 
@@ -64,14 +66,13 @@ function changeOperationExpenses(chartExpenses, objOperationsDate, arrDate, char
         }
 
         setDataFromInput(modifiedObj);
-
         return modifiedObj;
     }
 
     function setDataFromInput(modifiedObj) {
-        let inpCost = document.querySelector(".popup-change-operation_expenses .popup-change-operation__input");
-        let inpComm = document.querySelector(".popup-change-operation_expenses .popup-change-operation__textarrea");
-        let inpDate = document.querySelector(".popup-change-operation_expenses .popup-change-operation__input_date");
+        let inpCost = document.querySelector(".popup-change-operation_income .popup-change-operation__input");
+        let inpComm = document.querySelector(".popup-change-operation_income .popup-change-operation__textarrea");
+        let inpDate = document.querySelector(".popup-change-operation_income .popup-change-operation__input_date");
 
         inpCost.value = modifiedObj.cost;
         inpComm.value = modifiedObj.comment;
@@ -82,13 +83,13 @@ function changeOperationExpenses(chartExpenses, objOperationsDate, arrDate, char
         let index = operation.dataset.index;
         let modifiedObj = {}; 
 
-        let inpCost = document.querySelector(".popup-change-operation_expenses .popup-change-operation__input");
-        let inpComm = document.querySelector(".popup-change-operation_expenses .popup-change-operation__textarrea");
-        let inpDate = document.querySelector(".popup-change-operation_expenses .popup-change-operation__input_date");
+        let inpCost = document.querySelector(".popup-change-operation_income .popup-change-operation__input");
+        let inpComm = document.querySelector(".popup-change-operation_income .popup-change-operation__textarrea");
+        let inpDate = document.querySelector(".popup-change-operation_income .popup-change-operation__input_date");
 
         let modifiedItemOperationExpenses = [];
 
-        for (let obj of JSON.parse(localStorage.getItem("itemOperationExpenses"))) {
+        for (let obj of JSON.parse(localStorage.getItem("itemOperationIncome"))) {
             if (obj.index == index) {
                 modifiedObj = Object.assign({}, obj);
 
@@ -101,18 +102,18 @@ function changeOperationExpenses(chartExpenses, objOperationsDate, arrDate, char
             modifiedItemOperationExpenses.push(obj)
         }
 
-        localStorage.setItem("itemOperationExpenses", JSON.stringify(modifiedItemOperationExpenses));
+        localStorage.setItem("itemOperationIncome", JSON.stringify(modifiedItemOperationExpenses));
         setOperationToList(sortArrayByCurrentDate(modifiedItemOperationExpenses), modifiedObj)
     }
 
     function addCategoryToPopup(obj) {
-        document.querySelectorAll(".popup-change-operation_expenses .item-category").forEach(category => {
+        document.querySelectorAll(".popup-change-operation_income .item-category").forEach(category => {
             category.style.display = "none";
         })
 
-        let blockToPaste = document.querySelector(".popup-change-operation_expenses .list-categories");
+        let blockToPaste = document.querySelector(".popup-change-operation_income .list-categories");
                       
-        let itemCategory = `<div class="item-category item-category_expenses">
+        let itemCategory = `<div class="item-category item-category_income">
         <div class="item-category__head">
             <div class="item-category__icon ${obj.icon}" style="background-color:${obj.bg}"></div>
             <div class="item-category__info">
@@ -143,13 +144,13 @@ function changeOperationExpenses(chartExpenses, objOperationsDate, arrDate, char
 
         const yearMonthToFilter = localStorage.getItem("currentDate");
         const expensesInYearMonth = filterExpensesByMonth(arr, yearMonthToFilter);
-        localStorage.setItem("itemOperationExpensesSortedByCurrenDate", JSON.stringify(sortArr(expensesInYearMonth)));
+        localStorage.setItem("itemOperationIncomeSortedByCurrenDate", JSON.stringify(sortArr(expensesInYearMonth)));
 
         return expensesInYearMonth;
     }
 
     function setOperationToList(sortedData, objectOperation) {
-        let blockToPaste = document.querySelector(".operation-list__item_expenses");
+        let blockToPaste = document.querySelector(".operation-list__item_income");
 
         blockToPaste.querySelectorAll(".list-operation__wrapper").forEach(block => {
             block.remove()
@@ -158,13 +159,13 @@ function changeOperationExpenses(chartExpenses, objOperationsDate, arrDate, char
         sortedData = sortArrayByCurrentDate(sortedData)
 
         for (let i = 0;i < sortedData.length;i++) {
-            let block = `<div class="list-operation__wrapper" data-dat="expenses${sortedData[i].date}">
+            let block = `<div class="list-operation__wrapper" data-dat="income${sortedData[i].date}">
             <p class="list-operation__date">${sortedData[i].date}</p>
             </div>`;
 
             let itemCategory = "";
             if (sortedData[i].comment) {
-                itemCategory = `<div class="list-category__item item-category item-category_expenses expand-operation" data-index="${sortedData[i].index}">
+                itemCategory = `<div class="list-category__item item-category item-category_income expand-operation" data-index="${sortedData[i].index}">
             <div class="item-category__head">
                 <div class="item-category__icon ${sortedData[i].icon}" style="background-color:${sortedData[i].bg}"></div>
                 <div class="item-category__info">
@@ -186,7 +187,7 @@ function changeOperationExpenses(chartExpenses, objOperationsDate, arrDate, char
             </div>
                 </div>`;
             } else {
-                itemCategory = `<div class="list-category__item item-category item-category_expenses expand-operation" data-index="${sortedData[i].index}">
+                itemCategory = `<div class="list-category__item item-category item-category_income expand-operation" data-index="${sortedData[i].index}">
                 <div class="item-category__head">
                     <div class="item-category__icon ${sortedData[i].icon}" style="background-color:${sortedData[i].bg}"></div>
                     <div class="item-category__info">
@@ -218,20 +219,20 @@ function changeOperationExpenses(chartExpenses, objOperationsDate, arrDate, char
             return item;
         }
 
-        if (JSON.parse(localStorage.getItem("itemOperationExpensesSortedByCurrenDate")).length < 4) {
+        if (JSON.parse(localStorage.getItem("itemOperationIncomeSortedByCurrenDate")).length < 4) {
             blockToPaste.append(parserBlockToPaste(block));
-            document.querySelector(`[data-dat="expenses${sortedData[i].date}"]`).append(parser(itemCategory));
+            document.querySelector(`[data-dat="income${sortedData[i].date}"]`).append(parser(itemCategory));
 
-            if (document.querySelectorAll(`[data-dat="expenses${sortedData[i].date}"]`).length > 1) {
-                document.querySelectorAll(`[data-dat="expenses${sortedData[i].date}"]`)[document.querySelectorAll(`[data-dat="expenses${sortedData[i].date}"]`).length - 1].remove()
+            if (document.querySelectorAll(`[data-dat="income${sortedData[i].date}"]`).length > 1) {
+                document.querySelectorAll(`[data-dat="income${sortedData[i].date}"]`)[document.querySelectorAll(`[data-dat="income${sortedData[i].date}"]`).length - 1].remove()
             }
             more.classList.remove("operation-list__more_act")
         } else {
             blockToPaste.append(parserBlockToPaste(block));
-            document.querySelector(`[data-dat="expenses${sortedData[i].date}"]`).append(parser(itemCategory));
+            document.querySelector(`[data-dat="income${sortedData[i].date}"]`).append(parser(itemCategory));
 
-            if (document.querySelectorAll(`[data-dat="expenses${sortedData[i].date}"]`).length > 1) {
-                document.querySelectorAll(`[data-dat="expenses${sortedData[i].date}"]`)[document.querySelectorAll(`[data-dat="expenses${sortedData[i].date}"]`).length - 1].remove()
+            if (document.querySelectorAll(`[data-dat="income${sortedData[i].date}"]`).length > 1) {
+                document.querySelectorAll(`[data-dat="income${sortedData[i].date}"]`)[document.querySelectorAll(`[data-dat="income${sortedData[i].date}"]`).length - 1].remove()
             }
 
             blockToPaste.querySelectorAll(".item-category").forEach((operation, index) => {
@@ -254,7 +255,7 @@ function changeOperationExpenses(chartExpenses, objOperationsDate, arrDate, char
             }
         });
 
-        localStorage.setItem("operationsExpensesDate", JSON.stringify(sortDates(newObjDate)));
+        localStorage.setItem("operationsIncomeDate", JSON.stringify(sortDates(newObjDate)));
 
         operationsAllDates = uniteObjectsByDate(JSON.parse(localStorage.getItem("operationsExpensesDate")), JSON.parse(localStorage.getItem("operationsIncomeDate")))
         localStorage.setItem("operationsAllDate", JSON.stringify(operationsAllDates));
@@ -304,7 +305,7 @@ function changeOperationExpenses(chartExpenses, objOperationsDate, arrDate, char
 
     function operationToChart() {
         let obj = {}
-        if (localStorage.getItem("operationsExpensesDate")) obj = JSON.parse(localStorage.getItem("operationsExpensesDate"))
+        if (localStorage.getItem("operationsIncomeDate")) obj = JSON.parse(localStorage.getItem("operationsIncomeDate"))
 
         let uniqueTitles = [];
 
@@ -344,7 +345,7 @@ function changeOperationExpenses(chartExpenses, objOperationsDate, arrDate, char
         }
 
         let arrDate = []
-        for (let key of Object.keys(JSON.parse(localStorage.getItem("operationsExpensesDate")))) {
+        for (let key of Object.keys(JSON.parse(localStorage.getItem("operationsIncomeDate")))) {
             let temp = key.split(".").reverse()
             temp = temp.join("-")
             arrDate.push(temp);
@@ -364,17 +365,17 @@ function changeOperationExpenses(chartExpenses, objOperationsDate, arrDate, char
         }
         chartExpensesAndIncome.update();
 
-        localStorage.setItem("objOfBgOfOperationsExpenses", JSON.stringify(bgArray))
-        localStorage.setItem("arrOfCostsOfOperationsExpenses", JSON.stringify(OperationSumCosts))
+        localStorage.setItem("objOfBgOfOperationsIncome", JSON.stringify(bgArray))
+        localStorage.setItem("arrOfCostsOfOperationsIncome", JSON.stringify(OperationSumCosts))
     }
 
     function categoryChange() {
         let mergedArray = [];
             
-        if (localStorage.getItem("itemOperationExpensesSortedByCurrenDate")) {
-            mergedArray = [...JSON.parse(localStorage.getItem("operations")), ...JSON.parse(localStorage.getItem("itemOperationExpensesSortedByCurrenDate"))];
+        if (localStorage.getItem("itemOperationIncomeSortedByCurrenDate")) {
+            mergedArray = [...JSON.parse(localStorage.getItem("operationsIncome")), ...JSON.parse(localStorage.getItem("itemOperationIncomeSortedByCurrenDate"))];
         } else {
-            mergedArray = [...JSON.parse(localStorage.getItem("operations"))];
+            mergedArray = [...JSON.parse(localStorage.getItem("operationsIncome"))];
         }
         const grouped = mergedArray.reduce((acc, item) => {
             const key = item.title;
@@ -387,17 +388,17 @@ function changeOperationExpenses(chartExpenses, objOperationsDate, arrDate, char
         }, {});
         
         const res = Object.values(grouped);
-        localStorage.setItem("itemCategoriesExpensesSortedByCurrenDate", JSON.stringify(res))
+        localStorage.setItem("itemCategoriesIncomeSortedByCurrenDate", JSON.stringify(res))
 
         chart(res);
 
-        if (localStorage.getItem("itemCategoriesExpensesSortedByCurrenDate")) {
+        if (localStorage.getItem("itemCategoriesIncomeSortedByCurrenDate")) {
             let total = 0;
-            document.querySelectorAll(".list-categories_expenses .list-categories__item").forEach((category, i) => {
+            document.querySelectorAll(".list-categories_income .list-categories__item").forEach((category, i) => {
             
-                category.querySelector(".item-category__total").textContent = `${JSON.parse(localStorage.getItem("itemCategoriesExpensesSortedByCurrenDate"))[i].cost} BYN`;
-                total += JSON.parse(localStorage.getItem("itemCategoriesExpensesSortedByCurrenDate"))[i].cost;
-                document.querySelector(".slider-categories__total-num").textContent = total;
+                category.querySelector(".item-category__total").textContent = `${JSON.parse(localStorage.getItem("itemCategoriesIncomeSortedByCurrenDate"))[i].cost} BYN`;
+                total += JSON.parse(localStorage.getItem("itemCategoriesIncomeSortedByCurrenDate"))[i].cost;
+                document.querySelector(".slider-categories__item_income .slider-categories__total-num").textContent = total;
             })
         }
     }
@@ -427,4 +428,4 @@ function changeOperationExpenses(chartExpenses, objOperationsDate, arrDate, char
     }
 }
 
-export default changeOperationExpenses;
+export default changeOperationIncome;

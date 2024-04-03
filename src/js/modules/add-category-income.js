@@ -173,7 +173,7 @@ function addCategoryIncome(chartExpenses, arrOfCategories) {
     function setItemToList() {
         let blockToPaste = document.querySelector(".list-categories_income");
                        
-        let itemCategory = `<div class="list-categories__item item-category item-category_income">
+        let itemCategory = `<div class="list-categories__item item-category item-category_income" data-index="${objCategory.index}">
         <div class="item-category__head">
             <div class="item-category__icon ${objCategory.icon}" style="background-color:${objCategory.bg}"></div>
             <div class="item-category__info">

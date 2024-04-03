@@ -38,7 +38,7 @@ function addOperationExpenses(chartExpenses, objOperationsDate, arrDate, chartEx
     
                 let itemCategory = "";
             if (value[i].comment) {
-                itemCategory = `<div class="list-category__item item-category expand-operation" data-index="${value[i].index}">
+                itemCategory = `<div class="list-category__item item-category item-category_expenses expand-operation" data-index="${value[i].index}">
             <div class="item-category__head">
                 <div class="item-category__icon ${value[i].icon}" style="background-color:${value[i].bg}"></div>
                 <div class="item-category__info">
@@ -60,7 +60,7 @@ function addOperationExpenses(chartExpenses, objOperationsDate, arrDate, chartEx
             </div>
                 </div>`;
             } else {
-                itemCategory = `<div class="list-category__item item-category expand-operation" data-index="${value[i].index}">
+                itemCategory = `<div class="list-category__item item-category item-category_expenses expand-operation" data-index="${value[i].index}">
                 <div class="item-category__head">
                     <div class="item-category__icon ${value[i].icon}" style="background-color:${value[i].bg}"></div>
                     <div class="item-category__info">
@@ -112,7 +112,7 @@ function addOperationExpenses(chartExpenses, objOperationsDate, arrDate, chartEx
 
                         let itemCategory = "";
                         if (value[i].comment) {
-                            itemCategory = `<div class="list-category__item item-category expand-operation" data-index="${value[i].index}">
+                            itemCategory = `<div class="list-category__item item-category item-category_expenses expand-operation" data-index="${value[i].index}">
                         <div class="item-category__head">
                             <div class="item-category__icon ${value[i].icon}" style="background-color:${value[i].bg}"></div>
                             <div class="item-category__info">
@@ -134,7 +134,7 @@ function addOperationExpenses(chartExpenses, objOperationsDate, arrDate, chartEx
                         </div>
                             </div>`;
                         } else {
-                            itemCategory = `<div class="list-category__item item-category expand-operation" data-index="${value[i].index}">
+                            itemCategory = `<div class="list-category__item item-category item-category_expenses expand-operation" data-index="${value[i].index}">
                         <div class="item-category__head">
                             <div class="item-category__icon ${value[i].icon}" style="background-color:${value[i].bg}"></div>
                             <div class="item-category__info">
@@ -392,7 +392,7 @@ function addOperationExpenses(chartExpenses, objOperationsDate, arrDate, chartEx
 
             let itemCategory = "";
             if (sortedData[i].comment) {
-                itemCategory = `<div class="list-category__item item-category expand-operation" data-index="${sortedData[i].index}">
+                itemCategory = `<div class="list-category__item item-category item-category_expenses expand-operation" data-index="${sortedData[i].index}">
             <div class="item-category__head">
                 <div class="item-category__icon ${sortedData[i].icon}" style="background-color:${sortedData[i].bg}"></div>
                 <div class="item-category__info">
@@ -414,7 +414,7 @@ function addOperationExpenses(chartExpenses, objOperationsDate, arrDate, chartEx
             </div>
                 </div>`;
             } else {
-                itemCategory = `<div class="list-category__item item-category expand-operation" data-index="${sortedData[i].index}">
+                itemCategory = `<div class="list-category__item item-category item-category_expenses expand-operation" data-index="${sortedData[i].index}">
                 <div class="item-category__head">
                     <div class="item-category__icon ${sortedData[i].icon}" style="background-color:${sortedData[i].bg}"></div>
                     <div class="item-category__info">

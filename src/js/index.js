@@ -44,8 +44,8 @@ let bgArrIncome = [];
 let costArrIncome = [];
 let titlesIncome = [];
 
-if (localStorage.getItem("categoriesIncome")) {
-    categoriesIncome = JSON.parse(localStorage.getItem("categoriesIncome"));
+if (localStorage.getItem("itemCategoriesIncomeSortedByCurrenDate")) {
+    categoriesIncome = JSON.parse(localStorage.getItem("itemCategoriesIncomeSortedByCurrenDate"));
     
     categoriesIncome.forEach(item => {
         titlesIncome.push(item.title);
@@ -327,7 +327,7 @@ let mainDatePicker = new AirDatepicker('#main-picker', {
                         </div>`;
                         let itemCategory = "";
                         if (sortedData[i].comment) {
-                            itemCategory = `<div class="list-category__item item-category expand-operation" data-index="${sortedData[i].index}">
+                            itemCategory = `<div class="list-category__item item-category item-category_expenses expand-operation" data-index="${sortedData[i].index}">
                         <div class="item-category__head">
                             <div class="item-category__icon ${sortedData[i].icon}" style="background-color:${sortedData[i].bg}"></div>
                             <div class="item-category__info">
@@ -349,7 +349,7 @@ let mainDatePicker = new AirDatepicker('#main-picker', {
                         </div>
                             </div>`;
                         } else {
-                            itemCategory = `<div class="list-category__item item-category expand-operation" data-index="${sortedData[i].index}">
+                            itemCategory = `<div class="list-category__item item-category item-category_expenses expand-operation" data-index="${sortedData[i].index}">
                         <div class="item-category__head">
                             <div class="item-category__icon ${sortedData[i].icon}" style="background-color:${sortedData[i].bg}"></div>
                             <div class="item-category__info">
@@ -566,7 +566,7 @@ let mainDatePicker = new AirDatepicker('#main-picker', {
                     </div>`;
                     let itemCategory = "";
                     if (sortedData[i].comment) {
-                        itemCategory = `<div class="list-category__item item-category expand-operation" data-index="${sortedData[i].index}">
+                        itemCategory = `<div class="list-category__item item-category item-category_income expand-operation" data-index="${sortedData[i].index}">
                     <div class="item-category__head">
                         <div class="item-category__icon ${sortedData[i].icon}" style="background-color:${sortedData[i].bg}"></div>
                         <div class="item-category__info">
@@ -588,7 +588,7 @@ let mainDatePicker = new AirDatepicker('#main-picker', {
                     </div>
                         </div>`;
                     } else {
-                        itemCategory = `<div class="list-category__item item-category expand-operation" data-index="${sortedData[i].index}">
+                        itemCategory = `<div class="list-category__item item-category item-category_income expand-operation" data-index="${sortedData[i].index}">
                     <div class="item-category__head">
                         <div class="item-category__icon ${sortedData[i].icon}" style="background-color:${sortedData[i].bg}"></div>
                         <div class="item-category__info">
@@ -925,9 +925,19 @@ const swiperIconsIncome = new Swiper('.swiper_icons-income', {
 import changeOperationExpenses from "./modules/change-operation-expenses";
 changeOperationExpenses(chartExpenses, objOperationsDate, arrDate, chartExpensesAndIncome, operationsAllDates);
 
-let dateChangeOperation = new AirDatepicker('#date-change-operation-expenses', {
+let dateChangeOperationExpenses = new AirDatepicker('#date-change-operation-expenses', {
     inline: false,
     position:'right top',
-    container: '.popup-change-operation-datepicker',
+    container: '.popup-change-operation-expenses-datepicker',
+    dateFormat: 'yyyy-MM-dd',
+})
+
+import changeOperationIncome from "./modules/change-operation-income";
+changeOperationIncome(chartIncome, objOperationsDateIncome, arrDateIncome, chartIncomeBar, operationsAllDates);
+
+let dateChangeOperationIncome = new AirDatepicker('#date-change-operation-income', {
+    inline: false,
+    position:'right top',
+    container: '.popup-change-operation-income-datepicker',
     dateFormat: 'yyyy-MM-dd',
 })
