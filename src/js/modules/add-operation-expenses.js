@@ -21,63 +21,66 @@ function addOperationExpenses(chartExpenses, objOperationsDate, arrDate, chartEx
     if (localStorage.getItem("operationsExpensesDate")) {
         let blockToPaste = document.querySelector(".operation-list__item_expenses");
 
-        if (JSON.parse(localStorage.getItem("itemOperationExpenses")).length < 3) {
+        if (JSON.parse(localStorage.getItem("itemOperationExpensesSortedByCurrenDate")).length < 3) {
             for (let [key, value] of Object.entries(JSON.parse(localStorage.getItem("operationsExpensesDate"))).reverse()) {
 
-                let block = `<div class="list-operation__wrapper" data-dat="expenses${key}">
-                        <p class="list-operation__date">${key}</p>
-                    </div>`;
+                let block = `<div class="list-operation__wrapper" data-dat-wrapper="expenses${key}">
+                <p class="list-operation__date">${key}</p>
+                <div class="list-operation__wrapper-content" data-dat="expenses${key}"></div>
+                </div>`;
+
                 function parserBlockToPaste(block) {
                     var parser = new DOMParser();
                     let teg = parser.parseFromString(block, 'text/html');
                     let item = teg.querySelector(".list-operation__wrapper");
                     return item;
                 }
+
                 blockToPaste.append(parserBlockToPaste(block));
                 for (let i = 0;i < value.length;i++) {
     
-                let itemCategory = "";
-            if (value[i].comment) {
-                itemCategory = `<div class="list-category__item item-category item-category_expenses expand-operation" data-index="${value[i].index}">
-            <div class="item-category__head">
-                <div class="item-category__icon ${value[i].icon}" style="background-color:${value[i].bg}"></div>
-                <div class="item-category__info">
-                    <p class="item-category__name">${value[i].title}</p>
-                </div>
-                <div class="item-category__total">${value[i].cost} BYN</div>
-            </div>
-            <div class="item-category__footer">
-                <div class="item-category__footer-content">
-                    <div class="item-category__comment-wrapper">
-                        <div class="item-category__comment-icon"></div>
-                        <p class="item-category__comment">${value[i].comment}</p>
+                    let itemCategory = "";
+                    if (value[i].comment) {
+                        itemCategory = `<div class="list-category__item item-category item-category_expenses expand-operation" data-index="${value[i].index}">
+                    <div class="item-category__head">
+                        <div class="item-category__icon ${value[i].icon}" style="background-color:${value[i].bg}"></div>
+                        <div class="item-category__info">
+                            <p class="item-category__name">${value[i].title}</p>
+                        </div>
+                        <div class="item-category__total">${value[i].cost} BYN</div>
                     </div>
-                    <div class="item-category__buttons">
-                        <button class="item-category__button item-category__button_change">Изменить</button>
-                        <button class="item-category__button item-category__button_delete">Удалить</button>
-                    </div>
-                </div>
-            </div>
-                </div>`;
-            } else {
-                itemCategory = `<div class="list-category__item item-category item-category_expenses expand-operation" data-index="${value[i].index}">
-                <div class="item-category__head">
-                    <div class="item-category__icon ${value[i].icon}" style="background-color:${value[i].bg}"></div>
-                    <div class="item-category__info">
-                        <p class="item-category__name">${value[i].title}</p>
-                    </div>
-                    <div class="item-category__total">${value[i].cost} BYN</div>
-                </div>
-                <div class="item-category__footer">
-                    <div class="item-category__footer-content">
-                        <div class="item-category__buttons">
-                            <button class="item-category__button item-category__button_change">Изменить</button>
-                            <button class="item-category__button item-category__button_delete">Удалить</button>
+                    <div class="item-category__footer">
+                        <div class="item-category__footer-content">
+                            <div class="item-category__comment-wrapper">
+                                <div class="item-category__comment-icon"></div>
+                                <p class="item-category__comment">${value[i].comment}</p>
+                            </div>
+                            <div class="item-category__buttons">
+                                <button class="item-category__button item-category__button_change">Изменить</button>
+                                <button class="item-category__button item-category__button_delete">Удалить</button>
+                            </div>
                         </div>
                     </div>
-                </div>
-                    </div>`;
-            }
+                        </div>`;
+                    } else {
+                        itemCategory = `<div class="list-category__item item-category item-category_expenses expand-operation" data-index="${value[i].index}">
+                        <div class="item-category__head">
+                            <div class="item-category__icon ${value[i].icon}" style="background-color:${value[i].bg}"></div>
+                            <div class="item-category__info">
+                                <p class="item-category__name">${value[i].title}</p>
+                            </div>
+                            <div class="item-category__total">${value[i].cost} BYN</div>
+                        </div>
+                        <div class="item-category__footer">
+                            <div class="item-category__footer-content">
+                                <div class="item-category__buttons">
+                                    <button class="item-category__button item-category__button_change">Изменить</button>
+                                    <button class="item-category__button item-category__button_delete">Удалить</button>
+                                </div>
+                            </div>
+                        </div>
+                            </div>`;
+                    }
         
                     function parser(itemCategory) {
                         var parser = new DOMParser();
@@ -85,24 +88,28 @@ function addOperationExpenses(chartExpenses, objOperationsDate, arrDate, chartEx
                         let item = teg.querySelector(".item-category");
                         return item;
                     }
-                    document.querySelector(`[data-dat="expenses${key}"]`).append(parser(itemCategory))
+                    document.querySelector(`[data-dat="expenses${key}"]`).prepend(parser(itemCategory))
                 }
             } 
             more.classList.remove("operation-list__more_act")
+            console.log(more)
         }
-         else {
+        else {
             let count = 0;
             for (let [key, value] of Object.entries(JSON.parse(localStorage.getItem("operationsExpensesDate"))).reverse()) {
 
-                let block = `<div class="list-operation__wrapper" data-dat="expenses${key}">
-                        <p class="list-operation__date">${key}</p>
-                    </div>`;
+                let block = `<div class="list-operation__wrapper" data-dat-wrapper="expenses${key}">
+                <p class="list-operation__date">${key}</p>
+                <div class="list-operation__wrapper-content" data-dat="expenses${key}">
+                </div>`;
+
                 function parserBlockToPaste(block) {
                     var parser = new DOMParser();
                     let teg = parser.parseFromString(block, 'text/html');
                     let item = teg.querySelector(".list-operation__wrapper");
                     return item;
                 }
+
                 if (count < 3) {
                     blockToPaste.append(parserBlockToPaste(block));
                 }
@@ -160,7 +167,7 @@ function addOperationExpenses(chartExpenses, objOperationsDate, arrDate, chartEx
                             let item = teg.querySelector(".item-category");
                             return item;
                         }
-                        document.querySelector(`[data-dat="expenses${key}"]`).append(parser(itemCategory))
+                        document.querySelector(`[data-dat="expenses${key}"]`).prepend(parser(itemCategory))
                     }
                 }
                 more.classList.add("operation-list__more_act")
@@ -387,8 +394,9 @@ function addOperationExpenses(chartExpenses, objOperationsDate, arrDate, chartEx
         })
 
         for (let i = 0;i < sortedData.length;i++) {
-            let block = `<div class="list-operation__wrapper" data-dat="expenses${sortedData[i].date}">
+            let block = `<div class="list-operation__wrapper" data-dat-wrapper="expenses${sortedData[i].date}">
             <p class="list-operation__date">${sortedData[i].date}</p>
+            <div class="list-operation__wrapper-content" data-dat="expenses${sortedData[i].date}"></div>
             </div>`;
 
             let itemCategory = "";
@@ -434,49 +442,61 @@ function addOperationExpenses(chartExpenses, objOperationsDate, arrDate, chartEx
                     </div>`;
             }
                         
-        function parser(itemCategory) {
-            var parser = new DOMParser();
-            let teg = parser.parseFromString(itemCategory, 'text/html');
-            let item = teg.querySelector(".item-category");
-            return item;
-        }
-        function parserBlockToPaste(block) {
-            var parser = new DOMParser();
-            let teg = parser.parseFromString(block, 'text/html');
-            let item = teg.querySelector(".list-operation__wrapper");
-            return item;
-        }
-
-        if (JSON.parse(localStorage.getItem("itemOperationExpensesSortedByCurrenDate")).length < 4) {
-            blockToPaste.append(parserBlockToPaste(block));
-            document.querySelector(`[data-dat="expenses${sortedData[i].date}"]`).append(parser(itemCategory));
-
-            if (document.querySelectorAll(`[data-dat="expenses${sortedData[i].date}"]`).length > 1) {
-                document.querySelectorAll(`[data-dat="expenses${sortedData[i].date}"]`)[document.querySelectorAll(`[data-dat="expenses${sortedData[i].date}"]`).length - 1].remove()
+            function parser(itemCategory) {
+                var parser = new DOMParser();
+                let teg = parser.parseFromString(itemCategory, 'text/html');
+                let item = teg.querySelector(".item-category");
+                return item;
             }
-            more.classList.remove("operation-list__more_act")
-        }
-         else {
-            blockToPaste.append(parserBlockToPaste(block));
-            document.querySelector(`[data-dat="expenses${sortedData[i].date}"]`).append(parser(itemCategory));
-
-            if (document.querySelectorAll(`[data-dat="expenses${sortedData[i].date}"]`).length > 1) {
-                document.querySelectorAll(`[data-dat="expenses${sortedData[i].date}"]`)[document.querySelectorAll(`[data-dat="expenses${sortedData[i].date}"]`).length - 1].remove()
+            function parserBlockToPaste(block) {
+                var parser = new DOMParser();
+                let teg = parser.parseFromString(block, 'text/html');
+                let item = teg.querySelector(".list-operation__wrapper");
+                return item;
             }
 
-            blockToPaste.querySelectorAll(".item-category").forEach((operation, index) => {
-                if (index > 2) operation.remove()
-            })
-            blockToPaste.querySelectorAll(".list-operation__wrapper").forEach((block, index) => {
-                if (block.children.length <= 1) block.remove()
-            })
+            if (more.classList.contains("open")) {
+                pasteAllOperations();
+            } else {
+                pasteThreeOperations();
+            }
+            function pasteThreeOperations() {
+                blockToPaste.append(parserBlockToPaste(block));
+                document.querySelector(`[data-dat="expenses${sortedData[i].date}"]`).prepend(parser(itemCategory));
 
-            more.classList.add("operation-list__more_act")
+                if (document.querySelectorAll(`[data-dat="expenses${sortedData[i].date}"]`).length > 1) {
+                    document.querySelectorAll(`[data-dat-wrapper="expenses${sortedData[i].date}"]`)[document.querySelectorAll(`[data-dat-wrapper="expenses${sortedData[i].date}"]`).length - 1].remove()
+                }
+
+                if (JSON.parse(localStorage.getItem("itemOperationExpensesSortedByCurrenDate")).length < 4) {
+                    more.classList.remove("operation-list__more_act")
+                } 
+                else {
+                    blockToPaste.querySelectorAll(".item-category").forEach((operation, index) => {
+                        if (index > 2) operation.remove()
+                    })
+                    blockToPaste.querySelectorAll(".list-operation__wrapper").forEach((block) => {
+                        if (block.querySelector(".list-operation__wrapper-content").children.length == 0) {
+                            block.remove()
+                        }
+                    })
+
+                    more.classList.add("operation-list__more_act")
+                }
+            }
+            function pasteAllOperations() {
+                blockToPaste.append(parserBlockToPaste(block));
+                document.querySelector(`[data-dat="expenses${sortedData[i].date}"]`).prepend(parser(itemCategory));
+
+                if (document.querySelectorAll(`[data-dat="expenses${sortedData[i].date}"]`).length > 1) {
+                    document.querySelectorAll(`[data-dat-wrapper="expenses${sortedData[i].date}"]`)[document.querySelectorAll(`[data-dat-wrapper="expenses${sortedData[i].date}"]`).length - 1].remove()
+                }
+            }
         }
-        }
+
         let newObjDate = {};
         if (isObjectBelongToCurrentDate(objectOperation)) {
-            
+
             sortedData.forEach(item => {
                 if (!newObjDate[item.date]) {
                     newObjDate[item.date] = [item];

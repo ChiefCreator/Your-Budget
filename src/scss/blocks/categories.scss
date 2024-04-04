@@ -1,4 +1,8 @@
 .categories{
+    position: sticky;
+    top: 0;
+    height: auto;
+    margin-bottom: auto;
     &__slider-wrapper{
         margin-top: 15px;
         min-width: 450px;
@@ -137,36 +141,28 @@
 .list-categories{
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 10px;
 }
 .tools-categories{
-    margin-top: 20px;
+    margin-top: 15px;
     display: flex;
     gap: 20px;
-    &__block{
-        flex: 1 1 auto;
-        border-radius: 10px;
-        background-color:rgb(242, 243, 247);
-        padding: 10px;
-        cursor: pointer;
-        &:hover .tools-categories__item-arrow{
-            animation: anim-arrow .5s ease 2;
-        }
-        @keyframes anim-arrow {
-            0%, 100%{
-                transform: translateX(0);
-            }
-            50%{
-                transform: translateX(8px);
-            }
-        }
+}
+.tool-category{
+    flex: 1 1 auto;
+    border-radius: 10px;
+    background-color:rgb(242, 243, 247);
+    padding: 10px;
+    cursor: pointer;
+    &:hover .tool-category__item-arrow{
+        animation: anim-arrow .5s ease 2;
     }
-    .add-expenses{
-        .tools-categories__icon{
-            &::before{
-                content: "\2b";
-                font-size: 20px;
-            }
+    @keyframes anim-arrow {
+        0%, 100%{
+            transform: translateX(0);
+        }
+        50%{
+            transform: translateX(8px);
         }
     }
     &__icon{
@@ -200,6 +196,14 @@
             content: "\f105";
             @include font-awesome;
             font-size: 15px;
+        }
+    }
+}
+.add-expenses{
+    .tool-category__icon{
+        &::before{
+            content: "\2b";
+            font-size: 20px;
         }
     }
 }
