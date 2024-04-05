@@ -50,8 +50,9 @@ function deleteOperationExpenses(chartExpenses, chartExpensesAndIncome) {
 
         for (let [key, value] of Object.entries(res).reverse()) {
 
-            let block = `<div class="list-operation__wrapper" data-dat="expenses${key}">
+            let block = `<div class="list-operation__wrapper" data-dat-wrapper="expenses${key}">
                     <p class="list-operation__date">${key}</p>
+                    <div class="list-operation__wrapper-content" data-dat="expenses${key}"></div>
                 </div>`;
             function parserBlockToPaste(block) {
                 var parser = new DOMParser();
@@ -112,30 +113,42 @@ function deleteOperationExpenses(chartExpenses, chartExpensesAndIncome) {
                     return item;
                 }
 
-                if (JSON.parse(localStorage.getItem("itemOperationExpensesSortedByCurrenDate")).length < 4) {
-                    blockToPaste.append(parserBlockToPaste(block));
-                    document.querySelector(`[data-dat="expenses${value[i].date}"]`).append(parser(itemCategory));
-        
-                    if (document.querySelectorAll(`[data-dat="expenses${value[i].date}"]`).length > 1) {
-                        document.querySelectorAll(`[data-dat="expenses${value[i].date}"]`)[document.querySelectorAll(`[data-dat="expenses${value[i].date}"]`).length - 1].remove()
-                    }
-                    more.classList.remove("operation-list__more_act")
+                if (more.classList.contains("open")) {
+                    pasteAllOperations();
                 } else {
+                    pasteThreeOperations();
+                }
+                function pasteThreeOperations() {
                     blockToPaste.append(parserBlockToPaste(block));
-                    document.querySelector(`[data-dat="expenses${value[i].date}"]`).append(parser(itemCategory));
+                    document.querySelector(`[data-dat="expenses${value[i].date}"]`).prepend(parser(itemCategory));
         
                     if (document.querySelectorAll(`[data-dat="expenses${value[i].date}"]`).length > 1) {
-                        document.querySelectorAll(`[data-dat="expenses${value[i].date}"]`)[document.querySelectorAll(`[data-dat="expenses${value[i].date}"]`).length - 1].remove()
+                        document.querySelectorAll(`[data-dat-wrapper="expenses${value[i].date}"]`)[document.querySelectorAll(`[data-dat-wrapper="expenses${value[i].date}"]`).length - 1].remove()
                     }
         
-                    blockToPaste.querySelectorAll(".item-category").forEach((operation, index) => {
-                        if (index > 2) operation.remove()
-                    })
-                    blockToPaste.querySelectorAll(".list-operation__wrapper").forEach((block, index) => {
-                        if (block.children.length <= 1) block.remove()
-                    })
+                    if (JSON.parse(localStorage.getItem("itemOperationExpensesSortedByCurrenDate")).length < 4) {
+                        more.classList.remove("operation-list__more_act")
+                    } 
+                    else {
+                        blockToPaste.querySelectorAll(".item-category").forEach((operation, index) => {
+                            if (index > 2) operation.remove()
+                        })
+                        blockToPaste.querySelectorAll(".list-operation__wrapper").forEach((block) => {
+                            if (block.querySelector(".list-operation__wrapper-content").children.length == 0) {
+                                block.remove()
+                            }
+                        })
         
-                    more.classList.add("operation-list__more_act")
+                        more.classList.add("operation-list__more_act")
+                    }
+                }
+                function pasteAllOperations() {
+                    blockToPaste.append(parserBlockToPaste(block));
+                    document.querySelector(`[data-dat="expenses${value[i].date}"]`).prepend(parser(itemCategory));
+        
+                    if (document.querySelectorAll(`[data-dat="expenses${value[i].date}"]`).length > 1) {
+                        document.querySelectorAll(`[data-dat-wrapper="expenses${value[i].date}"]`)[document.querySelectorAll(`[data-dat-wrapper="expenses${value[i].date}"]`).length - 1].remove()
+                    }
                 }
             }
         } 

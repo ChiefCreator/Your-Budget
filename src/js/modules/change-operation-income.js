@@ -159,8 +159,9 @@ function changeOperationIncome(chartExpenses, objOperationsDate, arrDate, chartE
         sortedData = sortArrayByCurrentDate(sortedData)
 
         for (let i = 0;i < sortedData.length;i++) {
-            let block = `<div class="list-operation__wrapper" data-dat="income${sortedData[i].date}">
+            let block = `<div class="list-operation__wrapper" data-dat-wrapper="income${sortedData[i].date}">
             <p class="list-operation__date">${sortedData[i].date}</p>
+            <div class="list-operation__wrapper-content" data-dat="income${sortedData[i].date}"></div>
             </div>`;
 
             let itemCategory = "";
@@ -219,30 +220,43 @@ function changeOperationIncome(chartExpenses, objOperationsDate, arrDate, chartE
             return item;
         }
 
-        if (JSON.parse(localStorage.getItem("itemOperationIncomeSortedByCurrenDate")).length < 4) {
-            blockToPaste.append(parserBlockToPaste(block));
-            document.querySelector(`[data-dat="income${sortedData[i].date}"]`).append(parser(itemCategory));
-
-            if (document.querySelectorAll(`[data-dat="income${sortedData[i].date}"]`).length > 1) {
-                document.querySelectorAll(`[data-dat="income${sortedData[i].date}"]`)[document.querySelectorAll(`[data-dat="income${sortedData[i].date}"]`).length - 1].remove()
-            }
-            more.classList.remove("operation-list__more_act")
+        if (more.classList.contains("open")) {
+            pasteAllOperations();
         } else {
+            pasteThreeOperations();
+        }
+
+        function pasteThreeOperations() {
             blockToPaste.append(parserBlockToPaste(block));
-            document.querySelector(`[data-dat="income${sortedData[i].date}"]`).append(parser(itemCategory));
+            document.querySelector(`[data-dat="income${sortedData[i].date}"]`).prepend(parser(itemCategory));
 
             if (document.querySelectorAll(`[data-dat="income${sortedData[i].date}"]`).length > 1) {
-                document.querySelectorAll(`[data-dat="income${sortedData[i].date}"]`)[document.querySelectorAll(`[data-dat="income${sortedData[i].date}"]`).length - 1].remove()
+                document.querySelectorAll(`[data-dat-wrapper="income${sortedData[i].date}"]`)[document.querySelectorAll(`[data-dat-wrapper="income${sortedData[i].date}"]`).length - 1].remove()
             }
 
-            blockToPaste.querySelectorAll(".item-category").forEach((operation, index) => {
-                if (index > 2) operation.remove()
-            })
-            blockToPaste.querySelectorAll(".list-operation__wrapper").forEach((block, index) => {
-                if (block.children.length <= 1) block.remove()
-            })
+            if (JSON.parse(localStorage.getItem("itemOperationIncomeSortedByCurrenDate")).length < 4) {
+                more.classList.remove("operation-list__more_act")
+            }
+            else {
+                blockToPaste.querySelectorAll(".item-category").forEach((operation, index) => {
+                    if (index > 2) operation.remove()
+                })
+                blockToPaste.querySelectorAll(".list-operation__wrapper").forEach((block) => {
+                    if (block.querySelector(".list-operation__wrapper-content").children.length == 0) {
+                        block.remove()
+                    }
+                })
 
-            more.classList.add("operation-list__more_act")
+                more.classList.add("operation-list__more_act")
+            }
+        }
+        function pasteAllOperations() {
+            blockToPaste.append(parserBlockToPaste(block));
+            document.querySelector(`[data-dat="income${sortedData[i].date}"]`).prepend(parser(itemCategory));
+
+            if (document.querySelectorAll(`[data-dat="income${sortedData[i].date}"]`).length > 1) {
+                document.querySelectorAll(`[data-dat-wrapper="income${sortedData[i].date}"]`)[document.querySelectorAll(`[data-dat-wrapper="income${sortedData[i].date}"]`).length - 1].remove()
+            }
         }
         }
         let newObjDate = {};
