@@ -1196,8 +1196,8 @@ let dateOperationIncome = new AirDatepicker('#date-operation-income', {
 import togglePopup from "./modules/toggle-popup";
 togglePopup();
 
-import addCategoryExpenses from "./modules/add-category-expenses";
-addCategoryExpenses(chartExpenses,arrOfCategories);
+import createCategoryExpenses from "./modules/create-category-expenses";
+createCategoryExpenses(chartExpenses,arrOfCategories);
 
 import addCategoryIncome from "./modules/add-category-income";
 addCategoryIncome(chartIncome, categoriesIncome);
@@ -1227,17 +1227,18 @@ import Swiper from 'swiper/bundle';
 import 'swiper/css/bundle';
 
 const swiperIconsExpenses = new Swiper('.swiper_icons-expenses', {
-    speed: 400,
+    speed: 600,
     spaceBetween: 0,
     pagination: {
         el: '.pagination_icons-expenses',
         type: 'bullets',
         clickable: true,
     },
+    parallax:true,
 });
 
 const swiperIconsIncome = new Swiper('.swiper_icons-income', {
-    speed: 400,
+    speed: 600,
     spaceBetween: 0,
     pagination: {
         el: '.pagination_icons-income',
@@ -1271,3 +1272,16 @@ addMoreOperations();
 
 import addMoreOperationsIncome from "./modules/add-more-operations-income";
 addMoreOperationsIncome();
+
+const swiperCategories = new Swiper('.swiper_categories', {
+    speed: 600,
+    spaceBetween: 0,
+    pagination: {
+        el: '.pagination_done-expenses',
+        type: 'bullets',
+        clickable: true,
+    },
+});
+
+import addCategoryExpenses from "./modules/add-category-expenses";
+addCategoryExpenses(chartExpenses);
