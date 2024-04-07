@@ -16,7 +16,7 @@ function addCategoryExpenses(chartExpenses) {
         if (e.target.closest(".done-expenses")) {
             chooseCategory(category)
         }
-        if (e.target.closest(".popup-category-done__button")) {
+        if (e.target.closest(".popup-category-done_expenses .popup-category-done__button")) {
             if (localStorage.getItem("categories") && JSON.parse(localStorage.getItem("categories")).find(obj => obj.title == properties.title)) {
                 return null;
             }

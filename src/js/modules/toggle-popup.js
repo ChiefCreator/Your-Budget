@@ -5,7 +5,7 @@ function togglePopup() {
     let overblock = document.querySelector(".overblock");
 
     let createBtnsExpenses = document.querySelectorAll(".create-expenses");
-    let createBtnsIncome = document.querySelectorAll(".add-income");
+    let createBtnsIncome = document.querySelectorAll(".create-income");
 
     let closeBtn = document.querySelector(".popup-category__close");
     

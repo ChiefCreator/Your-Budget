@@ -1199,8 +1199,8 @@ togglePopup();
 import createCategoryExpenses from "./modules/create-category-expenses";
 createCategoryExpenses(chartExpenses,arrOfCategories);
 
-import addCategoryIncome from "./modules/add-category-income";
-addCategoryIncome(chartIncome, categoriesIncome);
+import createCategoryIncome from "./modules/create-category-income";
+createCategoryIncome(chartIncome, categoriesIncome);
 
 import addOperationExpenses from "./modules/add-operation-expenses";
 addOperationExpenses(chartExpenses, objOperationsDate, arrDate, chartExpensesAndIncome, operationsAllDates);
@@ -1285,3 +1285,11 @@ const swiperCategories = new Swiper('.swiper_categories', {
 
 import addCategoryExpenses from "./modules/add-category-expenses";
 addCategoryExpenses(chartExpenses);
+
+const swiperCategoriesIncome = new Swiper('.swiper_categories-income', {
+    speed: 600,
+    spaceBetween: 0,
+});
+
+import addCategoryIncome from "./modules/add-category-income";
+addCategoryIncome(chartIncome);
