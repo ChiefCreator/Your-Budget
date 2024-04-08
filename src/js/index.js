@@ -253,7 +253,13 @@ dateText.textContent = transformDate()
 if (!localStorage.getItem("currentDate")) {
     localStorage.setItem("currentDate", currentDate); 
 }
-dateText.textContent = transformDate(localStorage.getItem("currentDate")); 
+if (localStorage.getItem("currentDate")) {
+    dateText.textContent = transformDate(localStorage.getItem("currentDate")); 
+} else if (localStorage.getItem("currentDate") == "undefined") {
+    dateText.textContent = "Выберите дату"; 
+} else {
+    dateText.textContent = "Выберите дату"; 
+}
 
 let buttonYear = {
     content: 'Выбрать год',
@@ -1101,3 +1107,6 @@ const swiperCategoriesIncome = new Swiper('.swiper_categories-income', {
 
 import addCategoryIncome from "./modules/add-category-income";
 addCategoryIncome(chartIncome);
+
+import switchSelect from "./modules/switch-select";
+switchSelect();

@@ -1,0 +1,38 @@
+.select{
+    height: 100%;
+    &__button{
+        cursor: pointer;
+        height: 35px;
+        font-size: 14px;
+    }
+    &__dropdown{
+        margin-top: -5px;
+        display: grid;
+        grid-template-rows: 0fr;
+        overflow: hidden;
+        transition: grid-template-rows .3s ease;
+        &_visible{
+            grid-template-rows: 1fr;
+        }
+    }
+    &__dropdown-list{
+        min-height: 0;
+        overflow: hidden;
+        &_visible{
+            height: auto;
+        }
+    }
+    &__dropdown-item{
+        font-size: 15px;
+        font-weight: 500;
+        padding: 2px 0;
+        transition: background-color .3s ease;
+        cursor: pointer;
+        &:hover{
+            background-color:rgb(242, 243, 247);
+        }
+    }
+    &__input-hidden{
+        display: none;
+    }
+}

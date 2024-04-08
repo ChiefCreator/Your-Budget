@@ -68,6 +68,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        max-height: 35px;
         &::before{
             font-size: 18px;
             color: black;
@@ -167,5 +168,14 @@
         transform: translate(0,-50%);
         pointer-events: none;
         transition: all .3s ease;
+    }
+    &__select-wrapper{
+        flex: 0 1 200px;
+        min-height: 35px;
+        display: flex;
+        gap: 8px;
+    }
+    &__select-content{
+
     }
 }
